@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Iklan;
+use App\Models\Sapi;
+use Illuminate\Http\Request;
+
+class FrontendController extends Controller
+{
+    public function beranda()
+    {
+        // Ambil data iklan banner yang aktif dan belum expired
+        $iklans = Iklan::where('jenis', 'banner')
+            ->where('status', 'aktif')
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                      ->orWhere('expires_at', '>', now());
+            })
+            ->latest()
+            ->get();
+
+        // Ambil data sapi baru (1 minggu terakhir)
+        $sapis = Sapi::where('created_at', '>=', now()->subDays(7))
+            ->latest()
+            ->get();
+
+        // Ambil data pamflet edukasi
+        $edukasis = Iklan::where('jenis', 'edukasi')
+            ->latest()
+            ->get();
+
+        return view('frontend.beranda', compact('iklans', 'sapis', 'edukasis'));
+    }
+
+    public function showEdukasi($id)
+    {
+        $edukasi = Iklan::where('jenis', 'edukasi')->findOrFail($id);
+        return view('frontend.edukasi_detail', compact('edukasi'));
+    }
+
+    public function about()
+    {
+        return view('frontend.about');
+    }
+}
