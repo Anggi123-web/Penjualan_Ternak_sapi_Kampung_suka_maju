@@ -20,17 +20,34 @@ class FrontendController extends Controller
             ->latest()
             ->get();
 
-        // Ambil data sapi baru (1 minggu terakhir)
-        $sapis = Sapi::where('created_at', '>=', now()->subDays(7))
+        if ($iklans->isEmpty()) {
+            $iklans = Iklan::where('jenis', 'banner')->latest()->get();
+        }
+
+        // Ambil data sapi baru (1 minggu terakhir) yang masih tersedia (belum dipesan)
+        $sapis = Sapi::tersedia()
+            ->with('peternak')
+            ->where('created_at', '>=', now()->subDays(7))
             ->latest()
             ->get();
 
-        // Ambil data pamflet edukasi
-        $edukasis = Iklan::where('jenis', 'edukasi')
+        // Ambil data sapi Pre-Order yang masih tersedia (belum dipesan)
+        $sapiPreorder = Sapi::tersedia()
+            ->where('tipe_penjualan', 'pre_order')
+            ->with('peternak')
             ->latest()
+            ->take(8)
             ->get();
 
-        return view('frontend.beranda', compact('iklans', 'sapis', 'edukasis'));
+        // Ambil data sapi Pesan Biasa (Order langsung) yang masih tersedia (belum dipesan)
+        $sapiBiasa = Sapi::tersedia()
+            ->where('tipe_penjualan', 'order')
+            ->with('peternak')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return view('frontend.beranda', compact('iklans', 'sapis', 'sapiPreorder', 'sapiBiasa'));
     }
 
     public function showEdukasi($id)

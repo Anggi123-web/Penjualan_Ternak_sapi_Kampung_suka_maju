@@ -1,7 +1,34 @@
 @extends('layouts.peternak', ['title' => 'Tambah Data Sapi — Sistem Penjualan Sapi'])
 
 @section('page-styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <style>
+    #map {
+        height: 320px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        z-index: 1;
+    }
+    .gps-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        transition: all 0.2s ease;
+    }
+    .gps-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    }
     .back-link {
         display: inline-flex;
         align-items: center;
@@ -266,6 +293,50 @@
         line-height: 1.6;
     }
 
+    /* Tipe Penjualan Toggle */
+    .tipe-toggle {
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .tipe-option {
+        flex: 1;
+        cursor: pointer;
+    }
+
+    .tipe-option input[type="radio"] {
+        display: none;
+    }
+
+    .tipe-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(148, 163, 184, 0.1);
+        background: rgba(15, 23, 42, 0.4);
+        color: #94a3b8;
+    }
+
+    .tipe-option input[type="radio"]:checked + .tipe-order {
+        border-color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+        color: #6ee7b7;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
+    }
+
+    .tipe-option input[type="radio"]:checked + .tipe-preorder {
+        border-color: #f59e0b;
+        background: rgba(245, 158, 11, 0.1);
+        color: #fcd34d;
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.08);
+    }
+
     @media (max-width: 640px) {
         .form-grid {
             grid-template-columns: 1fr;
@@ -340,6 +411,50 @@
                     <input type="number" id="harga" name="harga" class="form-input has-prefix" placeholder="Contoh: 15000000" value="{{ old('harga') }}" min="1" required>
                 </div>
             </div>
+
+            <div class="form-group form-full">
+                <label class="form-label">Tipe Penjualan</label>
+                <div class="tipe-toggle">
+                    <label class="tipe-option">
+                        <input type="radio" name="tipe_penjualan" value="order" {{ old('tipe_penjualan', 'order') === 'order' ? 'checked' : '' }} onchange="togglePreorder()">
+                        <span class="tipe-label tipe-order">🛒 Order</span>
+                    </label>
+                    <label class="tipe-option">
+                        <input type="radio" name="tipe_penjualan" value="pre_order" {{ old('tipe_penjualan') === 'pre_order' ? 'checked' : '' }} onchange="togglePreorder()">
+                        <span class="tipe-label tipe-preorder">📋 Pre-Order</span>
+                    </label>
+                </div>
+                <div class="form-hint">Pilih "Order" untuk jual langsung, atau "Pre-Order" jika sapi belum tersedia saat ini.</div>
+            </div>
+
+            <div class="form-group" id="preorder-bulan-group" style="display: none;">
+                <label class="form-label" for="preorder_bulan">Bulan Pre-Order</label>
+                <select id="preorder_bulan" name="preorder_bulan" class="form-select">
+                    <option value="" disabled {{ old('preorder_bulan') ? '' : 'selected' }}>— Pilih bulan —</option>
+                    @foreach (['1' => 'Januari', '2' => 'Februari', '3' => 'Maret', '4' => 'April', '5' => 'Mei', '6' => 'Juni', '7' => 'Juli', '8' => 'Agustus', '9' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'] as $num => $nama)
+                        <option value="{{ $num }}" {{ old('preorder_bulan') == $num ? 'selected' : '' }}>{{ $nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group" id="preorder-tahun-group" style="display: none;">
+                <label class="form-label" for="preorder_tahun">Tahun Pre-Order</label>
+                <select id="preorder_tahun" name="preorder_tahun" class="form-select">
+                    <option value="" disabled {{ old('preorder_tahun') ? '' : 'selected' }}>— Pilih tahun —</option>
+                    @for ($y = date('Y'); $y <= date('Y') + 5; $y++)
+                        <option value="{{ $y }}" {{ old('preorder_tahun') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                    @endfor
+                </select>
+            </div>
+
+            <div class="form-group form-full" id="preorder-biaya-group" style="display: none;">
+                <label class="form-label" for="biaya_perawatan_harian">Biaya Perawatan Harian (Rp / Hari)</label>
+                <div class="input-wrapper">
+                    <span class="input-prefix">Rp</span>
+                    <input type="number" id="biaya_perawatan_harian" name="biaya_perawatan_harian" class="form-input has-prefix" placeholder="Contoh: 25000" value="{{ old('biaya_perawatan_harian', 25000) }}" min="0">
+                </div>
+                <div class="form-hint">Biaya pakan, suplemen, dan perawatan harian selama sapi dititipkan di kandang Anda (default: Rp 25.000 / hari). Biaya ini akan dihitung otomatis saat pembeli memilih tanggal penjemputan/pengantaran.</div>
+            </div>
         </div>
     </div>
 
@@ -347,25 +462,60 @@
         <h3>📸 Foto & Video</h3>
         <div class="form-grid">
             <div class="form-group">
-                <label class="form-label">Foto Sapi</label>
+                <label class="form-label">Foto Sapi (Bisa lebih dari 1)</label>
                 <div class="file-upload" id="foto-upload-area">
-                    <input type="file" name="foto" accept="image/*" id="foto-input" onchange="previewFile(this, 'foto-preview', 'image')">
+                    <input type="file" name="foto[]" accept="image/*" id="foto-input" multiple onchange="handleFotoUpload(this)">
                     <div class="file-upload-icon">📷</div>
                     <div class="file-upload-text">Klik atau seret foto ke sini</div>
-                    <div class="file-upload-hint">JPG, PNG, WebP — Maks 5MB</div>
+                    <div class="file-upload-hint">Format: JPG, PNG, WebP (Kompresi otomatis aktif)</div>
                 </div>
-                <div class="file-preview" id="foto-preview"></div>
+                <div id="foto-preview" style="display: none; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Video Sapi</label>
+                <label class="form-label">Video Sapi (Bisa lebih dari 1)</label>
                 <div class="file-upload" id="video-upload-area">
-                    <input type="file" name="video" accept="video/*" id="video-input" onchange="previewFile(this, 'video-preview', 'video')">
+                    <input type="file" name="video[]" accept="video/*" id="video-input" multiple onchange="handleVideoUpload(this)">
                     <div class="file-upload-icon">🎥</div>
                     <div class="file-upload-text">Klik atau seret video ke sini</div>
-                    <div class="file-upload-hint">MP4, MOV, AVI, WebM — Maks 50MB</div>
+                    <div class="file-upload-hint">MP4, MOV, AVI, WebM — Maks 100MB per berkas</div>
                 </div>
-                <div class="file-preview" id="video-preview"></div>
+                <div id="video-preview" style="display: none; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-card" style="margin-top: 1.5rem;">
+        <h3>📍 Lokasi Kandang / Sapi</h3>
+        <div class="form-grid">
+            <div class="form-group form-full">
+                <label class="form-label">Cari & Tentukan Lokasi Pada Peta</label>
+                <div id="map"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <span class="form-hint">Geser penanda merah ke lokasi kandang atau klik langsung pada peta.</span>
+                    <button type="button" class="gps-btn" onclick="getCurrentLocation()">
+                        🛰️ Gunakan Lokasi GPS Saya
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="latitude">Latitude</label>
+                <input type="text" id="latitude" name="latitude" class="form-input" placeholder="Klik pada peta..." value="{{ old('latitude', auth()->user()->latitude) }}" readonly required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="longitude">Longitude</label>
+                <input type="text" id="longitude" name="longitude" class="form-input" placeholder="Klik pada peta..." value="{{ old('longitude', auth()->user()->longitude) }}" readonly required>
+            </div>
+
+            <div class="form-group form-full">
+                <label class="form-label">Keterangan Alamat Kandang (Dari Profil Anda)</label>
+                <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 0.85rem 1rem; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">
+                    🏡 {{ auth()->user()->alamat ?? 'Alamat belum diatur di profil Anda.' }}
+                </div>
+                <input type="hidden" name="lokasi" value="{{ auth()->user()->alamat }}">
+                <div class="form-hint" style="margin-top: 0.35rem;">Alamat ini diambil otomatis dari profil pendaftaran Anda agar Anda tidak perlu menginputnya kembali.</div>
             </div>
         </div>
     </div>
@@ -410,6 +560,264 @@
                 preview.style.display = 'block';
             };
             reader.readAsDataURL(file);
+        }
+    }
+
+    function togglePreorder() {
+        const tipe = document.querySelector('input[name="tipe_penjualan"]:checked');
+        const bulanGroup = document.getElementById('preorder-bulan-group');
+        const tahunGroup = document.getElementById('preorder-tahun-group');
+        const biayaGroup = document.getElementById('preorder-biaya-group');
+
+        if (tipe && tipe.value === 'pre_order') {
+            bulanGroup.style.display = 'block';
+            tahunGroup.style.display = 'block';
+            if (biayaGroup) biayaGroup.style.display = 'block';
+        } else {
+            bulanGroup.style.display = 'none';
+            tahunGroup.style.display = 'none';
+            if (biayaGroup) biayaGroup.style.display = 'none';
+        }
+    }
+
+    // Initialize on page load (for old() values)
+    document.addEventListener('DOMContentLoaded', togglePreorder);
+</script>
+@endsection
+
+@section('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    let map, marker;
+    const defaultLat = {{ auth()->user()->latitude ?? -6.2088 }};
+    const defaultLng = {{ auth()->user()->longitude ?? 106.8456 }};
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const oldLat = document.getElementById('latitude').value;
+        const oldLng = document.getElementById('longitude').value;
+        
+        const startLat = oldLat ? parseFloat(oldLat) : defaultLat;
+        const startLng = oldLng ? parseFloat(oldLng) : defaultLng;
+        const zoomLevel = oldLat ? 16 : 10;
+
+        // Initialize map
+        map = L.map('map').setView([startLat, startLng], zoomLevel);
+
+        // Google Satellite Hybrid tile layer
+        L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '&copy; Google Maps Satelit'
+        }).addTo(map);
+
+        // Create marker
+        marker = L.marker([startLat, startLng], {
+            draggable: true
+        }).addTo(map);
+
+        // If coordinates were already filled, keep them. Otherwise, wait for user click/drag
+        if (oldLat && oldLng) {
+            // already filled
+        } else {
+            // set values on map marker load
+            updateCoordinates(startLat, startLng);
+        }
+
+        // Event: Marker dragged
+        marker.on('dragend', function(e) {
+            const position = marker.getLatLng();
+            updateCoordinates(position.lat, position.lng);
+        });
+
+        // Event: Map clicked
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+            marker.setLatLng([lat, lng]);
+            updateCoordinates(lat, lng);
+        });
+    });
+
+    function updateCoordinates(lat, lng) {
+        document.getElementById('latitude').value = lat.toFixed(8);
+        document.getElementById('longitude').value = lng.toFixed(8);
+    }
+
+    function updateMarkerAndMap(lat, lng, zoom = 16) {
+        marker.setLatLng([lat, lng]);
+        map.setView([lat, lng], zoom);
+        updateCoordinates(lat, lng);
+    }
+
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                updateMarkerAndMap(lat, lng, 16);
+            }, function(error) {
+                alert('Gagal mengambil lokasi GPS Anda. Pastikan izin lokasi diaktifkan di browser.');
+            });
+        } else {
+            alert('Browser Anda tidak mendukung layanan lokasi GPS.');
+        }
+    }
+
+    async function compressImageFile(file, maxDimension = 1200, quality = 0.7) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > maxDimension || height > maxDimension) {
+                        if (width > height) {
+                            height = Math.round((height * maxDimension) / width);
+                            width = maxDimension;
+                        } else {
+                            width = Math.round((width * maxDimension) / height);
+                            height = maxDimension;
+                        }
+                    }
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    canvas.toBlob((blob) => {
+                        const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", {
+                            type: "image/jpeg",
+                            lastModified: Date.now()
+                        });
+                        resolve(compressedFile);
+                    }, 'image/jpeg', quality);
+                };
+            };
+        });
+    }
+
+    async function handleFotoUpload(input) {
+        const previewContainer = document.getElementById('foto-preview');
+        previewContainer.innerHTML = '';
+        previewContainer.style.display = 'grid';
+
+        const files = input.files;
+        if (!files.length) return;
+
+        const dt = new DataTransfer();
+        
+        const loadingIndicator = document.createElement('div');
+        loadingIndicator.style.gridColumn = '1 / -1';
+        loadingIndicator.style.fontSize = '0.8rem';
+        loadingIndicator.style.color = '#10b981';
+        loadingIndicator.style.fontWeight = '600';
+        loadingIndicator.innerText = '⏳ Sedang mengompres gambar...';
+        previewContainer.appendChild(loadingIndicator);
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            if (file.type.startsWith('image/')) {
+                try {
+                    const compressedFile = await compressImageFile(file);
+                    dt.items.add(compressedFile);
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewItem = document.createElement('div');
+                        previewItem.style.position = 'relative';
+                        previewItem.style.borderRadius = '8px';
+                        previewItem.style.overflow = 'hidden';
+                        previewItem.style.border = '1px solid rgba(148,163,184,0.1)';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.width = '100%';
+                        img.style.height = '100px';
+                        img.style.objectFit = 'cover';
+                        
+                        const sizeBadge = document.createElement('div');
+                        sizeBadge.style.position = 'absolute';
+                        sizeBadge.style.bottom = '4px';
+                        sizeBadge.style.left = '4px';
+                        sizeBadge.style.background = 'rgba(15,23,42,0.85)';
+                        sizeBadge.style.color = '#6ee7b7';
+                        sizeBadge.style.fontSize = '9px';
+                        sizeBadge.style.padding = '2px 4px';
+                        sizeBadge.style.borderRadius = '4px';
+                        sizeBadge.style.fontWeight = '600';
+                        
+                        const originalKB = (file.size / 1024).toFixed(0);
+                        const compressedKB = (compressedFile.size / 1024).toFixed(0);
+                        sizeBadge.innerText = `${compressedKB} KB`;
+                        sizeBadge.title = `Original: ${originalKB} KB`;
+
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(sizeBadge);
+                        previewContainer.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(compressedFile);
+                } catch (e) {
+                    console.error(e);
+                    dt.items.add(file);
+                }
+            } else {
+                dt.items.add(file);
+            }
+        }
+
+        loadingIndicator.remove();
+        input.files = dt.files;
+    }
+
+    function handleVideoUpload(input) {
+        const previewContainer = document.getElementById('video-preview');
+        previewContainer.innerHTML = '';
+        previewContainer.style.display = 'grid';
+
+        const files = input.files;
+        if (!files.length) return;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            
+            const previewItem = document.createElement('div');
+            previewItem.style.position = 'relative';
+            previewItem.style.borderRadius = '8px';
+            previewItem.style.overflow = 'hidden';
+            previewItem.style.padding = '0.5rem';
+            previewItem.style.background = 'rgba(15,23,42,0.4)';
+            previewItem.style.border = '1px solid rgba(148,163,184,0.1)';
+            
+            const videoIcon = document.createElement('div');
+            videoIcon.innerText = '🎥 Video';
+            videoIcon.style.fontSize = '0.8rem';
+            videoIcon.style.fontWeight = '600';
+            videoIcon.style.color = '#3b82f6';
+            videoIcon.style.marginBottom = '4px';
+
+            const nameLabel = document.createElement('div');
+            nameLabel.innerText = file.name;
+            nameLabel.style.fontSize = '0.7rem';
+            nameLabel.style.color = '#94a3b8';
+            nameLabel.style.whiteSpace = 'nowrap';
+            nameLabel.style.overflow = 'hidden';
+            nameLabel.style.textOverflow = 'ellipsis';
+
+            const sizeLabel = document.createElement('div');
+            sizeLabel.innerText = (file.size / (1024 * 1024)).toFixed(1) + ' MB';
+            sizeLabel.style.fontSize = '0.7rem';
+            sizeLabel.style.color = '#64748b';
+
+            previewItem.appendChild(videoIcon);
+            previewItem.appendChild(nameLabel);
+            previewItem.appendChild(sizeLabel);
+            previewContainer.appendChild(previewItem);
         }
     }
 </script>

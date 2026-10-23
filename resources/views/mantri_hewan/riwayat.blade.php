@@ -272,8 +272,8 @@
                         <tr>
                             <td>
                                 <div class="table-sapi-info">
-                                    @if ($sapi->foto)
-                                        <img src="{{ asset('storage/' . $sapi->foto) }}" alt="{{ $sapi->jenis }}" class="table-sapi-thumb">
+                                    @if ($sapi->first_foto)
+                                        <img src="{{ asset('storage/' . $sapi->first_foto) }}" alt="{{ $sapi->jenis }}" class="table-sapi-thumb">
                                     @else
                                         <div class="table-sapi-thumb-placeholder">🐮</div>
                                     @endif

@@ -14,7 +14,8 @@ class KatalogController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Sapi::with('peternak')
+        $query = Sapi::tersedia()
+            ->with('peternak')
             ->orderByRaw("CASE WHEN status_kesehatan = 'sehat' THEN 0 ELSE 1 END")
             ->orderBy('created_at', 'desc');
 
@@ -48,16 +49,35 @@ class KatalogController extends Controller
             $query->where('status_kesehatan', 'sehat');
         }
 
+        // Filter berdasarkan tipe penjualan (order / pre_order)
+        if ($request->filled('tipe_penjualan')) {
+            $query->where('tipe_penjualan', $request->tipe_penjualan);
+        }
+
         $sapis = $query->get();
 
         // Daftar jenis unik untuk dropdown filter
-        $jenisList = Sapi::distinct()->pluck('jenis');
+        $jenisList = Sapi::tersedia()->distinct()->pluck('jenis');
+
+        // Ambil data iklan banner yang aktif dan belum expired
+        $iklans = Iklan::where('jenis', 'banner')
+            ->where('status', 'aktif')
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                      ->orWhere('expires_at', '>', now());
+            })
+            ->latest()
+            ->get();
+
+        if ($iklans->isEmpty()) {
+            $iklans = Iklan::where('jenis', 'banner')->latest()->get();
+        }
 
         // Statistik
-        $totalSapi = Sapi::count();
-        $totalTersertifikasi = Sapi::where('status_kesehatan', 'sehat')->count();
+        $totalSapi = Sapi::tersedia()->count();
+        $totalTersertifikasi = Sapi::tersedia()->where('status_kesehatan', 'sehat')->count();
 
-        return view('frontend.katalog', compact('sapis', 'jenisList', 'totalSapi', 'totalTersertifikasi'));
+        return view('frontend.katalog', compact('sapis', 'jenisList', 'totalSapi', 'totalTersertifikasi', 'iklans'));
     }
 
     /**
@@ -65,8 +85,44 @@ class KatalogController extends Controller
      */
     public function show($id)
     {
-        $sapi = Sapi::with(['peternak', 'verifier'])->findOrFail($id);
+        $query = Sapi::with(['peternak', 'verifier', 'transaksiAktif']);
+        
+        // Aparat kampung, peternak pemilik, atau publik bisa melihat detail (bahkan jika nonaktif/terjual)
+        if (!auth()->check() || (auth()->user()->role !== 'pengurus_kampung' && auth()->id() !== Sapi::withTrashed()->find($id)?->user_id)) {
+            $query->where(function ($q) {
+                $q->where('is_active', true)
+                  ->orWhereHas('transaksis', function ($tq) {
+                      $tq->where('status', '!=', 'dibatalkan');
+                  });
+            });
+        }
 
-        return view('katalog.show', compact('sapi'));
+        $sapi = $query->findOrFail($id);
+
+        $peternak = $sapi->peternak;
+        $peternakUlasans = collect();
+        $peternakAvgRating = 0;
+        $peternakTotalUlasan = 0;
+        $ratingCounts = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+
+        if ($peternak) {
+            $peternakUlasans = \App\Models\Ulasan::with(['pembeli', 'sapi'])
+                ->where('peternak_id', $peternak->id)
+                ->latest()
+                ->take(8)
+                ->get();
+            $peternakTotalUlasan = \App\Models\Ulasan::where('peternak_id', $peternak->id)->count();
+            $peternakAvgRating = $peternakTotalUlasan > 0 
+                ? round(\App\Models\Ulasan::where('peternak_id', $peternak->id)->avg('rating'), 1) 
+                : 0;
+
+            foreach ([5, 4, 3, 2, 1] as $star) {
+                $ratingCounts[$star] = \App\Models\Ulasan::where('peternak_id', $peternak->id)->where('rating', $star)->count();
+            }
+        }
+
+        $isTerjual = $sapi->is_terjual;
+
+        return view('katalog.show', compact('sapi', 'peternak', 'peternakUlasans', 'peternakAvgRating', 'peternakTotalUlasan', 'ratingCounts', 'isTerjual'));
     }
 }

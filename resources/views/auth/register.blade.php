@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -21,10 +22,11 @@
             color: #f1f5f9;
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             position: relative;
             overflow-x: hidden;
+            padding: 2rem 0;
         }
 
         /* Animated Background */
@@ -97,30 +99,75 @@
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 480px;
+            max-width: 960px;
             padding: 1.5rem;
         }
 
-        /* Back Link */
-        .back-link {
-            display: inline-flex;
+        /* Header Bar */
+        .register-header-bar {
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
+            gap: 1.25rem;
             margin-bottom: 1.5rem;
-            transition: color 0.2s ease;
         }
 
-        .back-link:hover {
+        .header-logo-box {
+            width: 100px;
+            height: 56px;
+            border: 2px solid rgba(148, 163, 184, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.5);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .header-logo-box img {
+            max-width: 80px;
+            max-height: 44px;
+            object-fit: contain;
+        }
+
+        .header-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
             color: #f1f5f9;
         }
 
-        .back-link svg {
-            width: 16px;
-            height: 16px;
+        /* Role Tabs */
+        .role-tabs {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .role-tab {
+            padding: 0.6rem 1.75rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid rgba(148, 163, 184, 0.15);
+            background: rgba(30, 41, 59, 0.5);
+            color: #94a3b8;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .role-tab:hover {
+            border-color: rgba(148, 163, 184, 0.3);
+            color: #cbd5e1;
+        }
+
+        .role-tab.active {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
         }
 
         /* Card */
@@ -154,84 +201,29 @@
             background: linear-gradient(90deg, #10b981, #3b82f6, #8b5cf6);
         }
 
-        /* Header */
-        .register-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .register-icon {
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(139,92,246,0.12));
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin: 0 auto 1.25rem;
-        }
-
-        .register-header h1 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.35rem;
-        }
-
-        .register-header p {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            line-height: 1.5;
-        }
-
         /* Form */
         .form-group {
-            margin-bottom: 1.15rem;
+            margin-bottom: 1.25rem;
         }
 
         .form-label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            color: #94a3b8;
+            color: #cbd5e1;
             margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #475569;
-            pointer-events: none;
-            transition: color 0.2s ease;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-icon svg {
-            width: 18px;
-            height: 18px;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.85rem;
+            padding: 0.85rem 1rem;
             background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.12);
             border-radius: 12px;
             color: #f1f5f9;
             font-size: 0.95rem;
             font-family: 'Inter', sans-serif;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             outline: none;
         }
 
@@ -242,23 +234,25 @@
         .form-input:focus {
             border-color: rgba(59, 130, 246, 0.4);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+            background: rgba(15, 23, 42, 0.8);
         }
 
-        .form-input:focus ~ .input-icon {
-            color: #93c5fd;
+        textarea.form-input {
+            resize: none;
+            min-height: 100px;
         }
 
         /* Select */
         .form-select {
             width: 100%;
-            padding: 0.85rem 1rem 0.85rem 2.85rem;
+            padding: 0.85rem 1rem;
             background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.12);
             border-radius: 12px;
             color: #f1f5f9;
             font-size: 0.95rem;
             font-family: 'Inter', sans-serif;
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             outline: none;
             appearance: none;
             cursor: pointer;
@@ -272,17 +266,34 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
         }
 
-        .form-select:focus ~ .input-icon {
-            color: #93c5fd;
-        }
-
         .form-select option {
             background: #1e293b;
             color: #f1f5f9;
             padding: 0.5rem;
         }
 
-        /* Password Toggle */
+        /* Grid layouts */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Password wrapper */
+        .input-password-wrapper {
+            position: relative;
+        }
+
+        .input-password-wrapper .form-input {
+            padding-right: 3rem;
+        }
+
         .password-toggle {
             position: absolute;
             right: 1rem;
@@ -305,6 +316,82 @@
 
         .password-toggle:hover {
             color: #93c5fd;
+        }
+
+        /* File Upload */
+        .file-upload-area {
+            position: relative;
+            border: 2px dashed rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.4);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .file-upload-area:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .file-upload-area.has-file {
+            border-color: rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .file-upload-area input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .file-upload-text {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .file-upload-name {
+            font-size: 0.75rem;
+            color: #10b981;
+            font-weight: 600;
+            margin-top: 0.25rem;
+            word-break: break-all;
+        }
+
+        .file-upload-preview {
+            max-width: 100%;
+            max-height: 140px;
+            border-radius: 8px;
+            object-fit: contain;
+            margin-top: 0.35rem;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: none;
+            z-index: 2;
+            position: relative;
+            pointer-events: none;
+        }
+
+        .file-upload-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+            text-align: center;
+            font-weight: 500;
         }
 
         /* Error */
@@ -346,19 +433,19 @@
         /* Submit */
         .btn-submit {
             width: 100%;
-            padding: 0.9rem;
+            padding: 0.95rem;
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 700;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
         }
 
         .btn-submit::before {
@@ -383,23 +470,87 @@
             transform: translateY(0);
         }
 
+        /* Peternak-only sections */
+        .peternak-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .peternak-section.visible {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section divider */
+        .section-divider {
+            border: none;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+            margin: 1.5rem 0;
+        }
+
+        /* Map */
+        #map {
+            height: 100%;
+            min-height: 180px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.15);
+            z-index: 1;
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.35rem;
+            display: block;
+        }
+
+        .btn-gps {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0.5rem;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-gps:hover {
+            background: #10b981;
+            color: white;
+        }
+
         /* Footer */
-        .register-footer {
+        .register-link {
             text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(148, 163, 184, 0.08);
+            font-size: 0.9rem;
             color: #94a3b8;
         }
 
-        .register-footer a {
-            color: #93c5fd;
+        .register-link a {
+            color: #60a5fa;
+            font-weight: 700;
             text-decoration: none;
-            font-weight: 600;
             transition: color 0.2s ease;
         }
 
-        .register-footer a:hover {
-            color: #bfdbfe;
+        .register-link a:hover {
+            color: #93c5fd;
+            text-decoration: underline;
         }
 
         .page-footer {
@@ -409,13 +560,28 @@
             color: #475569;
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 640px) {
             .register-card {
-                padding: 2rem 1.5rem;
+                padding: 2rem 1.25rem;
             }
 
-            .register-header h1 {
-                font-size: 1.3rem;
+            .form-row,
+            .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .role-tabs {
+                justify-content: center;
+            }
+
+            .register-header-bar {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.75rem;
+            }
+
+            .header-title {
+                font-size: 1.35rem;
             }
         }
     </style>
@@ -427,18 +593,27 @@
     <div class="grid-pattern"></div>
 
     <div class="register-container">
-        <a href="{{ route('login') }}" class="back-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            Kembali ke Login
-        </a>
-
-        <div class="register-card">
-            <div class="register-header">
-                <div class="register-icon">📝</div>
-                <h1>Daftar Akun Baru</h1>
-                <p>Buat akun untuk mengakses Sistem Penjualan Sapi</p>
+        {{-- Header Bar: Logo + Title --}}
+        <div class="register-header-bar">
+            <div class="header-logo-box">
+                <img src="{{ asset('images/sipeter_logo.png') }}" alt="SIPETER Logo">
             </div>
+            <h1 class="header-title">Registrasi</h1>
+        </div>
 
+        {{-- Role Tabs --}}
+        <div class="role-tabs">
+            <button type="button" class="role-tab" id="tab-peternak" data-role="peternak" onclick="switchRole('peternak')">
+                🐄 Peternak
+            </button>
+            <button type="button" class="role-tab" id="tab-pembeli" data-role="pembeli" onclick="switchRole('pembeli')">
+                🛒 Pembeli
+            </button>
+        </div>
+
+        {{-- Registration Card --}}
+        <div class="register-card">
+            {{-- Error Messages --}}
             @if ($errors->any())
                 <div class="form-error">
                     @foreach ($errors->all() as $error)
@@ -450,12 +625,14 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('register.process') }}" id="register-form">
+            <form method="POST" action="{{ route('register.process') }}" id="register-form" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="role" id="role-input" value="{{ old('role', 'peternak') }}">
 
-                <div class="form-group">
-                    <label class="form-label" for="name">Nama Lengkap</label>
-                    <div class="input-wrapper">
+                {{-- Row 1: Nama Pengguna + Nomer Induk --}}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Nama Pengguna</label>
                         <input
                             type="text"
                             id="name"
@@ -466,15 +643,39 @@
                             required
                             autofocus
                         >
-                        <span class="input-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="nik">Nomer Induk (NIK)</label>
+                        <input
+                            type="text"
+                            id="nik"
+                            name="nik"
+                            class="form-input"
+                            placeholder="Masukkan 16 digit NIK"
+                            value="{{ old('nik') }}"
+                            maxlength="20"
+                            required
+                        >
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="email">Email</label>
-                    <div class="input-wrapper">
+                {{-- Row 2: No Telephone + Email --}}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="no_telepon">No Telephone</label>
+                        <input
+                            type="tel"
+                            id="no_telepon"
+                            name="no_telepon"
+                            class="form-input"
+                            placeholder="Contoh: 08123456789"
+                            value="{{ old('no_telepon') }}"
+                            maxlength="20"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email</label>
                         <input
                             type="email"
                             id="email"
@@ -484,67 +685,132 @@
                             value="{{ old('email') }}"
                             required
                         >
-                        <span class="input-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        </span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="role">Jenis Akun</label>
-                    <div class="input-wrapper">
-                        <select id="role" name="role" class="form-select" required>
-                            <option value="" disabled {{ old('role') ? '' : 'selected' }}>— Pilih jenis akun —</option>
-                            <option value="peternak" {{ old('role') === 'peternak' ? 'selected' : '' }}>🐄 Peternak</option>
-                            <option value="pembeli" {{ old('role') === 'pembeli' ? 'selected' : '' }}>🛒 Pembeli</option>
-                            <option value="mantri_hewan" {{ old('role') === 'mantri_hewan' ? 'selected' : '' }}>🩺 Mantri Hewan</option>
-                            <option value="pengurus_kampung" {{ old('role') === 'pengurus_kampung' ? 'selected' : '' }}>🏘️ Pengurus Kampung</option>
+                <hr class="section-divider">
+
+                {{-- Alamat & Map side by side (For Peternak & Pembeli) --}}
+                <div class="form-row" style="margin-bottom: 1.25rem; align-items: stretch;">
+                    <div style="display: flex; flex-direction: column;">
+                        <label class="form-label" for="alamat">Alamat</label>
+                        <textarea
+                            id="alamat"
+                            name="alamat"
+                            class="form-input"
+                            placeholder="Contoh: Kampung Suka Maju, Kecamatan Abung Selatan, Kabupaten Lampung Utara, Lampung"
+                            style="flex: 1; min-height: 180px;"
+                        >{{ old('alamat') }}</textarea>
+                        <span class="form-hint">💡 Urutan: Kampung/Desa, Kecamatan, Kabupaten, Provinsi — peta otomatis mencari lokasi.</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <label class="form-label" style="margin-bottom: 0;">Detail Lokasi Map</label>
+                            <button type="button" class="btn-gps" onclick="getCurrentLocation()" style="margin-bottom: 0;">
+                                🛰️ GPS Saya
+                            </button>
+                        </div>
+                        <div id="map" style="flex: 1; min-height: 180px;"></div>
+                        <span class="form-hint" id="map-status">Geser marker atau klik peta untuk menentukan titik tepat.</span>
+                        <input type="hidden" id="latitude" name="latitude" value="{{ old('latitude') }}">
+                        <input type="hidden" id="longitude" name="longitude" value="{{ old('longitude') }}">
+                    </div>
+                </div>
+
+                {{-- Nomor Rekening & Jenis Bank (Peternak Only) --}}
+                <div class="form-row" id="rekening-bank-section" style="margin-bottom: 1.25rem;">
+                    <div>
+                        <label class="form-label" for="nomor_rekening">Nomor Rekening</label>
+                        <input
+                            type="text"
+                            id="nomor_rekening"
+                            name="nomor_rekening"
+                            class="form-input"
+                            placeholder="Masukkan nomor rekening"
+                            value="{{ old('nomor_rekening') }}"
+                        >
+                    </div>
+                    <div>
+                        <label class="form-label" for="jenis_bank">Jenis Bank</label>
+                        <select id="jenis_bank" name="jenis_bank" class="form-select">
+                            <option value="" disabled {{ old('jenis_bank') ? '' : 'selected' }}>— Pilih Bank —</option>
+                            <option value="BRI" {{ old('jenis_bank') === 'BRI' ? 'selected' : '' }}>BRI</option>
+                            <option value="BNI" {{ old('jenis_bank') === 'BNI' ? 'selected' : '' }}>BNI</option>
+                            <option value="BCA" {{ old('jenis_bank') === 'BCA' ? 'selected' : '' }}>BCA</option>
+                            <option value="Mandiri" {{ old('jenis_bank') === 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                            <option value="BSI" {{ old('jenis_bank') === 'BSI' ? 'selected' : '' }}>BSI</option>
+                            <option value="BTN" {{ old('jenis_bank') === 'BTN' ? 'selected' : '' }}>BTN</option>
+                            <option value="CIMB Niaga" {{ old('jenis_bank') === 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga</option>
+                            <option value="Danamon" {{ old('jenis_bank') === 'Danamon' ? 'selected' : '' }}>Danamon</option>
+                            <option value="Bank Jago" {{ old('jenis_bank') === 'Bank Jago' ? 'selected' : '' }}>Bank Jago</option>
+                            <option value="Lainnya" {{ old('jenis_bank') === 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
-                        <span class="input-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                        </span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <div class="input-wrapper">
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            class="form-input"
-                            placeholder="Minimal 6 karakter"
-                            required
-                        >
-                        <span class="input-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                        </span>
-                        <button type="button" class="password-toggle" onclick="togglePassword('password', this)" aria-label="Toggle password visibility">
-                            <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                            <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-                        </button>
+                {{-- Foto KTP & Foto Selfie (For Peternak & Pembeli) --}}
+                <div class="form-row" style="margin-bottom: 1.25rem;">
+                    <div>
+                        <label class="form-label">Foto KTP</label>
+                        <div class="file-upload-area" id="ktp-upload-area">
+                            <input type="file" name="foto_ktp" id="foto_ktp" accept="image/jpeg,image/png,image/jpg" onchange="handleFileSelect(this, 'ktp-upload-area', 'ktp-file-name', 'ktp-preview')">
+                            <div class="file-upload-icon">📄</div>
+                            <div class="file-upload-text">Klik untuk pilih file</div>
+                            <img id="ktp-preview" class="file-upload-preview" alt="Preview Foto KTP">
+                            <div class="file-upload-name" id="ktp-file-name"></div>
+                        </div>
+                        <div class="file-upload-label">Foto KTP</div>
+                    </div>
+                    <div>
+                        <label class="form-label">Foto Selfie dengan KTP</label>
+                        <div class="file-upload-area" id="selfie-upload-area">
+                            <input type="file" name="foto_selfie_ktp" id="foto_selfie_ktp" accept="image/jpeg,image/png,image/jpg" onchange="handleFileSelect(this, 'selfie-upload-area', 'selfie-file-name', 'selfie-preview')">
+                            <div class="file-upload-icon">🤳</div>
+                            <div class="file-upload-text">Klik untuk pilih file</div>
+                            <img id="selfie-preview" class="file-upload-preview" alt="Preview Foto Selfie dengan KTP">
+                            <div class="file-upload-name" id="selfie-file-name"></div>
+                        </div>
+                        <div class="file-upload-label">Foto Selfie dengan KTP</div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
-                    <div class="input-wrapper">
-                        <input
-                            type="password"
-                            id="password_confirmation"
-                            name="password_confirmation"
-                            class="form-input"
-                            placeholder="Ulangi password"
-                            required
-                        >
-                        <span class="input-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        </span>
-                        <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation', this)" aria-label="Toggle password visibility">
-                            <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                            <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-                        </button>
+                <hr class="section-divider">
+
+                {{-- Row: Password + Verifikasi Password --}}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-input"
+                                placeholder="Minimal 6 karakter"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password', this)" aria-label="Toggle password visibility">
+                                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password_confirmation">Verifikasi Password</label>
+                        <div class="input-password-wrapper">
+                            <input
+                                type="password"
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                class="form-input"
+                                placeholder="Ulangi password"
+                                required
+                            >
+                            <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation', this)" aria-label="Toggle password visibility">
+                                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -553,8 +819,9 @@
                 </button>
             </form>
 
-            <div class="register-footer">
-                Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a>
+            {{-- Login Link --}}
+            <div class="register-link">
+                Sudah punya akun? <a href="{{ route('login') }}">Login</a>
             </div>
         </div>
 
@@ -563,7 +830,38 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script>
+        // ══════ Role Tabs ══════
+        const roleInput = document.getElementById('role-input');
+        const rekeningBankSection = document.getElementById('rekening-bank-section');
+        const tabPeternak = document.getElementById('tab-peternak');
+        const tabPembeli = document.getElementById('tab-pembeli');
+
+        function switchRole(role) {
+            roleInput.value = role;
+
+            // Update tab visuals
+            tabPeternak.classList.toggle('active', role === 'peternak');
+            tabPembeli.classList.toggle('active', role === 'pembeli');
+
+            // Show/hide bank account fields (Peternak only)
+            if (role === 'peternak') {
+                if (rekeningBankSection) rekeningBankSection.style.display = 'grid';
+            } else {
+                if (rekeningBankSection) rekeningBankSection.style.display = 'none';
+            }
+
+            initMap();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const initialRole = roleInput.value || 'peternak';
+            switchRole(initialRole);
+        });
+
+        // ══════ Password Toggle ══════
         function togglePassword(inputId, btn) {
             const input = document.getElementById(inputId);
             const eyeOpen = btn.querySelector('.eye-open');
@@ -577,6 +875,174 @@
                 input.type = 'password';
                 eyeOpen.style.display = 'block';
                 eyeClosed.style.display = 'none';
+            }
+        }
+
+        // ══════ File Upload Handler with Preview ══════
+        function handleFileSelect(input, areaId, nameId, previewId) {
+            const area = document.getElementById(areaId);
+            const nameEl = document.getElementById(nameId);
+            const previewEl = document.getElementById(previewId);
+            const iconEl = area ? area.querySelector('.file-upload-icon') : null;
+            const textEl = area ? area.querySelector('.file-upload-text') : null;
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                area.classList.add('has-file');
+                if (nameEl) nameEl.textContent = file.name;
+
+                if (previewEl && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewEl.src = e.target.result;
+                        previewEl.style.display = 'block';
+                        if (iconEl) iconEl.style.display = 'none';
+                        if (textEl) textEl.textContent = 'Klik untuk ganti foto';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                area.classList.remove('has-file');
+                if (nameEl) nameEl.textContent = '';
+                if (previewEl) {
+                    previewEl.src = '';
+                    previewEl.style.display = 'none';
+                }
+                if (iconEl) iconEl.style.display = 'block';
+                if (textEl) textEl.textContent = 'Klik untuk pilih file';
+            }
+        }
+
+        // ══════ Map (Leaflet) ══════
+        let map, marker;
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+        const alamatInput = document.getElementById('alamat');
+        let geocodeTimer = null;
+
+        function initMap() {
+            if (map) {
+                setTimeout(() => { map.invalidateSize(); }, 200);
+                return;
+            }
+
+            let defaultLat = -6.2088;
+            let defaultLng = 106.8456;
+
+            if (latInput.value && lngInput.value) {
+                defaultLat = parseFloat(latInput.value);
+                defaultLng = parseFloat(lngInput.value);
+            }
+
+            map = L.map('map').setView([defaultLat, defaultLng], 13);
+
+            L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+                maxZoom: 20,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+                attribution: '&copy; Google Maps Satelit'
+            }).addTo(map);
+
+            marker = L.marker([defaultLat, defaultLng], {
+                draggable: true
+            }).addTo(map);
+
+            marker.on('dragend', function(e) {
+                const position = marker.getLatLng();
+                latInput.value = position.lat.toFixed(8);
+                lngInput.value = position.lng.toFixed(8);
+            });
+
+            map.on('click', function(e) {
+                const lat = e.latlng.lat;
+                const lng = e.latlng.lng;
+                marker.setLatLng([lat, lng]);
+                latInput.value = lat.toFixed(8);
+                lngInput.value = lng.toFixed(8);
+            });
+
+            if (!latInput.value || !lngInput.value) {
+                latInput.value = defaultLat.toFixed(8);
+                lngInput.value = defaultLng.toFixed(8);
+            }
+
+            // Attach geocoding listener to alamat input
+            if (alamatInput) {
+                alamatInput.addEventListener('input', function() {
+                    clearTimeout(geocodeTimer);
+                    const query = this.value.trim();
+                    if (query.length < 5) return; // Minimum 5 chars to search
+
+                    geocodeTimer = setTimeout(() => {
+                        geocodeAddress(query);
+                    }, 800); // Wait 800ms after user stops typing
+                });
+            }
+        }
+
+        // ══════ Geocode Address (Nominatim) ══════
+        function geocodeAddress(query) {
+            if (!map || !marker) return;
+
+            const mapStatus = document.getElementById('map-status');
+            if (mapStatus) {
+                mapStatus.textContent = '🔍 Mencari lokasi...';
+                mapStatus.style.color = '#f59e0b';
+            }
+
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1&countrycodes=id`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const lat = parseFloat(data[0].lat);
+                        const lng = parseFloat(data[0].lon);
+
+                        marker.setLatLng([lat, lng]);
+                        map.setView([lat, lng], 16);
+
+                        latInput.value = lat.toFixed(8);
+                        lngInput.value = lng.toFixed(8);
+
+                        if (mapStatus) {
+                            mapStatus.textContent = '✅ Lokasi ditemukan — geser marker untuk titik tepat';
+                            mapStatus.style.color = '#10b981';
+                        }
+                    } else {
+                        if (mapStatus) {
+                            mapStatus.textContent = '⚠️ Lokasi tidak ditemukan, coba lebih spesifik';
+                            mapStatus.style.color = '#f59e0b';
+                        }
+                    }
+                })
+                .catch(() => {
+                    if (mapStatus) {
+                        mapStatus.textContent = '❌ Gagal mencari lokasi';
+                        mapStatus.style.color = '#ef4444';
+                    }
+                });
+        }
+
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+
+                    marker.setLatLng([lat, lng]);
+                    map.setView([lat, lng], 16);
+
+                    latInput.value = lat.toFixed(8);
+                    lngInput.value = lng.toFixed(8);
+
+                    const mapStatus = document.getElementById('map-status');
+                    if (mapStatus) {
+                        mapStatus.textContent = '✅ Lokasi GPS ditemukan — geser marker untuk titik tepat';
+                        mapStatus.style.color = '#10b981';
+                    }
+                }, function(error) {
+                    alert('Gagal mengambil lokasi GPS Anda. Pastikan izin lokasi diaktifkan di browser.');
+                });
+            } else {
+                alert('Browser Anda tidak mendukung layanan lokasi GPS.');
             }
         }
     </script>

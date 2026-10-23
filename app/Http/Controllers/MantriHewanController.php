@@ -68,12 +68,20 @@ class MantriHewanController extends Controller
         $request->validate([
             'status_kesehatan' => 'required|in:sehat,tidak_sehat',
             'catatan_kesehatan' => 'required|string|max:2000',
+            'dokumen_pemeriksaan' => 'nullable|file|mimes:pdf|max:10240',
         ], [
             'status_kesehatan.required' => 'Pilih status kesehatan.',
             'status_kesehatan.in' => 'Status kesehatan tidak valid.',
             'catatan_kesehatan.required' => 'Catatan kesehatan wajib diisi.',
             'catatan_kesehatan.max' => 'Catatan kesehatan maksimal 2000 karakter.',
+            'dokumen_pemeriksaan.mimes' => 'Dokumen pemeriksaan harus berformat PDF.',
+            'dokumen_pemeriksaan.max' => 'Ukuran file dokumen PDF maksimal 10MB.',
         ]);
+
+        if ($request->hasFile('dokumen_pemeriksaan')) {
+            $path = $request->file('dokumen_pemeriksaan')->store('sapi/dokumen', 'public');
+            $sapi->dokumen_pemeriksaan = $path;
+        }
 
         $sapi->status_kesehatan = $request->status_kesehatan;
         $sapi->catatan_kesehatan = $request->catatan_kesehatan;

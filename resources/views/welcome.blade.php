@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -368,7 +369,7 @@
 
         <div class="cards-grid">
             <a href="{{ url('/login/peternak') }}" class="role-card card-peternak fade-up" id="card-peternak">
-                <div class="card-icon">🐄</div>
+                <div class="card-icon"><i class="bi bi-piggy-bank"></i></div>
                 <div class="card-title">Peternak</div>
                 <div class="card-desc">Kelola data sapi, pantau kesehatan ternak, dan kelola penjualan</div>
                 <div class="card-arrow">
@@ -378,7 +379,7 @@
             </a>
 
             <a href="{{ url('/login/pembeli') }}" class="role-card card-pembeli fade-up" id="card-pembeli">
-                <div class="card-icon">🛒</div>
+                <div class="card-icon"><i class="bi bi-cart3"></i></div>
                 <div class="card-title">Pembeli</div>
                 <div class="card-desc">Cari dan beli sapi, lihat katalog, dan kelola pembelian Anda</div>
                 <div class="card-arrow">
@@ -388,7 +389,7 @@
             </a>
 
             <a href="{{ url('/login/mantri-hewan') }}" class="role-card card-mantri fade-up" id="card-mantri">
-                <div class="card-icon">🩺</div>
+                <div class="card-icon"><i class="bi bi-heart-pulse"></i></div>
                 <div class="card-title">Mantri Hewan</div>
                 <div class="card-desc">Periksa kesehatan ternak, buat surat keterangan sehat, dan catat riwayat medis</div>
                 <div class="card-arrow">
@@ -398,7 +399,7 @@
             </a>
 
             <a href="{{ url('/login/pengurus-kampung') }}" class="role-card card-pengurus fade-up" id="card-pengurus">
-                <div class="card-icon">🏘️</div>
+                <div class="card-icon"><i class="bi bi-houses"></i></div>
                 <div class="card-title">Pengurus Kampung</div>
                 <div class="card-desc">Verifikasi data peternak, kelola administrasi, dan buat laporan wilayah</div>
                 <div class="card-arrow">

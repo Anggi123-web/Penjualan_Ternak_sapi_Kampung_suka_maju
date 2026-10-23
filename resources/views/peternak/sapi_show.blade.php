@@ -1,7 +1,25 @@
 @extends('layouts.peternak', ['title' => 'Detail Sapi — Sistem Penjualan Sapi'])
 
 @section('page-styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <style>
+    #map {
+        height: 250px;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        z-index: 1;
+    }
+    .lokasi-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+        align-items: start;
+    }
+    @media (max-width: 640px) {
+        .lokasi-grid {
+            grid-template-columns: 1fr;
+        }
+    }
     .back-link {
         display: inline-flex;
         align-items: center;
@@ -86,6 +104,51 @@
         max-height: 400px;
         border-radius: 10px;
         background: #000;
+    }
+
+    .foto-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.75rem;
+    }
+    
+    .foto-grid-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .foto-grid-item img {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        object-fit: cover !important;
+        transition: transform 0.2s ease;
+    }
+    
+    .foto-grid-item img:hover {
+        transform: scale(1.05);
+    }
+    
+    .video-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .video-list-item {
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #000;
+    }
+    
+    .video-list-item video {
+        width: 100% !important;
+        max-height: 250px !important;
+        display: block;
     }
 
     .media-placeholder {
@@ -293,8 +356,16 @@
     <div class="media-card">
         <div class="media-card-header">📷 Foto</div>
         <div class="media-body">
-            @if ($sapi->foto)
-                <img src="{{ asset('storage/' . $sapi->foto) }}" alt="Foto {{ $sapi->jenis }}">
+            @if (is_array($sapi->foto) && count($sapi->foto) > 0)
+                <div class="foto-grid">
+                    @foreach ($sapi->foto as $f)
+                        <div class="foto-grid-item">
+                            <a href="{{ asset('storage/' . $f) }}" target="_blank">
+                                <img src="{{ asset('storage/' . $f) }}" alt="Foto Sapi">
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
             @else
                 <div class="media-placeholder">
                     <div class="media-placeholder-icon">📷</div>
@@ -307,8 +378,14 @@
     <div class="media-card">
         <div class="media-card-header">🎥 Video</div>
         <div class="media-body">
-            @if ($sapi->video)
-                <video src="{{ asset('storage/' . $sapi->video) }}" controls></video>
+            @if (is_array($sapi->video) && count($sapi->video) > 0)
+                <div class="video-list">
+                    @foreach ($sapi->video as $v)
+                        <div class="video-list-item">
+                            <video src="{{ asset('storage/' . $v) }}" controls></video>
+                        </div>
+                    @endforeach
+                </div>
             @else
                 <div class="media-placeholder">
                     <div class="media-placeholder-icon">🎥</div>
@@ -339,6 +416,28 @@
             <span class="info-label">Harga</span>
             <span class="info-value price">{{ $sapi->harga_formatted }}</span>
         </div>
+        <div class="info-row">
+            <span class="info-label">Tipe Penjualan</span>
+            <span class="info-value">
+                @if($sapi->is_preorder)
+                    <span style="background: rgba(245,158,11,0.15); color: #fbbf24; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">📋 Pre-Order</span>
+                @else
+                    <span style="background: rgba(16,185,129,0.15); color: #6ee7b7; padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">🛒 Order</span>
+                @endif
+            </span>
+        </div>
+        @if($sapi->is_preorder && $sapi->preorder_bulan)
+        <div class="info-row">
+            <span class="info-label">Jadwal Pre-Order</span>
+            <span class="info-value">{{ $sapi->preorder_label }} {{ $sapi->preorder_tahun }}</span>
+        </div>
+        @endif
+        @if($sapi->is_preorder)
+        <div class="info-row">
+            <span class="info-label">Biaya Perawatan Harian</span>
+            <span class="info-value" style="color: #fbbf24; font-weight: 700;">{{ $sapi->biaya_perawatan_harian_formatted }} / hari</span>
+        </div>
+        @endif
     </div>
 
     <div class="info-card">
@@ -383,6 +482,36 @@
             </div>
         @endif
     </div>
+
+    @if ($sapi->latitude && $sapi->longitude)
+        <div class="info-card" style="grid-column: 1 / -1; margin-top: 1.5rem;">
+            <h3>📍 Lokasi Sapi / Kandang</h3>
+            <div class="lokasi-grid">
+                <div>
+                    <div id="map"></div>
+                </div>
+                <div>
+                    <div class="info-row">
+                        <span class="info-label">Latitude</span>
+                        <span class="info-value">{{ $sapi->latitude }}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Longitude</span>
+                        <span class="info-value">{{ $sapi->longitude }}</span>
+                    </div>
+                    <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+                        <span class="info-label">Keterangan Lokasi</span>
+                        <span class="info-value" style="text-align: left; font-weight: 500; color: #cbd5e1; margin-top: 0.25rem;">{{ $sapi->lokasi ?? '-' }}</span>
+                    </div>
+                    <div style="margin-top: 1.25rem;">
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ $sapi->latitude }},{{ $sapi->longitude }}" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 10px; color: #60a5fa; font-weight: 600; text-decoration: none; font-size: 0.85rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(59,130,246,0.2)'" onmouseout="this.style.background='rgba(59,130,246,0.1)'">
+                            🗺️ Buka di Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
 
 {{-- Actions --}}
@@ -398,4 +527,26 @@
         </button>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+@if ($sapi->latitude && $sapi->longitude)
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const lat = {{ $sapi->latitude }};
+        const lng = {{ $sapi->longitude }};
+        
+        const map = L.map('map').setView([lat, lng], 15);
+
+        L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '&copy; Google Maps Satelit'
+        }).addTo(map);
+
+        L.marker([lat, lng]).addTo(map);
+    });
+</script>
+@endif
 @endsection

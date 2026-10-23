@@ -25,13 +25,17 @@
             <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
                 <h4 style="font-family: var(--font-montserrat); font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--black-text);">Menu Akun</h4>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <a href="{{ route('pesanan.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 10px; text-decoration: none; color: var(--black-text); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.05)'; this.style.color='var(--green-brand)';" onmouseout="this.style.background='#f8fafc'; this.style.color='var(--black-text)';">
+                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-box-seam"></i> Monitoring Pemesanan</span>
+                        <span><i class="bi bi-arrow-right"></i></span>
+                    </a>
                     <a href="{{ route('pembeli.keranjang.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 10px; text-decoration: none; color: var(--black-text); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.05)'; this.style.color='var(--green-brand)';" onmouseout="this.style.background='#f8fafc'; this.style.color='var(--black-text)';">
-                        <span style="display: flex; align-items: center; gap: 0.75rem;">🛒 Keranjang Belanja</span>
-                        <span>➔</span>
+                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-cart3"></i> Keranjang Belanja</span>
+                        <span><i class="bi bi-arrow-right"></i></span>
                     </a>
                     <a href="{{ route('katalog.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 10px; text-decoration: none; color: var(--black-text); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.05)'; this.style.color='var(--green-brand)';" onmouseout="this.style.background='#f8fafc'; this.style.color='var(--black-text)';">
-                        <span style="display: flex; align-items: center; gap: 0.75rem;">🔍 Cari Sapi Baru</span>
-                        <span>➔</span>
+                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-search"></i> Cari Sapi Baru</span>
+                        <span><i class="bi bi-arrow-right"></i></span>
                     </a>
                 </div>
             </div>
@@ -49,7 +53,7 @@
                         </div>
                     </div>
                     <div style="width: 50px; height: 50px; background: rgba(56, 189, 248, 0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                        🐮
+                        <i class="bi bi-piggy-bank"></i>
                     </div>
                 </div>
                 <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.5; margin: 0;">
@@ -64,7 +68,7 @@
 
             <div style="background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 1.5rem;">
                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="font-size: 1.5rem;">💡</div>
+                    <div style="font-size: 1.5rem;"><i class="bi bi-lightbulb"></i></div>
                     <div>
                         <h4 style="font-family: var(--font-montserrat); font-size: 1.05rem; font-weight: 700; color: var(--black-text); margin: 0 0 0.5rem 0;">Informasi Pembelian</h4>
                         <p style="color: var(--medium-gray); font-size: 0.9rem; margin: 0; line-height: 1.6;">

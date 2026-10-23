@@ -22,7 +22,7 @@
     <div class="filter-card" style="margin-bottom: 2rem;">
         @if($keranjangs->isEmpty())
             <div class="empty-catalog" style="padding: 4rem 2rem; border: none; box-shadow: none;">
-                <div class="empty-icon">🛒</div>
+                <div class="empty-icon"><i class="bi bi-cart-x"></i></div>
                 <h3 class="empty-title">Keranjang Masih Kosong</h3>
                 <p class="empty-desc" style="margin-bottom: 2rem;">Anda belum menambahkan sapi apapun ke dalam keranjang.</p>
                 <a href="{{ route('katalog.index') }}" class="btn-login-p" style="margin: 0 auto; width: 200px;">
@@ -37,10 +37,10 @@
                     <div style="display: flex; gap: 1.5rem; padding: 1.5rem; background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
                         <!-- Foto -->
                         <div style="width: 140px; height: 140px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #f1f5f9;">
-                            @if($item->sapi->foto)
-                                <img src="{{ asset('storage/' . $item->sapi->foto) }}" alt="{{ $item->sapi->jenis }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            @if($item->sapi->first_foto)
+                                <img src="{{ asset('storage/' . $item->sapi->first_foto) }}" alt="{{ $item->sapi->jenis }}" style="width: 100%; height: 100%; object-fit: cover;">
                             @else
-                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">🐮</div>
+                                <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #a5d6a7;"><i class="bi bi-image"></i></div>
                             @endif
                         </div>
                         
@@ -77,9 +77,9 @@
                         </div>
                     </div>
                     <div>
-                        <button type="button" onclick="alert('Fitur Pembelian Langsung sedang dalam tahap pengembangan.')" class="btn-login-p" style="width: auto; padding: 0 2rem; height: 50px; font-size: 1.1rem;">
-                            Lanjut Pembayaran ➔
-                        </button>
+                        <a href="{{ route('pembayaran.show', $keranjangs->first()->sapi_id) }}" class="btn-login-p" style="width: auto; padding: 0 2rem; height: 50px; font-size: 1.1rem; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                            Lanjut Pembayaran <i class="bi bi-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>

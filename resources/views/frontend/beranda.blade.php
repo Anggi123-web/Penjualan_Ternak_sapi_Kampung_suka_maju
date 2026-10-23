@@ -3,90 +3,239 @@
 @section('title', 'Beranda — Sistem Penjualan Sapi')
 
 @section('content')
-    {{-- ═══ Hero Carousel Section ═══ --}}
-    <section class="hero-carousel-section" id="home">
-        <div class="carousel-wrapper">
-            <div class="carousel-container">
-                <div class="carousel-track" id="carouselTrack">
-                    @forelse($iklans as $iklan)
-                        <div class="carousel-slide">
-                            <a href="{{ route('katalog.index') }}"><img src="{{ asset('storage/' . $iklan->gambar) }}" alt="{{ $iklan->judul ?? 'Iklan Carousel' }}"></a>
-                        </div>
-                    @empty
-                        <!-- Default fallback banners if no ads are uploaded -->
-                        <div class="carousel-slide">
-                            <a href="{{ route('katalog.index') }}"><img src="{{ asset('images/caraousel 1.png') }}" alt="Iklan 1"></a>
-                        </div>
-                        <div class="carousel-slide">
-                            <a href="{{ route('katalog.index') }}"><img src="{{ asset('images/caraousel 2.png') }}" alt="Iklan 2"></a>
-                        </div>
-                    @endforelse
+    {{-- ═══ Hero Static Section ═══ --}}
+    <section class="hero-static-section" id="home">
+        <div class="hero-static-inner">
+            <div class="hero-static-image">
+                <img src="{{ asset('storage/iklan/foto/sapihero.png') }}" alt="Sapi Hero">
+            </div>
+            <div class="hero-static-content">
+                <h1 class="hero-static-title">
+                    Dari Peternak<br>
+                    Untuk Kebutuhan<br>
+                    <span>Terbaik</span> Anda.
+                </h1>
+                <p class="hero-static-subtitle">
+                    Nikmati kemudahan bertransaksi sapi pilihan yang dirawat dengan sepenuh hati oleh peternak lokal terbaik.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    {{-- ═══ Marketplace Trust & Value Proposition Bar ═══ --}}
+    <section class="trust-bar-section" style="padding: 1.5rem 2rem 0; background-color: #fafbfc;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div class="trust-bar-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; background: #ffffff; padding: 1.25rem 1.75rem; border-radius: 16px; border: 1px solid #eef2f6; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+                <div style="display: flex; align-items: center; gap: 0.85rem;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16, 185, 129, 0.1); color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">100% Tersertifikasi</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Uji kesehatan Mantri Hewan</p>
+                    </div>
                 </div>
-                <!-- Controls -->
-                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
-                <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
-                <div class="carousel-dots">
-                    @if($iklans->count() > 0)
-                        @foreach($iklans as $index => $iklan)
-                            <span class="dot {{ $index === 0 ? 'active' : '' }}" onclick="currentSlide({{ $index }})"></span>
-                        @endforeach
-                    @else
-                        <span class="dot active" onclick="currentSlide(0)"></span>
-                        <span class="dot" onclick="currentSlide(1)"></span>
-                    @endif
+
+                <div style="display: flex; align-items: center; gap: 0.85rem;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(59, 130, 246, 0.1); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                        <i class="bi bi-person-check-fill"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">Langsung dari Peternak</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Tanpa calo, harga kandang</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 0.85rem;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(245, 158, 11, 0.1); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">Garansi Pengantaran</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Sapi selamat sampai alamat</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 0.85rem;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(139, 92, 246, 0.1); color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                        <i class="bi bi-credit-card-2-front-fill"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">Transaksi Aman & DP</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Tersedia skema Pre-Order DP</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    {{-- ═══ Sapi Baru Section ═══ --}}
-    @if($sapis->count() > 0)
-    <section class="section" style="padding: 4rem 2rem; background-color: #f8fafc;">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h2 style="font-size: 2rem; color: #1e293b; margin-bottom: 0.5rem;">Sapi Baru di Katalog</h2>
-                <p style="color: #64748b; font-size: 1.1rem;">Lihat sapi-sapi terbaru yang diunggah dalam 1 minggu terakhir.</p>
+
+    {{-- ═══ Quick Category Bar ═══ --}}
+    <section class="quick-categories-section" style="padding: 2rem 2rem 0.5rem; background-color: #fafbfc;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <style>
+                .category-pill-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.6rem;
+                    padding: 0.65rem 1.15rem;
+                    background: #ffffff;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 999px;
+                    text-decoration: none;
+                    color: #1e293b;
+                    font-weight: 600;
+                    font-size: 0.88rem;
+                    white-space: nowrap;
+                    transition: all 0.2s ease;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+                }
+                .category-pill-item:hover {
+                    transform: translateY(-2px);
+                    border-color: #10b981;
+                    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.12);
+                    color: #059669;
+                }
+                .category-pill-item .category-icon {
+                    font-size: 1.2rem;
+                    line-height: 1;
+                }
+                @media (max-width: 992px) {
+                    .trust-bar-grid {
+                        grid-template-columns: repeat(2, 1fr) !important;
+                    }
+                }
+                @media (max-width: 576px) {
+                    .trust-bar-grid {
+                        grid-template-columns: 1fr !important;
+                    }
+                }
+            </style>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div>
+                    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: #1e293b;">Pilihan Kategori Ternak</h3>
+                    <p style="margin: 0.2rem 0 0; font-size: 0.85rem; color: #64748b;">Jelajahi sapi pilihan berdasarkan jenis ras dan tipe pemesanan</p>
+                </div>
+                <a href="{{ route('katalog.index') }}" style="font-size: 0.82rem; font-weight: 700; color: #059669; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">
+                    Lihat Semua &rarr;
+                </a>
             </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+
+            <div style="display: flex; gap: 0.75rem; overflow-x: auto; padding-bottom: 0.75rem; scrollbar-width: none;">
+                <a href="{{ route('katalog.index', ['jenis' => 'Limosin']) }}" class="category-pill-item">
+                    <i class="bi bi-tag-fill category-icon"></i>
+                    <span>Sapi Limosin</span>
+                </a>
+                <a href="{{ route('katalog.index', ['jenis' => 'Simental']) }}" class="category-pill-item">
+                    <i class="bi bi-tag-fill category-icon"></i>
+                    <span>Sapi Simental</span>
+                </a>
+                <a href="{{ route('katalog.index', ['jenis' => 'Brahman']) }}" class="category-pill-item">
+                    <i class="bi bi-tag-fill category-icon"></i>
+                    <span>Sapi Brahman</span>
+                </a>
+                <a href="{{ route('katalog.index', ['jenis' => 'Bali']) }}" class="category-pill-item">
+                    <i class="bi bi-tag-fill category-icon"></i>
+                    <span>Sapi Bali</span>
+                </a>
+                <a href="{{ route('katalog.index', ['jenis' => 'PO']) }}" class="category-pill-item">
+                    <i class="bi bi-tags-fill category-icon"></i>
+                    <span>Sapi PO</span>
+                </a>
+                <a href="{{ route('katalog.index', ['tipe_penjualan' => 'pre_order']) }}" class="category-pill-item" style="border-color: rgba(239, 68, 68, 0.3); background: #fff5f5;">
+                    <i class="bi bi-hourglass-split category-icon" style="color: #dc2626;"></i>
+                    <span style="color: #dc2626;">Sapi Pre-Order</span>
+                </a>
+                <a href="{{ route('katalog.index', ['tipe_penjualan' => 'order']) }}" class="category-pill-item" style="border-color: rgba(16, 185, 129, 0.3); background: #f0fdf4;">
+                    <i class="bi bi-lightning-charge-fill category-icon" style="color: #059669;"></i>
+                    <span style="color: #059669;">Siap Kirim</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- ═══ Update Sapi Terbaru Section ═══ --}}
+    @if($sapis->count() > 0)
+    <section class="sapi-update-section">
+        <div class="sapi-update-inner">
+            <div class="sapi-update-header">
+                <div class="sapi-update-header-left">
+                    <h2>Update Sapi Terbaru</h2>
+                    <p>Lihat sapi-sapi terbaru yang diunggah dalam 1 minggu terakhir.</p>
+                </div>
+                <a href="{{ route('katalog.index') }}" class="btn-selengkapnya">Selengkapnya</a>
+            </div>
+
+            <div class="sapi-cards-grid">
                 @foreach($sapis as $sapi)
-                <div class="product-card" style="background: white; border-radius: 1rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.3s;">
-                    <div style="position: relative; height: 200px;">
-                        <img src="{{ asset('storage/' . $sapi->foto) }}" alt="{{ $sapi->jenis }}" style="width: 100%; height: 100%; object-fit: cover;">
-                        <span style="position: absolute; top: 1rem; right: 1rem; background: #8b5cf6; color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600;">Baru</span>
+                <div class="sapi-card-new">
+                    {{-- Badge Order/Pre-Order --}}
+                    <span class="sapi-card-new-badge {{ $sapi->is_preorder ? 'preorder' : 'order' }}">
+                        {{ $sapi->tipe_penjualan_label }}
+                    </span>
+
+                    {{-- Badge Sertifikasi Kesehatan --}}
+                    @if($sapi->status_kesehatan === 'sehat')
+                        <div style="position: absolute; top: 12px; right: 12px; z-index: 5; background: rgba(255, 255, 255, 0.95); color: #16a34a; padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <i class="bi bi-check-circle-fill"></i> <span>Layak</span>
+                        </div>
+                    @endif
+
+                    {{-- Foto Sapi --}}
+                    <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none;">
+                        <div class="sapi-card-new-img">
+                            @if($sapi->first_foto)
+                                <img src="{{ asset('storage/' . $sapi->first_foto) }}" alt="{{ $sapi->jenis }}" loading="lazy">
+                            @else
+                                <div class="sapi-card-placeholder-icon"><i class="bi bi-image" style="font-size: 3rem; color: #a5d6a7;"></i></div>
+                            @endif
+
+                            {{-- Pre-Order Label Overlay --}}
+                            @if($sapi->is_preorder && $sapi->preorder_bulan)
+                                <div class="sapi-card-new-preorder-label">{{ $sapi->preorder_label }}</div>
+                            @endif
+                        </div>
+                    </a>
+
+                    {{-- Info Sapi --}}
+                    <div class="sapi-card-new-body">
+                        <div class="sapi-card-new-title-row">
+                            <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none; color: inherit;">
+                                <h3 style="transition: color 0.2s;" onmouseover="this.style.color='#00A740'" onmouseout="this.style.color='#0f172a'">{{ $sapi->jenis }}</h3>
+                            </a>
+                            <span class="sapi-card-new-price">{{ $sapi->harga_formatted }}</span>
+                        </div>
+                        <div class="sapi-card-new-specs">
+                            <span>Umur : {{ $sapi->umur_formatted }}</span>
+                            <span>Bobot : ± {{ number_format($sapi->bobot, 0, ',', '.') }} kg</span>
+                            <span style="color: #64748b; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+                                <i class="bi bi-geo-alt-fill" style="color: #ef4444; font-size: 0.82rem;"></i> {{ $sapi->lokasi ?? 'Kampung Sukamaju' }}
+                            </span>
+                        </div>
                     </div>
-                    <div style="padding: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-                            <div>
-                                <h3 style="font-size: 1.25rem; font-weight: 600; color: #1e293b; margin-bottom: 0.25rem;">{{ $sapi->jenis }}</h3>
-                                <p style="color: #64748b; font-size: 0.9rem;">{{ $sapi->umur_formatted }} • {{ $sapi->bobot }} kg</p>
-                            </div>
+
+                    {{-- Footer --}}
+                    <div class="sapi-card-new-footer">
+                        <div class="sapi-card-new-peternak" style="display: flex; align-items: center; gap: 4px;">
+                            by <a href="#">{{ $sapi->peternak->name ?? 'Peternak' }}</a>
+                            <i class="bi bi-patch-check-fill" style="color: #10b981; font-size: 0.85rem;" title="Peternak Terverifikasi"></i>
                         </div>
-                        <div style="font-size: 1.25rem; font-weight: 700; color: #8b5cf6; margin-bottom: 1.5rem;">
-                            {{ $sapi->harga_formatted }}
-                        </div>
-                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                        <div class="sapi-card-new-actions">
+                            <a href="{{ route('katalog.show', $sapi->id) }}" class="btn-beli-sekarang" style="display: inline-flex; align-items: center; justify-content: center; gap: 5px;">
+                                <i class="bi bi-eye"></i> Detail
+                            </a>
                             @if(!auth()->check())
-                                <a href="{{ route('login') }}" style="flex: 1; text-align: center; padding: 0.75rem; border-radius: 0.5rem; background: var(--green-brand, #10b981); color: white; text-decoration: none; font-weight: 500; font-size: 0.95rem;">
-                                    💳 Beli
-                                </a>
-                                <a href="{{ route('login') }}" style="flex: 1; text-align: center; padding: 0.75rem; border-radius: 0.5rem; background: rgba(16, 185, 129, 0.1); color: var(--green-brand, #10b981); border: 1px solid rgba(16, 185, 129, 0.2); text-decoration: none; font-weight: 500; font-size: 0.95rem;">
-                                    🛒 Keranjang
+                                <a href="{{ route('login') }}" class="btn-keranjang-icon" title="Keranjang" onclick="alert('Silakan login terlebih dahulu untuk menambahkan ternak ke keranjang belanja.');">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                                 </a>
                             @elseif(auth()->user()->role === 'pembeli')
-                                <button type="button" onclick="alert('Fitur Pembelian Langsung sedang dalam tahap pengembangan.')" style="flex: 1; padding: 0.75rem; border-radius: 0.5rem; background: var(--green-brand, #10b981); color: white; border: none; font-weight: 500; font-size: 0.95rem; cursor: pointer;">
-                                    💳 Beli
-                                </button>
-                                <form action="{{ route('pembeli.keranjang.store') }}" method="POST" style="flex: 1; margin: 0;">
+                                <form action="{{ route('pembeli.keranjang.store') }}" method="POST" style="margin: 0;">
                                     @csrf
                                     <input type="hidden" name="sapi_id" value="{{ $sapi->id }}">
-                                    <button type="submit" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: rgba(16, 185, 129, 0.1); color: var(--green-brand, #10b981); border: 1px solid rgba(16, 185, 129, 0.2); font-weight: 500; font-size: 0.95rem; cursor: pointer;">
-                                        🛒 Keranjang
+                                    <button type="submit" class="btn-keranjang-icon" title="Keranjang">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                                     </button>
                                 </form>
-                            @else
-                                <a href="{{ route('katalog.show', $sapi->id) }}" class="btn-primary" style="display: block; text-align: center; width: 100%; padding: 0.75rem; border-radius: 0.5rem; background: #1e293b; color: white; text-decoration: none; font-weight: 500;">
-                                    Lihat Detail
-                                </a>
                             @endif
                         </div>
                     </div>
@@ -97,143 +246,243 @@
     </section>
     @endif
 
-    {{-- ═══ Edukasi & Info Section ═══ --}}
-    @if($edukasis->count() > 0)
-    <section class="section" style="padding: 4rem 2rem; background-color: #ffffff;">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <div style="text-align: center; margin-bottom: 3rem;">
-                <h2 style="font-size: 2rem; color: #1e293b; margin-bottom: 0.5rem;">Edukasi & Info</h2>
-                <p style="color: #64748b; font-size: 1.1rem;">Informasi seputar perawatan sapi dan regulasi pembelian.</p>
+
+    {{-- ═══ Katalog Sapi Pre-Order Section ═══ --}}
+    <section class="sapi-update-section" id="katalog-preorder" style="padding-top: 3rem; background-color: #fafbfc; border-top: 1px solid #f1f5f9;">
+        <div class="sapi-update-inner">
+            <div class="sapi-update-header">
+                <div class="sapi-update-header-left">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                        <span style="display: inline-flex; align-items: center; gap: 0.35rem; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">
+                            <i class="bi bi-hourglass-split"></i> Pre-Order
+                        </span>
+                    </div>
+                    <h2>Katalog Sapi Pre-Order</h2>
+                    <p>Pesan sapi lebih awal untuk kebutuhan qurban, aqiqah, atau hajatan mendatang langsung dari peternak terpercaya.</p>
+                </div>
+                <a href="{{ route('katalog.index', ['tipe_penjualan' => 'pre_order']) }}" class="btn-selengkapnya">Selengkapnya</a>
             </div>
 
-            <style>
-                .edu-slide {
-                    flex: 0 0 calc((100% - 2rem) / 2);
-                    box-sizing: border-box;
-                }
-                @media (max-width: 768px) {
-                    .edu-slide {
-                        flex: 0 0 100%;
-                    }
-                }
-                .edu-btn {
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    z-index: 10;
-                    background: #fff;
-                    border: 1px solid #e2e8f0;
-                    border-radius: 50%;
-                    width: 44px;
-                    height: 44px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                    color: #1e293b;
-                    font-size: 1.2rem;
-                    transition: all 0.2s;
-                }
-                .edu-btn:hover {
-                    background: #f8fafc;
-                    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
-                }
-                .edu-btn:disabled {
-                    opacity: 0.5;
-                    cursor: not-allowed;
-                }
-            </style>
-            
-            <div style="position: relative; padding: 1rem 0; overflow: hidden; margin: 0 -1rem;">
-                <button id="eduPrev" class="edu-btn" style="left: 1rem;">&#10094;</button>
-                <button id="eduNext" class="edu-btn" style="right: 1rem;">&#10095;</button>
-                
-                <div style="padding: 0 1rem; overflow: hidden;">
-                    <div id="edukasiTrack" style="display: flex; gap: 2rem; transition: transform 0.4s ease-in-out;">
-                        @foreach($edukasis as $edukasi)
-                        <div class="edu-slide">
-                            <a href="{{ route('edukasi.show', $edukasi->id) }}" style="text-decoration: none; display: block; width: 100%;">
-                                <div style="border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s; background: #fff;">
-                                    <div style="width: 100%; aspect-ratio: 629/192; overflow: hidden; background: #f8fafc;">
-                                        <img src="{{ asset('storage/' . $edukasi->gambar) }}" alt="{{ $edukasi->judul }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                    </div>
-                                    <div style="padding: 1rem; border-top: 1px solid #f1f5f9;">
-                                        <h4 style="font-size: 1.1rem; font-weight: 600; color: #334155; margin: 0;">{{ $edukasi->judul }}</h4>
-                                        @if($edukasi->deskripsi)
-                                            <p style="color: #64748b; font-size: 0.9rem; margin: 0.5rem 0 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                                {{ $edukasi->deskripsi }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </div>
-                            </a>
+            @if($sapiPreorder->count() > 0)
+            <div class="sapi-cards-grid">
+                @foreach($sapiPreorder as $sapi)
+                <div class="sapi-card-new">
+                    {{-- Badge Pre-Order --}}
+                    <span class="sapi-card-new-badge preorder">
+                        {{ $sapi->tipe_penjualan_label }}
+                    </span>
+
+                    {{-- Badge Sertifikasi Kesehatan --}}
+                    @if($sapi->status_kesehatan === 'sehat')
+                        <div style="position: absolute; top: 12px; right: 12px; z-index: 5; background: rgba(255, 255, 255, 0.95); color: #16a34a; padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <i class="bi bi-check-circle-fill"></i> <span>Layak</span>
                         </div>
-                        @endforeach
+                    @endif
+
+                    {{-- Foto Sapi --}}
+                    <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none;">
+                        <div class="sapi-card-new-img">
+                            @if($sapi->first_foto)
+                                <img src="{{ asset('storage/' . $sapi->first_foto) }}" alt="{{ $sapi->jenis }}" loading="lazy">
+                            @else
+                                <div class="sapi-card-placeholder-icon"><i class="bi bi-image" style="font-size: 3rem; color: #a5d6a7;"></i></div>
+                            @endif
+
+                            {{-- Pre-Order Label Overlay --}}
+                            @if($sapi->preorder_bulan)
+                                <div class="sapi-card-new-preorder-label">{{ $sapi->preorder_label }}</div>
+                            @endif
+                        </div>
+                    </a>
+
+                    {{-- Info Sapi --}}
+                    <div class="sapi-card-new-body">
+                        <div class="sapi-card-new-title-row">
+                            <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none; color: inherit;">
+                                <h3 style="transition: color 0.2s;" onmouseover="this.style.color='#00A740'" onmouseout="this.style.color='#0f172a'">{{ $sapi->jenis }}</h3>
+                            </a>
+                            <span class="sapi-card-new-price">{{ $sapi->harga_formatted }}</span>
+                        </div>
+                        <div class="sapi-card-new-specs">
+                            <span>Umur : {{ $sapi->umur_formatted }}</span>
+                            <span>Bobot : ± {{ number_format($sapi->bobot, 0, ',', '.') }} kg</span>
+                            <span style="color: #64748b; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+                                <i class="bi bi-geo-alt-fill" style="color: #ef4444; font-size: 0.82rem;"></i> {{ $sapi->lokasi ?? 'Kampung Sukamaju' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    {{-- Footer --}}
+                    <div class="sapi-card-new-footer">
+                        <div class="sapi-card-new-peternak" style="display: flex; align-items: center; gap: 4px;">
+                            by <a href="#">{{ $sapi->peternak->name ?? 'Peternak' }}</a>
+                            <i class="bi bi-patch-check-fill" style="color: #10b981; font-size: 0.85rem;" title="Peternak Terverifikasi"></i>
+                        </div>
+                        <div class="sapi-card-new-actions">
+                            <a href="{{ route('katalog.show', $sapi->id) }}" class="btn-beli-sekarang" style="display: inline-flex; align-items: center; justify-content: center; gap: 5px; background: linear-gradient(135deg, #ef4444, #dc2626);">
+                                <i class="bi bi-eye"></i> Detail
+                            </a>
+                            @if(!auth()->check())
+                                <a href="{{ route('login') }}" class="btn-keranjang-icon" title="Keranjang" onclick="alert('Silakan login terlebih dahulu untuk menambahkan ternak ke keranjang belanja.');">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                </a>
+                            @elseif(auth()->user()->role === 'pembeli')
+                                <form action="{{ route('pembeli.keranjang.store') }}" method="POST" style="margin: 0;">
+                                    @csrf
+                                    <input type="hidden" name="sapi_id" value="{{ $sapi->id }}">
+                                    <button type="submit" class="btn-keranjang-icon" title="Keranjang">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                 </div>
+                @endforeach
             </div>
+            @else
+            <div style="text-align: center; padding: 3rem 1.5rem; background: #ffffff; border-radius: 1rem; border: 1px dashed #cbd5e1; margin-top: 1rem;">
+                <i class="bi bi-hourglass-split" style="font-size: 2.75rem; color: #f59e0b; display: block; margin-bottom: 0.5rem;"></i>
+                <h4 style="font-size: 1.1rem; color: #334155; margin: 0 0 0.4rem 0; font-weight: 600;">Belum Ada Sapi Pre-Order</h4>
+                <p style="color: #64748b; font-size: 0.9rem; margin: 0;">Saat ini belum ada ternak dalam kategori Pre-Order yang tersedia.</p>
+            </div>
+            @endif
+        </div>
+    </section>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const track = document.getElementById('edukasiTrack');
-                    const slides = track.querySelectorAll('.edu-slide');
-                    const prevBtn = document.getElementById('eduPrev');
-                    const nextBtn = document.getElementById('eduNext');
-                    
-                    if (!track || slides.length === 0) return;
+    {{-- ═══ Section Iklan di Sela-Sela Katalog (Tanpa Teks/Kalimat Apapun) ═══ --}}
+    @if(isset($iklans) && $iklans->count() > 0)
+    <section class="iklan-sela-katalog-section" style="padding: 2rem 2rem; background-color: #f8fafc; border-top: 1px solid #f1f5f9;">
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div class="carousel-container" style="border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.06);">
+                <div class="carousel-track" id="carouselTrack">
+                    @foreach($iklans as $iklan)
+                    <div class="carousel-slide">
+                        <img src="{{ asset('storage/' . $iklan->gambar) }}" alt="" style="width: 100%; aspect-ratio: 1638 / 500; object-fit: cover; border-radius: 20px; display: block;">
+                    </div>
+                    @endforeach
+                </div>
 
-                    let currentIndex = 0;
-                    
-                    function getItemsToShow() {
-                        return window.innerWidth <= 768 ? 1 : 2;
-                    }
+                @if($iklans->count() > 1)
+                    <button type="button" class="carousel-btn prev" onclick="moveSlide(-1)" aria-label="Sebelumnya">&#10094;</button>
+                    <button type="button" class="carousel-btn next" onclick="moveSlide(1)" aria-label="Selanjutnya">&#10095;</button>
 
-                    function updateCarousel() {
-                        const itemsToShow = getItemsToShow();
-                        const slideWidth = slides[0].offsetWidth;
-                        const gap = window.innerWidth <= 768 ? 0 : 32; // Assuming gap might wrap differently, but flex gap is 32px
-                        
-                        // Exact calculation including flex gap (2rem = 32px)
-                        const moveAmount = currentIndex * (slideWidth + 32); 
-                        track.style.transform = `translateX(-${moveAmount}px)`;
-                        
-                        const maxIndex = slides.length - itemsToShow;
-                        
-                        prevBtn.disabled = currentIndex === 0;
-                        nextBtn.disabled = currentIndex >= maxIndex;
-                        
-                        // Hide buttons entirely if total items <= itemsToShow
-                        if (slides.length <= itemsToShow) {
-                            prevBtn.style.display = 'none';
-                            nextBtn.style.display = 'none';
-                        } else {
-                            prevBtn.style.display = 'flex';
-                            nextBtn.style.display = 'flex';
-                        }
-                    }
-
-                    prevBtn.addEventListener('click', () => {
-                        if (currentIndex > 0) {
-                            currentIndex--;
-                            updateCarousel();
-                        }
-                    });
-
-                    nextBtn.addEventListener('click', () => {
-                        const itemsToShow = getItemsToShow();
-                        const maxIndex = slides.length - itemsToShow;
-                        if (currentIndex < maxIndex) {
-                            currentIndex++;
-                            updateCarousel();
-                        }
-                    });
-                    
-                    updateCarousel();
-                    window.addEventListener('resize', updateCarousel);
-                });
-            </script>
+                    <div class="carousel-dots">
+                        @foreach($iklans as $index => $iklan)
+                            <span class="dot {{ $index === 0 ? 'active' : '' }}" onclick="currentSlide({{ $index }})"></span>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
         </div>
     </section>
     @endif
+
+    {{-- ═══ Katalog Sapi Pesan Biasa Section ═══ --}}
+    <section class="sapi-update-section" id="katalog-biasa" style="padding-top: 3rem; padding-bottom: 4rem; background-color: #ffffff; border-top: 1px solid #f1f5f9;">
+        <div class="sapi-update-inner">
+            <div class="sapi-update-header">
+                <div class="sapi-update-header-left">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                        <span style="display: inline-flex; align-items: center; gap: 0.35rem; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;">
+                            <i class="bi bi-lightning-charge-fill"></i> Ready Stock
+                        </span>
+                    </div>
+                    <h2>Katalog Sapi Pesan Biasa</h2>
+                    <p>Pilihan sapi sehat berkualitas yang siap langsung dipesan dan dikirim ke lokasi Anda.</p>
+                </div>
+                <a href="{{ route('katalog.index', ['tipe_penjualan' => 'order']) }}" class="btn-selengkapnya">Selengkapnya</a>
+            </div>
+
+            @if($sapiBiasa->count() > 0)
+            <div class="sapi-cards-grid">
+                @foreach($sapiBiasa as $sapi)
+                <div class="sapi-card-new">
+                    {{-- Badge Order --}}
+                    <span class="sapi-card-new-badge order">
+                        {{ $sapi->tipe_penjualan_label }}
+                    </span>
+
+                    {{-- Badge Sertifikasi Kesehatan --}}
+                    @if($sapi->status_kesehatan === 'sehat')
+                        <div style="position: absolute; top: 12px; right: 12px; z-index: 5; background: rgba(255, 255, 255, 0.95); color: #16a34a; padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; gap: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <i class="bi bi-check-circle-fill"></i> <span>Layak</span>
+                        </div>
+                    @endif
+
+                    {{-- Foto Sapi --}}
+                    <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none;">
+                        <div class="sapi-card-new-img">
+                            @if($sapi->first_foto)
+                                <img src="{{ asset('storage/' . $sapi->first_foto) }}" alt="{{ $sapi->jenis }}" loading="lazy">
+                            @else
+                                <div class="sapi-card-placeholder-icon"><i class="bi bi-image" style="font-size: 3rem; color: #a5d6a7;"></i></div>
+                            @endif
+                        </div>
+                    </a>
+
+                    {{-- Info Sapi --}}
+                    <div class="sapi-card-new-body">
+                        <div class="sapi-card-new-title-row">
+                            <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none; color: inherit;">
+                                <h3 style="transition: color 0.2s;" onmouseover="this.style.color='#00A740'" onmouseout="this.style.color='#0f172a'">{{ $sapi->jenis }}</h3>
+                            </a>
+                            <span class="sapi-card-new-price">{{ $sapi->harga_formatted }}</span>
+                        </div>
+                        <div class="sapi-card-new-specs">
+                            <span>Umur : {{ $sapi->umur_formatted }}</span>
+                            <span>Bobot : ± {{ number_format($sapi->bobot, 0, ',', '.') }} kg</span>
+                            <span style="color: #64748b; font-size: 0.78rem; display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+                                <i class="bi bi-geo-alt-fill" style="color: #ef4444; font-size: 0.82rem;"></i> {{ $sapi->lokasi ?? 'Kampung Sukamaju' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    {{-- Footer --}}
+                    <div class="sapi-card-new-footer">
+                        <div class="sapi-card-new-peternak" style="display: flex; align-items: center; gap: 4px;">
+                            by <a href="#">{{ $sapi->peternak->name ?? 'Peternak' }}</a>
+                            <i class="bi bi-patch-check-fill" style="color: #10b981; font-size: 0.85rem;" title="Peternak Terverifikasi"></i>
+                        </div>
+                        <div class="sapi-card-new-actions">
+                            <a href="{{ route('katalog.show', $sapi->id) }}" class="btn-beli-sekarang" style="display: inline-flex; align-items: center; justify-content: center; gap: 5px;">
+                                <i class="bi bi-eye"></i> Detail
+                            </a>
+                            @if(!auth()->check())
+                                <a href="{{ route('login') }}" class="btn-keranjang-icon" title="Keranjang" onclick="alert('Silakan login terlebih dahulu untuk menambahkan ternak ke keranjang belanja.');">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                </a>
+                            @elseif(auth()->user()->role === 'pembeli')
+                                <form action="{{ route('pembeli.keranjang.store') }}" method="POST" style="margin: 0;">
+                                    @csrf
+                                    <input type="hidden" name="sapi_id" value="{{ $sapi->id }}">
+                                    <button type="submit" class="btn-keranjang-icon" title="Keranjang">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            @else
+            <div style="text-align: center; padding: 3rem 1.5rem; background: #f8fafc; border-radius: 1rem; border: 1px dashed #cbd5e1; margin-top: 1rem;">
+                <i class="bi bi-box-seam" style="font-size: 2.75rem; color: #10b981; display: block; margin-bottom: 0.5rem;"></i>
+                <h4 style="font-size: 1.1rem; color: #334155; margin: 0 0 0.4rem 0; font-weight: 600;">Belum Ada Sapi Pesan Biasa</h4>
+                <p style="color: #64748b; font-size: 0.9rem; margin: 0;">Saat ini belum ada ternak dalam kategori pesan biasa yang tersedia.</p>
+            </div>
+            @endif
+
+            {{-- Tombol Lihat Semua Katalog --}}
+            <div style="text-align: center; margin-top: 3.5rem;">
+                <a href="{{ route('katalog.index') }}" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 2.2rem; background: linear-gradient(135deg, #10b981, #059669); color: white; text-decoration: none; border-radius: 999px; font-weight: 700; font-size: 1rem; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3); transition: all 0.3s;"
+                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(16, 185, 129, 0.4)';"
+                   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 14px rgba(16, 185, 129, 0.3)';">
+                    Lihat Semua Katalog Sapi
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
 @endsection

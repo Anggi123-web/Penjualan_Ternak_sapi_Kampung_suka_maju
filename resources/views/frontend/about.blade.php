@@ -15,22 +15,22 @@
                 
                 <div class="about-features">
                     <div class="about-feature-item">
-                        <div class="about-feature-icon">🛡️</div>
+                        <div class="about-feature-icon"><i class="bi bi-shield-check"></i></div>
                         <h4 class="about-feature-title">Terverifikasi Sehat</h4>
                         <p class="about-feature-desc">Setiap sapi yang berlabel Layak Budidaya telah melalui pengecekan kesehatan langsung oleh Mantri Hewan.</p>
                     </div>
                     <div class="about-feature-item">
-                        <div class="about-feature-icon">🤝</div>
+                        <div class="about-feature-icon"><i class="bi bi-people-fill"></i></div>
                         <h4 class="about-feature-title">Hubungan Langsung</h4>
                         <p class="about-feature-desc">Membeli langsung dari peternak lokal terbaik, membantu meningkatkan perekonomian daerah.</p>
                     </div>
                     <div class="about-feature-item">
-                        <div class="about-feature-icon">📈</div>
+                        <div class="about-feature-icon"><i class="bi bi-graph-up-arrow"></i></div>
                         <h4 class="about-feature-title">Harga Transparan</h4>
                         <p class="about-feature-desc">Informasi bobot, umur, dan harga tercantum dengan jelas tanpa biaya tersembunyi.</p>
                     </div>
                     <div class="about-feature-item">
-                        <div class="about-feature-icon">✨</div>
+                        <div class="about-feature-icon"><i class="bi bi-stars"></i></div>
                         <h4 class="about-feature-title">Kemudahan Transaksi</h4>
                         <p class="about-feature-desc">Platform digital yang memudahkan pemantauan dan pencarian hewan ternak terbaik Anda.</p>
                     </div>

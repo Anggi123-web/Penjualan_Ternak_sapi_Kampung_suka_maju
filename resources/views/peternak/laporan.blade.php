@@ -127,7 +127,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Total Penjualan</span>
-            <div class="stat-card-icon" style="background: rgba(16,185,129,0.1); color: #6ee7b7;">💰</div>
+            <div class="stat-card-icon" style="background: rgba(16,185,129,0.1); color: #6ee7b7;"><i class="bi bi-cash-stack"></i></div>
         </div>
         <div class="stat-card-value">0</div>
         <div class="stat-card-change">Transaksi</div>
@@ -135,7 +135,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Total Pendapatan</span>
-            <div class="stat-card-icon" style="background: rgba(59,130,246,0.1); color: #93c5fd;">📈</div>
+            <div class="stat-card-icon" style="background: rgba(59,130,246,0.1); color: #93c5fd;"><i class="bi bi-graph-up-arrow"></i></div>
         </div>
         <div class="stat-card-value">Rp 0</div>
         <div class="stat-card-change">Periode ini</div>
@@ -143,7 +143,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Rata-rata Harga</span>
-            <div class="stat-card-icon" style="background: rgba(245,158,11,0.1); color: #fcd34d;">📊</div>
+            <div class="stat-card-icon" style="background: rgba(245,158,11,0.1); color: #fcd34d;"><i class="bi bi-bar-chart-line"></i></div>
         </div>
         <div class="stat-card-value">Rp 0</div>
         <div class="stat-card-change">Per ekor</div>
@@ -152,16 +152,16 @@
 
 <div class="report-grid">
     <div class="report-card">
-        <h4>📊 Grafik Penjualan</h4>
+        <h4><i class="bi bi-bar-chart-fill"></i> Grafik Penjualan</h4>
         <div class="chart-placeholder">
-            <div class="chart-placeholder-icon">📉</div>
+            <div class="chart-placeholder-icon"><i class="bi bi-graph-down"></i></div>
             <span>Grafik akan tampil saat ada data penjualan</span>
         </div>
     </div>
     <div class="report-card">
-        <h4>🐮 Penjualan per Jenis</h4>
+        <h4><i class="bi bi-piggy-bank"></i> Penjualan per Jenis</h4>
         <div class="chart-placeholder">
-            <div class="chart-placeholder-icon">📋</div>
+            <div class="chart-placeholder-icon"><i class="bi bi-clipboard-data"></i></div>
             <span>Data akan muncul saat ada penjualan</span>
         </div>
     </div>

@@ -57,15 +57,21 @@
         border-radius: 16px;
         overflow: hidden;
         transition: all 0.3s ease;
-        text-decoration: none;
         color: inherit;
-        display: block;
+        display: flex;
+        flex-direction: column;
     }
 
     .sapi-card:hover {
         transform: translateY(-4px);
         border-color: rgba(148, 163, 184, 0.15);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .sapi-card-img-link {
+        display: block;
+        text-decoration: none;
+        overflow: hidden;
     }
 
     .sapi-card-img {
@@ -76,12 +82,18 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
     }
 
     .sapi-card-img img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .sapi-card:hover .sapi-card-img img {
+        transform: scale(1.04);
     }
 
     .sapi-card-img-placeholder {
@@ -97,13 +109,23 @@
 
     .sapi-card-body {
         padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
     }
 
     .sapi-card-header {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
+        gap: 0.5rem;
         margin-bottom: 0.75rem;
+    }
+
+    .sapi-card-jenis-link {
+        text-decoration: none;
+        color: inherit;
     }
 
     .sapi-card-jenis {
@@ -111,12 +133,18 @@
         font-weight: 700;
         letter-spacing: -0.02em;
         color: #f1f5f9;
+        transition: color 0.2s ease;
+    }
+
+    .sapi-card-jenis-link:hover .sapi-card-jenis {
+        color: #6ee7b7;
     }
 
     .sapi-card-harga {
         font-size: 1rem;
         font-weight: 800;
         color: #6ee7b7;
+        white-space: nowrap;
     }
 
     .sapi-card-details {
@@ -207,8 +235,121 @@
         gap: 0.5rem;
     }
 
+    /* Card Actions */
+    .sapi-card-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0.5rem;
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(148, 163, 184, 0.08);
+    }
+
+    .action-form {
+        margin: 0;
+        display: flex;
+    }
+
+    .btn-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        padding: 0.55rem 0.5rem;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn-action span {
+        font-size: 0.85rem;
+    }
+
+    /* Detail Button */
+    .btn-action.btn-detail {
+        background: rgba(148, 163, 184, 0.08);
+        color: #cbd5e1;
+        border-color: rgba(148, 163, 184, 0.15);
+    }
+
+    .btn-action.btn-detail:hover {
+        background: rgba(148, 163, 184, 0.18);
+        color: #ffffff;
+        border-color: rgba(148, 163, 184, 0.3);
+        transform: translateY(-1px);
+    }
+
+    /* Edit Button */
+    .btn-action.btn-edit {
+        background: rgba(59, 130, 246, 0.12);
+        color: #60a5fa;
+        border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .btn-action.btn-edit:hover {
+        background: rgba(59, 130, 246, 0.22);
+        color: #93c5fd;
+        border-color: rgba(59, 130, 246, 0.45);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        transform: translateY(-1px);
+    }
+
+    /* Delete Button */
+    .btn-action.btn-delete {
+        background: rgba(239, 68, 68, 0.1);
+        color: #fca5a5;
+        border-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-action.btn-delete:hover {
+        background: rgba(239, 68, 68, 0.22);
+        color: #f87171;
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+        transform: translateY(-1px);
+    }
+
+    .btn-sampah-nav {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.7rem 1.25rem;
+        background: rgba(239, 68, 68, 0.12);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .btn-sampah-nav:hover {
+        background: rgba(239, 68, 68, 0.22);
+        border-color: rgba(239, 68, 68, 0.5);
+        color: #ffffff;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
+    }
+
     @media (max-width: 640px) {
         .sapi-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .sapi-card-actions {
             grid-template-columns: 1fr;
         }
     }
@@ -229,11 +370,16 @@
 
 <div class="page-toolbar">
     <div class="toolbar-info">
-        Total: <strong>{{ $sapis->count() }}</strong> sapi
+        Total: <strong>{{ $sapis->count() }}</strong> sapi aktif
     </div>
-    <a href="{{ route('peternak.sapi.create') }}" class="btn-primary" id="btn-tambah-sapi">
-        <span>＋</span> Tambah Data Sapi
-    </a>
+    <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+        <a href="{{ route('peternak.sapi.sampah') }}" class="btn-sampah-nav" id="btn-sampah-peternak" title="Lihat Sapi di Sampah">
+            <span>🗑️</span> Sampah ({{ $totalSampah ?? 0 }})
+        </a>
+        <a href="{{ route('peternak.sapi.create') }}" class="btn-primary" id="btn-tambah-sapi">
+            <span>＋</span> Tambah Data Sapi
+        </a>
+    </div>
 </div>
 
 @if ($sapis->isEmpty())
@@ -250,39 +396,72 @@
 @else
     <div class="sapi-grid">
         @foreach ($sapis as $sapi)
-            <a href="{{ route('peternak.sapi.show', $sapi->id) }}" class="sapi-card" id="sapi-card-{{ $sapi->id }}">
-                @if ($sapi->foto)
-                    <div class="sapi-card-img">
-                        <img src="{{ asset('storage/' . $sapi->foto) }}" alt="Foto {{ $sapi->jenis }}" loading="lazy">
-                    </div>
-                @else
-                    <div class="sapi-card-img-placeholder">🐮</div>
-                @endif
+            <div class="sapi-card" id="sapi-card-{{ $sapi->id }}">
+                <a href="{{ route('peternak.sapi.show', $sapi->id) }}" class="sapi-card-img-link" title="Lihat detail {{ $sapi->jenis }}">
+                    @if ($sapi->first_foto)
+                        <div class="sapi-card-img" style="position: relative;">
+                            <img src="{{ asset('storage/' . $sapi->first_foto) }}" alt="Foto {{ $sapi->jenis }}" loading="lazy">
+                            <span style="position: absolute; top: 0.75rem; left: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+                                {{ $sapi->is_preorder ? 'background: rgba(245,158,11,0.9); color: #fff;' : 'background: rgba(16,185,129,0.9); color: #fff;' }}">
+                                {{ $sapi->tipe_penjualan_label }}
+                            </span>
+                        </div>
+                    @else
+                        <div class="sapi-card-img-placeholder" style="position: relative;">🐮
+                            <span style="position: absolute; top: 0.75rem; left: 0.75rem; padding: 0.25rem 0.75rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+                                {{ $sapi->is_preorder ? 'background: rgba(245,158,11,0.9); color: #fff;' : 'background: rgba(16,185,129,0.9); color: #fff;' }}">
+                                {{ $sapi->tipe_penjualan_label }}
+                            </span>
+                        </div>
+                    @endif
+                </a>
 
                 <div class="sapi-card-body">
-                    <div class="sapi-card-header">
-                        <div class="sapi-card-jenis">{{ $sapi->jenis }}</div>
-                        <div class="sapi-card-harga">{{ $sapi->harga_formatted }}</div>
+                    <div>
+                        <div class="sapi-card-header">
+                            <a href="{{ route('peternak.sapi.show', $sapi->id) }}" class="sapi-card-jenis-link" title="Lihat detail {{ $sapi->jenis }}">
+                                <div class="sapi-card-jenis">{{ $sapi->jenis }}</div>
+                            </a>
+                            <div class="sapi-card-harga">{{ $sapi->harga_formatted }}</div>
+                        </div>
+
+                        <div class="sapi-card-details">
+                            <div class="sapi-detail-item">
+                                📅 <strong>{{ $sapi->umur_formatted }}</strong>
+                            </div>
+                            <div class="sapi-detail-item">
+                                ⚖️ <strong>{{ number_format($sapi->bobot, 0) }} kg</strong>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 0.5rem;">
+                            @if ($sapi->status_kesehatan === 'sehat')
+                                <span class="health-badge health-sehat">✅ Terverifikasi Sehat</span>
+                            @elseif ($sapi->status_kesehatan === 'tidak_sehat')
+                                <span class="health-badge health-tidak-sehat">❌ Tidak Sehat</span>
+                            @else
+                                <span class="health-badge health-belum">⏳ Belum Diperiksa</span>
+                            @endif
+                        </div>
                     </div>
 
-                    <div class="sapi-card-details">
-                        <div class="sapi-detail-item">
-                            📅 <strong>{{ $sapi->umur_formatted }}</strong>
-                        </div>
-                        <div class="sapi-detail-item">
-                            ⚖️ <strong>{{ number_format($sapi->bobot, 0) }} kg</strong>
-                        </div>
+                    <div class="sapi-card-actions">
+                        <a href="{{ route('peternak.sapi.show', $sapi->id) }}" class="btn-action btn-detail" id="btn-detail-sapi-{{ $sapi->id }}" title="Lihat Detail">
+                            <span>👁️</span> Detail
+                        </a>
+                        <a href="{{ route('peternak.sapi.edit', $sapi->id) }}" class="btn-action btn-edit" id="btn-edit-sapi-{{ $sapi->id }}" title="Edit Data Sapi">
+                            <span>✏️</span> Edit
+                        </a>
+                        <form method="POST" action="{{ route('peternak.sapi.delete', $sapi->id) }}" onsubmit="return confirm('Pindahkan data sapi ini ke Sampah?')" class="action-form">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-action btn-delete" id="btn-delete-sapi-{{ $sapi->id }}" title="Pindahkan ke Sampah">
+                                <span>🗑️</span> Hapus
+                            </button>
+                        </form>
                     </div>
-
-                    @if ($sapi->status_kesehatan === 'sehat')
-                        <span class="health-badge health-sehat">✅ Terverifikasi Sehat</span>
-                    @elseif ($sapi->status_kesehatan === 'tidak_sehat')
-                        <span class="health-badge health-tidak-sehat">❌ Tidak Sehat</span>
-                    @else
-                        <span class="health-badge health-belum">⏳ Belum Diperiksa</span>
-                    @endif
                 </div>
-            </a>
+            </div>
         @endforeach
     </div>
 @endif

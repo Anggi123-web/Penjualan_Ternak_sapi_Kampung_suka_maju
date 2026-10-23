@@ -10,7 +10,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Total Sapi</span>
-            <div class="stat-card-icon" style="background: rgba(16,185,129,0.1); color: #6ee7b7;">🐮</div>
+            <div class="stat-card-icon" style="background: rgba(16,185,129,0.1); color: #6ee7b7;"><i class="bi bi-piggy-bank"></i></div>
         </div>
         <div class="stat-card-value">{{ $totalSapi }}</div>
         <div class="stat-card-change">Terdaftar</div>
@@ -18,7 +18,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Terverifikasi Sehat</span>
-            <div class="stat-card-icon" style="background: rgba(59,130,246,0.1); color: #93c5fd;">✅</div>
+            <div class="stat-card-icon" style="background: rgba(59,130,246,0.1); color: #93c5fd;"><i class="bi bi-check-circle-fill"></i></div>
         </div>
         <div class="stat-card-value">{{ $sapiSehat }}</div>
         <div class="stat-card-change">Sapi sehat</div>
@@ -26,7 +26,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Belum Diperiksa</span>
-            <div class="stat-card-icon" style="background: rgba(245,158,11,0.1); color: #fcd34d;">⏳</div>
+            <div class="stat-card-icon" style="background: rgba(245,158,11,0.1); color: #fcd34d;"><i class="bi bi-hourglass-split"></i></div>
         </div>
         <div class="stat-card-value">{{ $sapiBelumDiperiksa }}</div>
         <div class="stat-card-change">Menunggu mantri</div>
@@ -34,7 +34,7 @@
 </div>
 
 <div class="content-card">
-    <h3>📋 Aktivitas Terbaru</h3>
+    <h3><i class="bi bi-clipboard-data"></i> Aktivitas Terbaru</h3>
     <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 0.5rem;">Belum ada aktivitas terbaru.</p>
 </div>
 @endsection

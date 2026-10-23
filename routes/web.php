@@ -10,6 +10,13 @@ use App\Http\Controllers\KatalogController;
 use App\Http\Controllers\IklanController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\EdukasiController;
+use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\PengurusKampung\KatalogController as PengurusKatalogController;
+use App\Http\Controllers\PengurusKampung\MonitoringController as PengurusMonitoringController;
+use App\Http\Controllers\PengurusKampung\PeternakController as PengurusPeternakController;
+use App\Http\Controllers\PengurusKampung\LaporanController as PengurusLaporanController;
 
 // Halaman utama — Katalog publik
 Route::get('/', [FrontendController::class, 'beranda'])->name('beranda');
@@ -17,6 +24,29 @@ Route::get('/katalog', [KatalogController::class, 'index'])->name('katalog.index
 Route::get('/about-us', [FrontendController::class, 'about'])->name('about');
 Route::get('/katalog/{id}', [KatalogController::class, 'show'])->name('katalog.show');
 Route::get('/edukasi/{id}', [FrontendController::class, 'showEdukasi'])->name('edukasi.show');
+
+// Fitur Chat Box Interaktif Pembeli & Penjual
+Route::middleware('auth')->prefix('chat')->group(function () {
+    Route::get('/messages', [ChatController::class, 'getMessages'])->name('chat.messages');
+    Route::post('/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+    Route::get('/unread-count', [ChatController::class, 'getUnreadCount'])->name('chat.unread_count');
+    Route::get('/conversations', [ChatController::class, 'getConversations'])->name('chat.conversations');
+});
+
+// Alur Pembayaran
+Route::get('/pembayaran/{sapi_id}', [PembayaranController::class, 'show'])->name('pembayaran.show');
+Route::post('/pembayaran/{sapi_id}', [PembayaranController::class, 'store'])->name('pembayaran.store');
+Route::get('/pembayaran/{transaksi_id}/upload', [PembayaranController::class, 'showUpload'])->name('pembayaran.upload');
+Route::post('/pembayaran/{transaksi_id}/upload', [PembayaranController::class, 'processUpload'])->name('pembayaran.upload.process');
+Route::get('/pembayaran/{transaksi_id}/sukses', [PembayaranController::class, 'sukses'])->name('pembayaran.sukses');
+Route::get('/pembayaran/{transaksi_id}/pelunasan', [PembayaranController::class, 'showPelunasan'])->name('pembayaran.pelunasan');
+Route::post('/pembayaran/{transaksi_id}/pelunasan', [PembayaranController::class, 'processPelunasan'])->name('pembayaran.pelunasan.process');
+
+// Alur Monitoring Pemesanan Sapi
+Route::get('/pemesanan', [PesananController::class, 'index'])->name('pesanan.index');
+Route::post('/pemesanan/{id}/selesai', [PesananController::class, 'konfirmasiSelesai'])->name('pesanan.selesai')->middleware('auth');
+Route::post('/pemesanan/{id}/ulasan', [PesananController::class, 'simpanUlasan'])->name('pesanan.ulasan')->middleware('auth');
+Route::get('/pemesanan/{id}/surat-pdf', [PesananController::class, 'downloadSuratPdf'])->name('pesanan.surat_pdf')->middleware('auth');
 
 // Auth routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -40,6 +70,20 @@ Route::middleware(['auth', 'role:peternak'])->prefix('peternak')->group(function
     Route::get('/sapi/{id}/edit', [PeternakController::class, 'editSapi'])->name('peternak.sapi.edit');
     Route::put('/sapi/{id}', [PeternakController::class, 'updateSapi'])->name('peternak.sapi.update');
     Route::delete('/sapi/{id}', [PeternakController::class, 'deleteSapi'])->name('peternak.sapi.delete');
+
+    // Kelola Pesanan Masuk
+    Route::get('/pesanan', [PeternakController::class, 'pesanan'])->name('peternak.pesanan');
+    Route::put('/pesanan/{id}/status', [PeternakController::class, 'updateStatusPesanan'])->name('peternak.pesanan.update_status');
+    Route::put('/pesanan/{id}/konfirmasi-pelunasan', [PeternakController::class, 'konfirmasiPelunasan'])->name('peternak.pesanan.konfirmasi_pelunasan');
+
+    // Kelola Ulasan Pembeli
+    Route::get('/ulasan', [PeternakController::class, 'ulasan'])->name('peternak.ulasan');
+    Route::post('/ulasan/{id}/balas', [PeternakController::class, 'balasUlasan'])->name('peternak.ulasan.balas');
+
+    // Sampah Sapi Peternak
+    Route::get('/sampah', [PeternakController::class, 'sampah'])->name('peternak.sapi.sampah');
+    Route::post('/sapi/{id}/restore', [PeternakController::class, 'restoreSapi'])->name('peternak.sapi.restore');
+    Route::delete('/sapi/{id}/force-delete', [PeternakController::class, 'forceDeleteSapi'])->name('peternak.sapi.force_delete');
 });
 
 // Iklan Routes (Shared between Peternak and Pengurus Kampung)
@@ -83,4 +127,28 @@ Route::middleware(['auth', 'role:pengurus_kampung'])->prefix('pengurus-kampung')
     Route::get('/edukasi/create', [EdukasiController::class, 'create'])->name('pengurus_kampung.edukasi.create');
     Route::post('/edukasi', [EdukasiController::class, 'store'])->name('pengurus_kampung.edukasi.store');
     Route::delete('/edukasi/{id}', [EdukasiController::class, 'destroy'])->name('pengurus_kampung.edukasi.destroy');
+
+    // Katalog Penjualan & Sampah routes
+    Route::get('/katalog', [PengurusKatalogController::class, 'index'])->name('pengurus_kampung.katalog.index');
+    Route::put('/katalog/{id}/toggle', [PengurusKatalogController::class, 'toggleStatus'])->name('pengurus_kampung.katalog.toggle');
+    Route::delete('/katalog/{id}/hapus', [PengurusKatalogController::class, 'softDelete'])->name('pengurus_kampung.katalog.soft_delete');
+    Route::get('/katalog/sampah', [PengurusKatalogController::class, 'sampah'])->name('pengurus_kampung.katalog.sampah');
+    Route::post('/katalog/{id}/pulihkan', [PengurusKatalogController::class, 'restore'])->name('pengurus_kampung.katalog.restore');
+    Route::delete('/katalog/{id}/permanen', [PengurusKatalogController::class, 'forceDelete'])->name('pengurus_kampung.katalog.force_delete');
+
+    // Surat Keterangan & Monitoring Pemesanan (Aparat Kampung)
+    Route::get('/monitoring', [PengurusMonitoringController::class, 'index'])->name('pengurus_kampung.monitoring.index');
+    Route::post('/monitoring/{id}/surat', [PengurusMonitoringController::class, 'uploadSurat'])->name('pengurus_kampung.monitoring.upload_surat');
+    Route::get('/monitoring/{id}/surat-pdf', [PesananController::class, 'downloadSuratPdf'])->name('pengurus_kampung.monitoring.surat_pdf');
+    Route::put('/monitoring/{id}/update', [PengurusMonitoringController::class, 'updateMonitoring'])->name('pengurus_kampung.monitoring.update');
+
+    // Data Peternak
+    Route::get('/peternak', [PengurusPeternakController::class, 'index'])->name('pengurus_kampung.peternak.index');
+    Route::get('/peternak/{id}', [PengurusPeternakController::class, 'show'])->name('pengurus_kampung.peternak.show');
+
+    // Laporan Penjualan Per Triwulan
+    Route::get('/laporan-triwulan', [PengurusLaporanController::class, 'index'])->name('pengurus_kampung.laporan.index');
+    Route::get('/laporan-triwulan/cetak', [PengurusLaporanController::class, 'cetak'])->name('pengurus_kampung.laporan.cetak');
+    Route::get('/laporan-triwulan/pdf', [PengurusLaporanController::class, 'downloadPdf'])->name('pengurus_kampung.laporan.pdf');
 });
+

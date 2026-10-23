@@ -32,15 +32,15 @@
 
 @section('content')
 <div class="mobile-header">
-    <span style="font-weight: 700;">🩺 Mantri Hewan</span>
-    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <span style="font-weight: 700;"><i class="bi bi-heart-pulse"></i> Mantri Hewan</span>
+    <button class="hamburger" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
 </div>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <div class="dashboard-layout">
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-logo">
-            <div class="sidebar-logo-icon" style="background: rgba(245,158,11,0.1); color: #fcd34d;">🩺</div>
+            <div class="sidebar-logo-icon" style="background: rgba(245,158,11,0.1); color: #fcd34d;"><i class="bi bi-heart-pulse"></i></div>
             <div class="sidebar-logo-text">
                 <h2>Mantri Hewan</h2>
                 <span>Sistem Penjualan Sapi</span>
@@ -49,18 +49,18 @@
 
         <nav class="sidebar-nav">
             <a href="{{ route('mantri_hewan.dashboard') }}" class="{{ request()->routeIs('mantri_hewan.dashboard') ? 'active' : '' }}">
-                <span class="nav-icon">📊</span>
+                <span class="nav-icon"><i class="bi bi-bar-chart-line"></i></span>
                 Dashboard
             </a>
             <a href="{{ route('mantri_hewan.pemeriksaan') }}" class="{{ request()->routeIs('mantri_hewan.pemeriksaan*') ? 'active' : '' }}">
-                <span class="nav-icon">🔬</span>
+                <span class="nav-icon"><i class="bi bi-search"></i></span>
                 Pemeriksaan
                 @if(isset($menungguCount) && $menungguCount > 0)
                     <span class="badge-count">{{ $menungguCount }}</span>
                 @endif
             </a>
             <a href="{{ route('mantri_hewan.riwayat') }}" class="{{ request()->routeIs('mantri_hewan.riwayat') ? 'active' : '' }}">
-                <span class="nav-icon">📋</span>
+                <span class="nav-icon"><i class="bi bi-clipboard-data"></i></span>
                 Riwayat Verifikasi
             </a>
         </nav>
@@ -78,7 +78,7 @@
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="btn-logout">
-                    🚪 Keluar
+                    <i class="bi bi-box-arrow-right"></i> Keluar
                 </button>
             </form>
         </div>
@@ -96,3 +96,4 @@
     }
 </script>
 @endsection
+

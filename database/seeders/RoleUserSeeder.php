@@ -32,6 +32,12 @@ class RoleUserSeeder extends Seeder
                 'role' => 'mantri_hewan',
             ],
             [
+                'name' => 'Drh. Ahmad Fauzi',
+                'email' => 'mantri2@gmail.com',
+                'password' => bcrypt('password123'),
+                'role' => 'mantri_hewan',
+            ],
+            [
                 'name' => 'Pak Hasan Pengurus',
                 'email' => 'pengurus@gmail.com',
                 'password' => bcrypt('password123'),

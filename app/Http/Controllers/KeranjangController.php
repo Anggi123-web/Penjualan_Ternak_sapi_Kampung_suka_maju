@@ -11,7 +11,13 @@ class KeranjangController extends Controller
 {
     public function index()
     {
-        $keranjangs = Keranjang::with('sapi')->where('user_id', Auth::id())->get();
+        // Bersihkan otomatis jika sapi sudah dipesan oleh pembeli lain
+        $terjualIds = Sapi::terjual()->pluck('id');
+        if ($terjualIds->isNotEmpty()) {
+            Keranjang::where('user_id', Auth::id())->whereIn('sapi_id', $terjualIds)->delete();
+        }
+
+        $keranjangs = Keranjang::with('sapi.peternak')->where('user_id', Auth::id())->get();
         return view('frontend.keranjang', compact('keranjangs'));
     }
 
@@ -22,6 +28,10 @@ class KeranjangController extends Controller
         ]);
 
         $sapi = Sapi::findOrFail($request->sapi_id);
+
+        if ($sapi->is_terjual) {
+            return back()->with('error', 'Mohon maaf, ternak sapi ini sudah dipesan/terjual dan tidak dapat ditambahkan ke keranjang.');
+        }
 
         // Cek apakah sapi sudah ada di keranjang user ini
         $exists = Keranjang::where('user_id', auth()->id())

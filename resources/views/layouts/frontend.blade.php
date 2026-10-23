@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Alex+Brush&family=Satisfy&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         *, *::before, *::after {
@@ -303,6 +305,387 @@
             background: var(--green-brand);
             width: 30px;
             border-radius: 10px;
+        }
+
+        /* ═══ Hero Static Section (Beranda Redesign) ═══ */
+        .hero-static-section {
+            padding-top: 110px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 40%, #e0f2f1 100%);
+            width: 100%;
+            min-height: 520px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-static-inner {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 80px;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero-static-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-static-image img {
+            max-width: 100%;
+            max-height: 460px;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.1));
+            animation: heroFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .hero-static-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-static-title {
+            font-family: var(--font-montserrat);
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-static-title span {
+            color: var(--green-brand);
+        }
+
+        .hero-static-subtitle {
+            font-family: var(--font-inter);
+            font-size: 1.05rem;
+            color: #555555;
+            line-height: 1.7;
+            max-width: 480px;
+        }
+
+        /* ═══ Section Update Sapi Terbaru ═══ */
+        .sapi-update-section {
+            padding: 4rem 2rem;
+            background: #ffffff;
+        }
+
+        .sapi-update-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sapi-update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2.5rem;
+        }
+
+        .sapi-update-header-left h2 {
+            font-family: var(--font-montserrat);
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 0.4rem;
+        }
+
+        .sapi-update-header-left p {
+            font-family: var(--font-inter);
+            font-size: 0.95rem;
+            color: #777;
+        }
+
+        .btn-selengkapnya {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.75rem;
+            border: 2px solid var(--green-brand);
+            color: var(--green-brand);
+            background: transparent;
+            border-radius: 8px;
+            font-family: var(--font-montserrat);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-selengkapnya:hover {
+            background: var(--green-brand);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 167, 64, 0.25);
+        }
+
+        .sapi-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .sapi-card-new {
+            background: linear-gradient(180deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 167, 64, 0.12);
+            position: relative;
+        }
+
+        .sapi-card-new:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 167, 64, 0.15);
+            border-color: rgba(0, 167, 64, 0.3);
+        }
+
+        .sapi-card-new-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 5;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-family: var(--font-montserrat);
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: capitalize;
+        }
+
+        .sapi-card-new-badge.order {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .sapi-card-new-badge.preorder {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .sapi-card-new-img {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            padding: 0.5rem;
+        }
+
+        .sapi-card-new-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
+        .sapi-card-new:hover .sapi-card-new-img img {
+            transform: scale(1.05);
+        }
+
+        .sapi-card-new-img .sapi-card-placeholder-icon {
+            font-size: 4rem;
+            color: #a5d6a7;
+        }
+
+        .sapi-card-new-preorder-label {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 193, 7, 0.95);
+            color: #333;
+            font-family: var(--font-montserrat);
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .sapi-card-new-body {
+            padding: 1rem 1.25rem 0.75rem;
+        }
+
+        .sapi-card-new-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .sapi-card-new-title-row h3 {
+            font-family: var(--font-montserrat);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .sapi-card-new-title-row .sapi-card-new-price {
+            font-family: var(--font-montserrat);
+            font-size: 1rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            white-space: nowrap;
+        }
+
+        .sapi-card-new-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .sapi-card-new-specs span {
+            font-family: var(--font-inter);
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        .sapi-card-new-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            border-top: 1px solid rgba(0, 167, 64, 0.1);
+        }
+
+        .sapi-card-new-footer .sapi-card-new-peternak {
+            font-family: var(--font-inter);
+            font-size: 0.78rem;
+            color: #777;
+        }
+
+        .sapi-card-new-footer .sapi-card-new-peternak a {
+            color: var(--green-brand);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .sapi-card-new-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-beli-sekarang {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.45rem 1rem;
+            background: var(--green-brand);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-montserrat);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-beli-sekarang:hover {
+            background: var(--green-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-keranjang-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            background: rgba(0, 167, 64, 0.1);
+            border: 1px solid rgba(0, 167, 64, 0.2);
+            border-radius: 6px;
+            color: var(--green-brand);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-keranjang-icon:hover {
+            background: var(--green-brand);
+            color: #ffffff;
+            border-color: var(--green-brand);
+        }
+
+        /* Responsive for new sections */
+        @media (max-width: 1199px) {
+            .hero-static-inner {
+                padding: 2rem 40px;
+            }
+            .hero-static-title {
+                font-size: 2.5rem;
+            }
+            .sapi-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 991px) {
+            .hero-static-inner {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 30px;
+            }
+            .hero-static-image img {
+                max-height: 320px;
+            }
+            .hero-static-subtitle {
+                margin: 0 auto;
+            }
+            .sapi-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .sapi-update-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-static-section {
+                min-height: 400px;
+                padding-top: 100px;
+            }
+            .hero-static-inner {
+                padding: 1.5rem 15px;
+            }
+            .hero-static-title {
+                font-size: 1.8rem;
+            }
+            .hero-static-image img {
+                max-height: 240px;
+            }
+            .sapi-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .sapi-update-header-left h2 {
+                font-size: 1.5rem;
+            }
         }
 
         /* ═══ Stats Section ═══ */
@@ -1008,6 +1391,53 @@
             .hero-carousel-section { padding-top: 100px; }
             .carousel-btn { width: 36px; height: 36px; font-size: 18px; }
         }
+
+        /* ═══ Badge Notifikasi Pemesanan ═══ */
+        .nav-order-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 800;
+            font-family: var(--font-montserrat);
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            margin-left: 6px;
+            box-shadow: 0 0 0 2px #ffffff, 0 2px 6px rgba(239, 68, 68, 0.4);
+            animation: pulseOrderBadge 2s infinite;
+        }
+
+        @keyframes pulseOrderBadge {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+                transform: scale(1);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+                transform: scale(1.08);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+                transform: scale(1);
+            }
+        }
+
+        .nav-order-badge-mobile {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #ef4444;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-family: var(--font-inter);
+        }
     </style>
 </head>
 <body id="home">
@@ -1032,9 +1462,29 @@
             </div>
         </form>
 
+        @php
+            $notifUpdatePesanan = 0;
+            if(auth()->check()) {
+                $notifUpdatePesanan = \App\Models\Transaksi::where('user_id', auth()->id())
+                    ->where(function($q) {
+                        $q->whereNull('pembeli_read_at')
+                          ->orWhereColumn('status_updated_at', '>', 'pembeli_read_at');
+                    })
+                    ->count();
+            }
+        @endphp
+
         <div class="drawer-nav" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
             <a href="{{ route('beranda') }}" class="drawer-link {{ request()->routeIs('beranda') ? 'active' : '' }}" id="m-link-home">Branda</a>
             <a href="{{ route('katalog.index') }}" class="drawer-link {{ request()->routeIs('katalog.*') ? 'active' : '' }}" id="m-link-catalog">Catalog</a>
+            @auth
+                <a href="{{ route('pesanan.index') }}" class="drawer-link {{ request()->routeIs('pesanan.*') ? 'active' : '' }}" id="m-link-orders" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>Pemesanan</span>
+                    @if($notifUpdatePesanan > 0)
+                        <span class="nav-order-badge-mobile"><i class="bi bi-bell-fill"></i> {{ $notifUpdatePesanan }} Update</span>
+                    @endif
+                </a>
+            @endauth
             <a href="{{ route('about') }}" class="drawer-link {{ request()->routeIs('about') ? 'active' : '' }}" id="m-link-about">About us</a>
         </div>
         
@@ -1071,6 +1521,14 @@
             <div class="navbar-links-p">
                 <a href="{{ route('beranda') }}" class="nav-link-p {{ request()->routeIs('beranda') ? 'active' : '' }}" id="link-home">Branda</a>
                 <a href="{{ route('katalog.index') }}" class="nav-link-p {{ request()->routeIs('katalog.*') ? 'active' : '' }}" id="link-catalog">Catalog</a>
+                @auth
+                    <a href="{{ route('pesanan.index') }}" class="nav-link-p {{ request()->routeIs('pesanan.*') ? 'active' : '' }}" id="link-orders" style="display: inline-flex; align-items: center;">
+                        Pemesanan
+                        @if($notifUpdatePesanan > 0)
+                            <span class="nav-order-badge" title="{{ $notifUpdatePesanan }} pesanan ada update baru">{{ $notifUpdatePesanan }}</span>
+                        @endif
+                    </a>
+                @endauth
                 <a href="{{ route('about') }}" class="nav-link-p {{ request()->routeIs('about') ? 'active' : '' }}" id="link-about">About us</a>
             </div>
 
@@ -1098,6 +1556,14 @@
                         @php
                             $keranjangCount = \App\Models\Keranjang::where('user_id', auth()->id())->count();
                         @endphp
+                        @php
+                            $unreadChatCount = \App\Models\Chat::where('penerima_id', auth()->id())->where('is_read', false)->count();
+                        @endphp
+                        <button type="button" onclick="toggleChatWindow()" style="display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: rgba(0, 167, 64, 0.1); border-radius: 8px; position: relative; border: none; cursor: pointer; color: var(--green-brand); transition: background-color 0.2s ease;" title="Pesan Obrolan">
+                            <i class="bi bi-chat-dots" style="font-size: 1.2rem;"></i>
+                            <span class="nav-chat-badge" style="position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; font-size: 10px; font-weight: bold; width: 18px; height: 18px; display: {{ $unreadChatCount > 0 ? 'flex' : 'none' }}; align-items: center; justify-content: center; border-radius: 50%;">{{ $unreadChatCount }}</span>
+                        </button>
+
                         <a href="{{ route('pembeli.keranjang.index') }}" style="display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: rgba(0, 167, 64, 0.1); border-radius: 8px; position: relative; text-decoration: none; color: var(--green-brand); transition: background-color 0.2s ease;">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="9" cy="21" r="1"></circle>
@@ -1109,12 +1575,21 @@
                             @endif
                         </a>
                         <div class="user-menu-dropdown" style="position: relative; display: inline-block;">
-                            <a href="{{ route('pembeli.dashboard') }}" class="btn-login-p" style="width: auto; padding: 0 15px; border: none; cursor: pointer; text-decoration: none; display: flex; align-items: center;">👤 Akun Saya</a>
-                            <div class="dropdown-content" style="display: none; position: absolute; right: 0; padding-top: 8px; min-width: 160px; z-index: 10;">
+                            <a href="{{ route('pembeli.dashboard') }}" class="btn-login-p" style="width: auto; padding: 0 15px; border: none; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+                                <i class="bi bi-person-circle" style="font-size: 1.05rem;"></i> Akun Saya
+                            </a>
+                            <div class="dropdown-content" style="display: none; position: absolute; right: 0; padding-top: 8px; min-width: 180px; z-index: 10;">
                                 <div style="background-color: #ffffff; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+                                    <a href="{{ route('pesanan.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; color: var(--black-text); text-decoration: none; font-size: 13px; font-weight: 600; font-family: var(--font-inter); transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                                        <span style="display: flex; align-items: center; gap: 8px;"><i class="bi bi-box-seam" style="color: var(--green-brand);"></i> Pemesanan Saya</span>
+                                        @if($notifUpdatePesanan > 0)
+                                            <span style="background: #ef4444; color: white; border-radius: 999px; padding: 1px 6px; font-size: 10px; font-weight: bold;">{{ $notifUpdatePesanan }}</span>
+                                        @endif
+                                    </a>
+                                    <div style="height: 1px; background: rgba(0,0,0,0.05);"></div>
                                     <form action="{{ route('logout') }}" method="POST" style="margin: 0; padding: 0;">
                                         @csrf
-                                        <button type="submit" style="width: 100%; text-align: left; padding: 12px 16px; border: none; background: transparent; cursor: pointer; color: #ef4444; font-weight: bold; font-family: var(--font-inter); transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#fee2e2'" onmouseout="this.style.backgroundColor='transparent'">Keluar</button>
+                                        <button type="submit" style="width: 100%; text-align: left; padding: 12px 16px; border: none; background: transparent; cursor: pointer; color: #ef4444; font-weight: bold; font-family: var(--font-inter); font-size: 13px; display: flex; align-items: center; gap: 8px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#fee2e2'" onmouseout="this.style.backgroundColor='transparent'"><i class="bi bi-box-arrow-right"></i> Keluar</button>
                                     </form>
                                 </div>
                             </div>
@@ -1250,5 +1725,7 @@
             });
         });
     </script>
+
+    @include('partials.chat_box')
 </body>
 </html>
