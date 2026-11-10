@@ -292,8 +292,8 @@
     /* ═══ Stepper Tracker (Responsif) ═══ */
     .tracker-box {
         padding: 1rem 1.25rem 0.85rem;
-        background: #ffffff;
-        border-bottom: 1px solid #f1f5f9;
+        background: var(--bg-card, #ffffff);
+        border-bottom: 1px solid var(--border-color, #f1f5f9);
     }
 
     /* Stepper Desktop & Tablet (> 768px) */
@@ -317,7 +317,7 @@
         left: 30px;
         right: 30px;
         height: 3px;
-        background: #e2e8f0;
+        background: var(--border-color, #e2e8f0);
         z-index: 1;
     }
 
@@ -345,9 +345,9 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background: white;
-        border: 2.5px solid #cbd5e1;
-        color: #94a3b8;
+        background: var(--bg-card, white);
+        border: 2.5px solid var(--border-color, #cbd5e1);
+        color: var(--text-muted, #94a3b8);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -362,7 +362,7 @@
     }
 
     .tracker-step.current .tracker-node {
-        background: #ffffff;
+        background: var(--bg-card, #ffffff);
         border-color: #3b82f6;
         color: #3b82f6;
         box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
@@ -372,11 +372,11 @@
         font-size: 0.75rem;
         font-weight: 700;
         margin-top: 6px;
-        color: #64748b;
+        color: var(--text-secondary, #64748b);
         font-family: var(--font-montserrat);
     }
 
-    .tracker-step.done .tracker-step-label { color: #0f172a; }
+    .tracker-step.done .tracker-step-label { color: var(--text-heading, #0f172a); }
     .tracker-step.current .tracker-step-label { color: #2563eb; }
 
     .tracker-step-desc {
@@ -574,8 +574,8 @@
 
     /* Col 3: Peternak & Tagihan */
     .payment-summary-box {
-        background: #ffffff;
-        border: 1px solid #edf2f7;
+        background: var(--bg-surface, #ffffff);
+        border: 1px solid var(--border-color, #edf2f7);
         border-radius: 10px;
         padding: 0.75rem 0.85rem;
     }
@@ -585,7 +585,7 @@
         align-items: center;
         gap: 8px;
         padding-bottom: 0.5rem;
-        border-bottom: 1px solid #f1f5f9;
+        border-bottom: 1px solid var(--border-color, #f1f5f9);
         margin-bottom: 0.5rem;
     }
 
@@ -608,14 +608,14 @@
         justify-content: space-between;
         font-size: 0.78rem;
         margin-bottom: 0.25rem;
-        color: #64748b;
+        color: var(--text-secondary, #64748b);
     }
 
     .cost-row.total {
         margin-top: 0.4rem;
         padding-top: 0.4rem;
-        border-top: 1px dashed #e2e8f0;
-        color: #0f172a;
+        border-top: 1px dashed var(--border-color, #e2e8f0);
+        color: var(--text-heading, #0f172a);
         font-weight: 800;
         font-size: 0.9rem;
     }
@@ -623,16 +623,16 @@
     /* ═══ Box Ulasan Ringkas ═══ */
     .review-display-box {
         margin: 0 1.25rem 0.75rem;
-        background: #fffdf5;
-        border: 1px solid #fef3c7;
+        background: rgba(245, 158, 11, 0.08);
+        border: 1px solid rgba(245, 158, 11, 0.3);
         border-radius: 10px;
         padding: 0.75rem 1rem;
     }
 
     /* ═══ Card Footer Actions ═══ */
     .order-card-footer {
-        background: #f8fafc;
-        border-top: 1px solid #eef2f6;
+        background: var(--bg-muted, #f8fafc);
+        border-top: 1px solid var(--border-color, #eef2f6);
         padding: 0.65rem 1.25rem;
         display: flex;
         justify-content: space-between;

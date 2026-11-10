@@ -26,7 +26,7 @@
         </div>
 
         @if(session('success'))
-            <div class="alert alert-success" style="background: #d1fae5; color: #065f46; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+            <div class="alert alert-success" style="background: rgba(16, 185, 129, 0.1); color: var(--green-brand); border: 1px solid rgba(16, 185, 129, 0.25); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
                 {{ session('success') }}
             </div>
         @endif
@@ -34,18 +34,18 @@
         <div class="content-card">
             @if($edukasis->isEmpty())
                 <div style="text-align: center; padding: 2rem;">
-                    <p style="color: #64748b; font-size: 1.1rem;">Belum ada pamflet edukasi yang diunggah.</p>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem;">Belum ada pamflet edukasi yang diunggah.</p>
                 </div>
             @else
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
                     @foreach($edukasis as $edukasi)
-                        <div class="edukasi-card" style="border: 1px solid #e2e8f0; border-radius: 0.75rem; overflow: hidden; background: #fff;">
-                            <div style="height: 200px; overflow: hidden; background: #f1f5f9; display: flex; align-items: center; justify-content: center;">
+                        <div class="edukasi-card" style="border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; background: var(--bg-card); color: var(--text-primary);">
+                            <div style="height: 200px; overflow: hidden; background: var(--bg-muted); display: flex; align-items: center; justify-content: center;">
                                 <img src="{{ asset('storage/' . $edukasi->gambar) }}" alt="{{ $edukasi->judul }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                             </div>
                             <div style="padding: 1rem;">
-                                <h4 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; color: #1e293b;">{{ $edukasi->judul }}</h4>
-                                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 1rem;">Diunggah: {{ $edukasi->created_at->format('d M Y') }}</p>
+                                <h4 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; color: var(--text-heading);">{{ $edukasi->judul }}</h4>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Diunggah: {{ $edukasi->created_at->format('d M Y') }}</p>
                                 
                                 <form action="{{ route('pengurus_kampung.edukasi.destroy', $edukasi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus edukasi ini?');">
                                     @csrf

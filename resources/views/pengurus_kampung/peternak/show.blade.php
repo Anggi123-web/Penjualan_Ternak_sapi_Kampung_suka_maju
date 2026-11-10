@@ -68,12 +68,13 @@
     }
 
     .data-label {
-        color: #94a3b8;
+        color: var(--text-secondary);
+        font-weight: 500;
     }
 
     .data-value {
-        font-weight: 600;
-        color: #f1f5f9;
+        font-weight: 700;
+        color: var(--text-heading);
         text-align: right;
     }
 
@@ -145,15 +146,75 @@
         margin-bottom: 1.5rem;
     }
 
+    .back-link-peternak {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: #6d28d9;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        transition: color 0.2s ease;
+    }
+    .back-link-peternak:hover {
+        color: #4c1d95;
+    }
+    [data-theme="dark"] .back-link-peternak {
+        color: #c4b5fd;
+    }
+    [data-theme="dark"] .back-link-peternak:hover {
+        color: #ddd6fe;
+    }
+
+    .verif-pending-callout {
+        background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(217,119,6,0.18));
+        border: 1px solid rgba(217,119,6,0.4);
+        border-radius: 16px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        box-shadow: 0 4px 15px rgba(245,158,11,0.1);
+    }
+    [data-theme="dark"] .verif-pending-callout {
+        background: linear-gradient(135deg, rgba(245,158,11,0.18), rgba(217,119,6,0.25));
+        border-color: rgba(245,158,11,0.45);
+        box-shadow: 0 10px 25px -5px rgba(245,158,11,0.2);
+    }
+
+    .verif-pending-title {
+        margin: 0 0 4px 0;
+        color: #92400e;
+        font-size: 1.05rem;
+        font-weight: 800;
+    }
+    [data-theme="dark"] .verif-pending-title {
+        color: #fcd34d;
+    }
+
+    .verif-pending-text {
+        margin: 0;
+        color: #334155;
+        font-size: 0.85rem;
+        line-height: 1.45;
+    }
+    [data-theme="dark"] .verif-pending-text {
+        color: #cbd5e1;
+    }
+
     .tab-btn {
         padding: 0.65rem 1.25rem;
         border-radius: 12px;
         font-weight: 700;
         font-size: 0.9rem;
         cursor: pointer;
-        border: 1px solid transparent;
-        background: rgba(30, 41, 59, 0.6);
-        color: #94a3b8;
+        border: 1px solid var(--border-color);
+        background: var(--bg-muted);
+        color: var(--text-secondary);
         display: inline-flex;
         align-items: center;
         gap: 8px;
@@ -161,11 +222,20 @@
     }
 
     .tab-btn:hover {
+        color: #6d28d9;
+        background: rgba(139, 92, 246, 0.12);
+    }
+    [data-theme="dark"] .tab-btn:hover {
         color: #c4b5fd;
-        background: rgba(139, 92, 246, 0.15);
+        background: rgba(139, 92, 246, 0.2);
     }
 
     .tab-btn.active {
+        background: #ede9fe;
+        color: #6d28d9;
+        border-color: #8b5cf6;
+    }
+    [data-theme="dark"] .tab-btn.active {
         background: rgba(139, 92, 246, 0.25);
         color: #c4b5fd;
         border-color: #8b5cf6;
@@ -178,8 +248,8 @@
     }
 
     .sapi-card-mini {
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(148, 163, 184, 0.1);
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
         border-radius: 16px;
         overflow: hidden;
         transition: all 0.25s ease;
@@ -224,19 +294,23 @@
         font-size: 1rem;
         font-weight: 700;
         margin-bottom: 0.4rem;
+        color: var(--text-heading);
     }
 
     .sapi-spec-row {
         display: flex;
         gap: 1rem;
         font-size: 0.8rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
         margin-bottom: 0.75rem;
     }
 
     .sapi-price {
         font-size: 1.05rem;
         font-weight: 800;
+        color: var(--green-brand, #00A740);
+    }
+    [data-theme="dark"] .sapi-price {
         color: #6ee7b7;
     }
 
@@ -258,21 +332,23 @@
     }
 
     .modal-content-box {
-        background: #1e293b;
-        border: 1px solid rgba(148, 163, 184, 0.2);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
         border-radius: 20px;
         max-width: 650px;
         width: 100%;
         overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        color: var(--text-primary);
     }
 
     .modal-header-box {
         padding: 1.25rem 1.5rem;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        border-bottom: 1px solid var(--border-color);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: var(--text-heading);
     }
 
     .modal-body-box {
@@ -302,49 +378,122 @@
     <main class="main-content">
         <!-- Header & Breadcrumbs -->
         <div style="margin-bottom: 1.5rem;">
-            <a href="{{ route('pengurus_kampung.peternak.index') }}" style="display: inline-flex; align-items: center; gap: 6px; color: #c4b5fd; text-decoration: none; font-size: 0.88rem; font-weight: 600; margin-bottom: 0.75rem;">
+            <a href="{{ route('pengurus_kampung.peternak.index') }}" class="back-link-peternak">
                 <i class="bi bi-arrow-left"></i> Kembali ke Direktori Peternak
             </a>
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
                 <div>
                     <h1>{{ $peternak->name }}</h1>
-                    <p style="color: #94a3b8; font-size: 0.9rem;">Informasi administrasi kependudukan dan inventaris ternak peternak binaan.</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Informasi administrasi kependudukan dan inventaris ternak peternak binaan.</p>
                 </div>
-                @if($peternak->no_telepon)
-                    @php
-                        $cleanPhone = preg_replace('/[^0-9]/', '', $peternak->no_telepon);
-                        if (str_starts_with($cleanPhone, '0')) {
-                            $cleanPhone = '62' . substr($cleanPhone, 1);
-                        }
-                    @endphp
-                    <a href="https://wa.me/{{ $cleanPhone }}" target="_blank" style="padding: 0.7rem 1.25rem; background: #10b981; color: #ffffff; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-                        <i class="bi bi-whatsapp"></i> Hubungi WhatsApp
-                    </a>
-                @endif
+                <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+                    @if($peternak->isMenungguVerifikasi())
+                        <form method="POST" action="{{ route('pengurus_kampung.peternak.verifikasi', $peternak->id) }}" onsubmit="return confirm('Verifikasi akun peternak {{ addslashes($peternak->name) }} dan siapkan WhatsApp?')">
+                            @csrf
+                            <button type="submit" style="padding: 0.7rem 1.25rem; background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                                <i class="bi bi-check-circle-fill"></i> Setujui & Kirim Akun WA
+                            </button>
+                        </form>
+                        <button type="button" onclick="openRejectModal('{{ $peternak->id }}', '{{ addslashes($peternak->name) }}')" style="padding: 0.7rem 1.1rem; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.35); color: #dc2626; border-radius: 12px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="bi bi-x-circle"></i> Tolak
+                        </button>
+                    @elseif($peternak->isTerverifikasi())
+                        <a href="{{ route('pengurus_kampung.peternak.kirim_wa', $peternak->id) }}" target="_blank" style="padding: 0.7rem 1.25rem; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); color: #047857; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="bi bi-whatsapp"></i> Kirim Akun via WA
+                        </a>
+                    @endif
+
+                    @if($peternak->no_telepon)
+                        @php
+                            $cleanPhone = preg_replace('/[^0-9]/', '', $peternak->no_telepon);
+                            if (str_starts_with($cleanPhone, '0')) {
+                                $cleanPhone = '62' . substr($cleanPhone, 1);
+                            }
+                        @endphp
+                        <a href="https://wa.me/{{ $cleanPhone }}" target="_blank" style="padding: 0.7rem 1.25rem; background: #10b981; color: #ffffff; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                            <i class="bi bi-chat-dots-fill"></i> Chat WA
+                        </a>
+                    @endif
+                </div>
             </div>
         </div>
+
+        @if($peternak->isMenungguVerifikasi())
+            <div class="verif-pending-callout">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 48px; height: 48px; border-radius: 14px; background: #f59e0b; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 800; flex-shrink: 0;">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                    <div>
+                        <h4 class="verif-pending-title">
+                            Pendaftaran Akun Menunggu Verifikasi Aparat Kampung
+                        </h4>
+                        <p class="verif-pending-text">
+                            Pastikan data NIK, domisili kandang, dan dokumen KTP peternak telah valid sebelum menyetujui akun dan mengirimkan info via WhatsApp.
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+                    <form method="POST" action="{{ route('pengurus_kampung.peternak.verifikasi', $peternak->id) }}" onsubmit="return confirm('Verifikasi akun peternak {{ addslashes($peternak->name) }} dan siapkan pesan aktivasi WhatsApp?')">
+                        @csrf
+                        <button type="submit" style="padding: 0.65rem 1.25rem; background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; border: none; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                            <i class="bi bi-check-circle-fill"></i> Setujui & Kirim Akun WA
+                        </button>
+                    </form>
+                    <button type="button" onclick="openRejectModal('{{ $peternak->id }}', '{{ addslashes($peternak->name) }}')" style="padding: 0.65rem 1.1rem; background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.35); color: #dc2626; border-radius: 10px; font-weight: 700; font-size: 0.88rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="bi bi-x-circle"></i> Tolak Pendaftaran
+                    </button>
+                </div>
+            </div>
+        @endif
 
         <!-- 2-Column Layout -->
         <div class="profile-layout">
             <!-- Sidebar Card: Identitas & Dokumen -->
             <div class="profile-sidebar-card">
-                <div class="profile-avatar-large">
+                <div class="profile-avatar-large" style="{{ $peternak->isMenungguVerifikasi() ? 'background: linear-gradient(135deg, #f59e0b, #d97706);' : '' }}">
                     {{ strtoupper(substr($peternak->name, 0, 2)) }}
                 </div>
                 <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.25rem;">{{ $peternak->name }}</h3>
-                <span style="display: inline-block; background: rgba(139,92,246,0.15); color: #c4b5fd; padding: 3px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; margin-bottom: 1rem;">
-                    Peternak Terverifikasi
-                </span>
+                
+                @if($peternak->isMenungguVerifikasi())
+                    <span class="badge-status-verif status-menunggu" style="margin-bottom: 1rem;">
+                        <i class="bi bi-hourglass-split"></i> Menunggu Verifikasi
+                    </span>
+                @elseif($peternak->isTerverifikasi())
+                    <span class="badge-status-verif status-terverifikasi" style="margin-bottom: 0.5rem;">
+                        <i class="bi bi-patch-check-fill"></i> Peternak Terverifikasi
+                    </span>
+                    @if($peternak->diverifikasiOleh)
+                        <div style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 1rem;">
+                            Diverifikasi oleh: <strong style="color: var(--text-heading);">{{ $peternak->diverifikasiOleh->name }}</strong>
+                            @if($peternak->tanggal_verifikasi)
+                                &bull; {{ $peternak->tanggal_verifikasi->format('d/m/Y') }}
+                            @endif
+                        </div>
+                    @else
+                        <div style="margin-bottom: 0.75rem;"></div>
+                    @endif
+                @elseif($peternak->isDitolak())
+                    <span class="badge-status-verif status-ditolak" style="margin-bottom: 0.75rem;">
+                        <i class="bi bi-x-circle-fill"></i> Pendaftaran Ditolak
+                    </span>
+                    @if($peternak->alasan_penolakan)
+                        <div style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 1rem; font-size: 0.78rem; color: #dc2626;">
+                            <strong>Alasan:</strong> {{ $peternak->alasan_penolakan }}
+                        </div>
+                    @endif
+                @endif
 
                 <!-- KPI Mini -->
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-                    <div style="background: rgba(15,23,42,0.6); padding: 0.75rem; border-radius: 12px; text-align: center; border: 1px solid rgba(148,163,184,0.08);">
-                        <span style="font-size: 1.25rem; font-weight: 800; color: #c4b5fd; display: block;">{{ $stats['total_sapi'] }}</span>
-                        <span style="font-size: 0.72rem; color: #94a3b8;">Total Sapi</span>
+                    <div style="background: var(--bg-muted); padding: 0.75rem; border-radius: 12px; text-align: center; border: 1px solid var(--border-color);">
+                        <span style="font-size: 1.25rem; font-weight: 800; color: var(--text-heading); display: block;">{{ $stats['total_sapi'] }}</span>
+                        <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Total Sapi</span>
                     </div>
-                    <div style="background: rgba(15,23,42,0.6); padding: 0.75rem; border-radius: 12px; text-align: center; border: 1px solid rgba(148,163,184,0.08);">
-                        <span style="font-size: 1.25rem; font-weight: 800; color: #6ee7b7; display: block;">{{ $stats['transaksi_sukses'] }}</span>
-                        <span style="font-size: 0.72rem; color: #94a3b8;">Sapi Terjual</span>
+                    <div style="background: var(--bg-muted); padding: 0.75rem; border-radius: 12px; text-align: center; border: 1px solid var(--border-color);">
+                        <span style="font-size: 1.25rem; font-weight: 800; color: var(--green-brand); display: block;">{{ $stats['transaksi_sukses'] }}</span>
+                        <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Sapi Terjual</span>
                     </div>
                 </div>
 
@@ -482,7 +631,7 @@
                         <div style="overflow-x: auto;">
                             <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left;">
                                 <thead>
-                                    <tr style="border-bottom: 1px solid rgba(148,163,184,0.15); color: #94a3b8; font-size: 0.78rem; text-transform: uppercase;">
+                                    <tr style="border-bottom: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.78rem; text-transform: uppercase;">
                                         <th style="padding: 0.75rem 1rem;">No. Transaksi</th>
                                         <th style="padding: 0.75rem 1rem;">Tanggal</th>
                                         <th style="padding: 0.75rem 1rem;">Pembeli</th>
@@ -493,20 +642,20 @@
                                 </thead>
                                 <tbody>
                                     @foreach($transaksis as $trx)
-                                        <tr style="border-bottom: 1px solid rgba(148,163,184,0.06);">
-                                            <td style="padding: 0.85rem 1rem; font-family: monospace; font-weight: 700; color: #f1f5f9;">
+                                        <tr style="border-bottom: 1px solid var(--border-color);">
+                                            <td style="padding: 0.85rem 1rem; font-family: monospace; font-weight: 700; color: var(--text-heading);">
                                                 {{ $trx->kode_transaksi }}
                                             </td>
-                                            <td style="padding: 0.85rem 1rem; color: #94a3b8;">
+                                            <td style="padding: 0.85rem 1rem; color: var(--text-muted);">
                                                 {{ $trx->created_at->format('d M Y') }}
                                             </td>
-                                            <td style="padding: 0.85rem 1rem; font-weight: 600;">
+                                            <td style="padding: 0.85rem 1rem; font-weight: 600; color: var(--text-primary);">
                                                 {{ $trx->pembeli?->name ?? 'Pembeli' }}
                                             </td>
-                                            <td style="padding: 0.85rem 1rem; color: #c4b5fd;">
+                                            <td style="padding: 0.85rem 1rem; color: var(--text-secondary);">
                                                 {{ $trx->sapi?->jenis ?? 'Sapi' }}
                                             </td>
-                                            <td style="padding: 0.85rem 1rem; font-weight: 700; color: #6ee7b7;">
+                                            <td style="padding: 0.85rem 1rem; font-weight: 800; color: var(--green-brand);">
                                                 {{ $trx->total_harga_formatted }}
                                             </td>
                                             <td style="padding: 0.85rem 1rem;">
@@ -520,8 +669,8 @@
                             </table>
                         </div>
                     @else
-                        <div style="text-align: center; padding: 3rem; color: #94a3b8;">
-                            <i class="bi bi-receipt" style="font-size: 2.5rem; color: #64748b; margin-bottom: 0.75rem; display: block;"></i>
+                        <div style="text-align: center; padding: 3rem; color: var(--text-muted);">
+                            <i class="bi bi-receipt" style="font-size: 2.5rem; color: var(--text-muted); margin-bottom: 0.75rem; display: block;"></i>
                             <p>Belum ada transaksi penjualan sapi dari peternak ini.</p>
                         </div>
                     @endif
@@ -535,12 +684,46 @@
 <div class="modal-overlay" id="docModal" onclick="closeDocModal(event)">
     <div class="modal-content-box" onclick="event.stopPropagation()">
         <div class="modal-header-box">
-            <h4 id="docModalTitle">Pratinjau Dokumen</h4>
+            <h4 id="docModalTitle" style="color: var(--text-heading);">Pratinjau Dokumen</h4>
             <button type="button" class="modal-close-btn" onclick="closeDocModal()">&times;</button>
         </div>
         <div class="modal-body-box">
             <img id="docModalImg" src="" alt="Pratinjau Dokumen">
         </div>
+    </div>
+</div>
+
+<!-- Modal Tolak Pendaftaran Peternak -->
+<div class="modal-overlay" id="rejectModal" onclick="closeRejectModal(event)">
+    <div class="modal-content-box" onclick="event.stopPropagation()" style="max-width: 520px;">
+        <div class="modal-header-box" style="border-bottom: 1px solid rgba(239,68,68,0.25);">
+            <h4 style="color: #dc2626; display: flex; align-items: center; gap: 8px;">
+                <i class="bi bi-exclamation-triangle-fill"></i> Tolak Pendaftaran Peternak
+            </h4>
+            <button type="button" class="modal-close-btn" onclick="closeRejectModal()">&times;</button>
+        </div>
+        <form id="rejectForm" method="POST" action="{{ route('pengurus_kampung.peternak.tolak', $peternak->id) }}">
+            @csrf
+            <div class="modal-body-box" style="text-align: left; padding: 1.5rem;">
+                <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1rem;">
+                    Anda akan menolak pengajuan akun untuk <strong id="rejectPeternakName" style="color: var(--text-heading);">{{ $peternak->name }}</strong>. Berikan alasan penolakan yang jelas:
+                </p>
+                <div style="margin-bottom: 1.25rem;">
+                    <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                        Alasan / Catatan Penolakan <span style="color: #ef4444;">*</span>
+                    </label>
+                    <textarea name="alasan_penolakan" rows="4" required placeholder="Contoh: Dokumen KTP buram / tidak sesuai data domisili Kampung Suka Maju." style="width: 100%; padding: 0.75rem 1rem; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px; color: var(--text-primary); font-size: 0.88rem; outline: none; resize: vertical;"></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                    <button type="button" onclick="closeRejectModal()" style="padding: 0.6rem 1.2rem; background: var(--bg-muted); border: 1px solid var(--border-color); color: var(--text-secondary); border-radius: 10px; font-weight: 600; font-size: 0.85rem; cursor: pointer;">
+                        Batal
+                    </button>
+                    <button type="submit" style="padding: 0.6rem 1.3rem; background: linear-gradient(135deg, #ef4444, #dc2626); border: none; color: #ffffff; border-radius: 10px; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <i class="bi bi-x-circle"></i> Tolak & Kirim WA
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -596,8 +779,20 @@
         document.getElementById('docModal').classList.remove('active');
     }
 
+    function openRejectModal(id, name) {
+        document.getElementById('rejectPeternakName').textContent = name;
+        document.getElementById('rejectModal').classList.add('active');
+    }
+
+    function closeRejectModal() {
+        document.getElementById('rejectModal').classList.remove('active');
+    }
+
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeDocModal();
+        if (e.key === 'Escape') {
+            closeDocModal();
+            closeRejectModal();
+        }
     });
 </script>
 @endsection

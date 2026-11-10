@@ -44,7 +44,11 @@ class DashboardController extends Controller
             ->count();
         $omsetTriwulan = \App\Models\Transaksi::where('status', 'selesai')
             ->whereYear('created_at', $now->year)
-            ->whereIn(\Illuminate\Support\Facades\DB::raw('MONTH(created_at)'), $quarterMonths)
+            ->where(function($q) use ($quarterMonths) {
+                foreach ($quarterMonths as $m) {
+                    $q->orWhereMonth('created_at', $m);
+                }
+            })
             ->sum('total_harga');
 
         $recentPeternaks = \App\Models\User::where('role', 'peternak')
@@ -58,9 +62,14 @@ class DashboardController extends Controller
             ->take(5)
             ->get();
 
+        $pendingPeternakCount = \App\Models\User::where('role', 'peternak')
+            ->where('status_verifikasi', 'menunggu_verifikasi')
+            ->count();
+
         return view('dashboard.pengurus_kampung', compact(
             'totalPeternak',
             'peternakAktif',
+            'pendingPeternakCount',
             'totalSapi',
             'pendingSurat',
             'transaksiBulanIni',

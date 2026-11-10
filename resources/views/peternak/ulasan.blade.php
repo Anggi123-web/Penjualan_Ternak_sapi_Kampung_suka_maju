@@ -1,6 +1,4 @@
-@extends('layouts.peternak')
-
-@section('title', 'Ulasan & Reputasi Peternak — Sistem Penjualan Sapi')
+@extends('layouts.peternak', ['title' => 'Ulasan & Reputasi Peternak — Sistem Penjualan Sapi'])
 
 @section('page-styles')
 <style>
@@ -22,7 +20,7 @@
     .ulasan-header-title {
         font-size: clamp(1.35rem, 3vw, 1.75rem);
         font-weight: 800;
-        color: #f1f5f9;
+        color: var(--text-heading);
         margin: 0;
         font-family: var(--font-montserrat, sans-serif);
         display: flex;
@@ -31,7 +29,7 @@
     }
 
     .ulasan-header-subtitle {
-        color: #94a3b8;
+        color: var(--text-secondary);
         font-size: 0.88rem;
         margin-top: 4px;
         margin-bottom: 0;
@@ -47,15 +45,16 @@
     }
 
     .ulasan-stat-card {
-        background: #1e293b;
-        border: 1px solid rgba(148, 163, 184, 0.12);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
         border-radius: 14px;
         padding: 1.25rem 1.35rem;
         display: flex;
         align-items: center;
         gap: 1rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
         transition: transform 0.2s ease;
+        color: var(--text-primary);
     }
 
     .ulasan-stat-card:hover {
@@ -81,7 +80,7 @@
     .ulasan-stat-label {
         font-size: 0.78rem;
         font-weight: 700;
-        color: #94a3b8;
+        color: var(--text-secondary);
         text-transform: uppercase;
         letter-spacing: 0.04em;
     }
@@ -89,7 +88,7 @@
     .ulasan-stat-val {
         font-size: 1.75rem;
         font-weight: 900;
-        color: #f8fafc;
+        color: var(--text-heading);
         line-height: 1.15;
         margin-top: 2px;
         font-family: var(--font-montserrat, sans-serif);
@@ -97,14 +96,15 @@
 
     /* Distribution Card */
     .ulasan-dist-card {
-        background: #1e293b;
-        border: 1px solid rgba(148, 163, 184, 0.12);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
         border-radius: 14px;
         padding: 1rem 1.25rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
         display: flex;
         flex-direction: column;
         justify-content: center;
+        color: var(--text-primary);
     }
 
     .dist-row {
@@ -113,13 +113,13 @@
         gap: 6px;
         font-size: 0.76rem;
         margin-bottom: 3px;
-        color: #cbd5e1;
+        color: var(--text-secondary);
     }
 
     .dist-bar-track {
         flex: 1;
         height: 6px;
-        background: rgba(148, 163, 184, 0.15);
+        background: var(--bg-muted);
         border-radius: 999px;
         overflow: hidden;
     }
@@ -157,15 +157,15 @@
         align-items: center;
         gap: 4px;
         transition: all 0.2s;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        background: #1e293b;
-        color: #94a3b8;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        color: var(--text-secondary);
         flex-shrink: 0;
     }
 
     .ulasan-pill-btn:hover {
         background: rgba(16, 185, 129, 0.15);
-        color: #34d399;
+        color: var(--green-brand);
         border-color: rgba(16, 185, 129, 0.3);
     }
 
@@ -185,17 +185,18 @@
 
     /* Review Card */
     .ulasan-card {
-        background: #1e293b;
-        border: 1px solid rgba(148, 163, 184, 0.12);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
         border-radius: 14px;
         padding: 1.25rem 1.35rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
         margin-bottom: 1rem;
         transition: border-color 0.2s;
+        color: var(--text-primary);
     }
 
     .ulasan-card:hover {
-        border-color: rgba(148, 163, 184, 0.25);
+        border-color: rgba(16, 185, 129, 0.3);
     }
 
     .ulasan-card-header {
@@ -227,14 +228,14 @@
 
     .buyer-name-title {
         margin: 0;
-        color: #f8fafc;
+        color: var(--text-heading);
         font-size: 0.95rem;
         font-weight: 700;
         line-height: 1.2;
     }
 
     .buyer-meta-sub {
-        color: #94a3b8;
+        color: var(--text-secondary);
         font-size: 0.76rem;
         margin-top: 2px;
     }
@@ -251,14 +252,17 @@
     }
 
     .comment-quote-box {
-        color: #e2e8f0;
+        color: var(--text-primary);
         font-size: 0.88rem;
         line-height: 1.5;
         margin: 0.75rem 0 0;
-        background: rgba(15, 23, 42, 0.4);
+        background: var(--bg-muted);
         padding: 0.75rem 0.95rem;
         border-radius: 8px;
         border-left: 3px solid #f59e0b;
+        border: 1px solid var(--border-color);
+        border-left-width: 3px;
+        border-left-color: #f59e0b;
     }
 
     .reply-bubble-box {
@@ -345,9 +349,8 @@
 </style>
 @endsection
 
-@section('content')
-<div class="main-content">
-    <div class="ulasan-page-wrapper">
+@section('page-content')
+<div class="ulasan-page-wrapper">
         {{-- Header Halaman --}}
         <div class="ulasan-header">
             <div>
@@ -528,15 +531,15 @@
                         @endif
 
                         {{-- Kotak Input Balasan --}}
-                        <div id="replyBox-{{ $u->id }}" style="display: none; margin-top: 0.85rem; background: #0f172a; padding: 0.85rem; border-radius: 8px; border: 1px solid rgba(148, 163, 184, 0.2);">
+                        <div id="replyBox-{{ $u->id }}" style="display: none; margin-top: 0.85rem; background: var(--bg-muted); padding: 0.85rem; border-radius: 8px; border: 1px solid var(--border-color);">
                             <form action="{{ route('peternak.ulasan.balas', $u->id) }}" method="POST">
                                 @csrf
-                                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: #cbd5e1; margin-bottom: 0.35rem;">
+                                <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.35rem;">
                                     Tulis tanggapan / ucapan terima kasih:
                                 </label>
-                                <textarea name="balasan_peternak" rows="2" required placeholder="Contoh: Terima kasih atas kepercayaannya! Semoga ternak sapinya sehat dan berkah..." style="width: 100%; padding: 0.55rem 0.75rem; background: #1e293b; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 6px; color: #f8fafc; font-size: 0.84rem; outline: none; resize: vertical; font-family: inherit;">{{ $u->balasan_peternak }}</textarea>
+                                <textarea name="balasan_peternak" rows="2" required placeholder="Contoh: Terima kasih atas kepercayaannya! Semoga ternak sapinya sehat dan berkah..." style="width: 100%; padding: 0.55rem 0.75rem; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 6px; color: var(--text-primary); font-size: 0.84rem; outline: none; resize: vertical; font-family: inherit;">{{ $u->balasan_peternak }}</textarea>
                                 <div style="display: flex; justify-content: flex-end; gap: 6px; margin-top: 6px;">
-                                    <button type="button" onclick="toggleReplyBox({{ $u->id }})" style="background: rgba(148, 163, 184, 0.15); color: #cbd5e1; border: none; padding: 4px 10px; border-radius: 5px; font-size: 0.78rem; cursor: pointer;">
+                                    <button type="button" onclick="toggleReplyBox({{ $u->id }})" style="background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-color); padding: 4px 10px; border-radius: 5px; font-size: 0.78rem; cursor: pointer;">
                                         Batal
                                     </button>
                                     <button type="submit" style="background: #10b981; color: white; border: none; padding: 4px 12px; border-radius: 5px; font-size: 0.78rem; font-weight: 600; cursor: pointer;">
@@ -553,19 +556,20 @@
                 </div>
             </div>
         @else
-            <div style="background: #1e293b; border: 1px dashed rgba(148, 163, 184, 0.2); border-radius: 14px; padding: 3rem 1.5rem; text-align: center;">
+            <div style="background: var(--bg-card); border: 1px dashed var(--border-color); border-radius: 14px; padding: 3rem 1.5rem; text-align: center;">
                 <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); color: #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 1.85rem; margin: 0 auto 1rem;">
                     <i class="bi bi-star"></i>
                 </div>
-                <h3 style="color: #f1f5f9; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem;">Belum Ada Ulasan Pembeli</h3>
-                <p style="color: #94a3b8; font-size: 0.85rem; max-width: 440px; margin: 0 auto; line-height: 1.5;">
+                <h3 style="color: var(--text-heading); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem;">Belum Ada Ulasan Pembeli</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; max-width: 440px; margin: 0 auto; line-height: 1.5;">
                     Ulasan kepuasan dan rating bintang akan muncul di sini saat pembeli mengonfirmasi pesanan sapi mereka telah diterima.
                 </p>
             </div>
         @endif
     </div>
-</div>
+@endsection
 
+@section('scripts')
 <script>
     function toggleReplyBox(id) {
         var box = document.getElementById('replyBox-' + id);

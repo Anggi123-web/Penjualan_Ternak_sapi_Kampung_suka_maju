@@ -35,10 +35,10 @@
 
     .select-filter-custom {
         padding: 0.65rem 1rem;
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(148, 163, 184, 0.15);
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
         border-radius: 12px;
-        color: #f1f5f9;
+        color: var(--text-primary);
         font-size: 0.9rem;
         outline: none;
         cursor: pointer;
@@ -47,12 +47,12 @@
     }
 
     .select-filter-custom:focus {
-        border-color: #8b5cf6;
+        border-color: var(--green-brand);
     }
 
     .select-filter-custom option {
-        background: #1e293b;
-        color: #f1f5f9;
+        background: var(--bg-card);
+        color: var(--text-primary);
     }
 
     .btn-filter-action {
@@ -81,24 +81,30 @@
     }
 
     .btn-outline-print {
-        background: rgba(16, 185, 129, 0.15);
+        background: rgba(16, 185, 129, 0.12);
         border: 1px solid rgba(16, 185, 129, 0.35);
+        color: #065f46;
+    }
+    [data-theme="dark"] .btn-outline-print {
         color: #6ee7b7;
     }
 
     .btn-outline-print:hover {
-        background: rgba(16, 185, 129, 0.25);
+        background: #10b981;
         color: #ffffff;
     }
 
     .btn-outline-pdf {
-        background: rgba(239, 68, 68, 0.15);
+        background: rgba(239, 68, 68, 0.12);
         border: 1px solid rgba(239, 68, 68, 0.35);
+        color: #b91c1c;
+    }
+    [data-theme="dark"] .btn-outline-pdf {
         color: #fca5a5;
     }
 
     .btn-outline-pdf:hover {
-        background: rgba(239, 68, 68, 0.25);
+        background: #ef4444;
         color: #ffffff;
     }
 
@@ -151,25 +157,27 @@
         text-transform: uppercase;
         padding: 3px 8px;
         border-radius: 6px;
-        background: rgba(148, 163, 184, 0.15);
-        color: #cbd5e1;
+        background: var(--bg-muted);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
     }
 
     .quarter-card.highlight .quarter-badge {
-        background: #8b5cf6;
+        background: var(--green-brand);
         color: #ffffff;
+        border-color: transparent;
     }
 
     .quarter-omset {
         font-size: 1.25rem;
         font-weight: 800;
-        color: #f1f5f9;
+        color: var(--text-heading);
         margin-bottom: 0.25rem;
     }
 
     .quarter-sub {
         font-size: 0.8rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
     }
 
     /* Section Cards */
@@ -194,24 +202,24 @@
 
     .report-table th {
         padding: 0.85rem 1rem;
-        background: rgba(15, 23, 42, 0.5);
-        color: #94a3b8;
+        background: var(--bg-muted);
+        color: var(--text-secondary);
         font-size: 0.78rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+        border-bottom: 2px solid var(--border-color);
     }
 
     .report-table td {
         padding: 1rem;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.06);
-        color: #cbd5e1;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-primary);
         vertical-align: middle;
     }
 
     .report-table tr:hover td {
-        background: rgba(139, 92, 246, 0.04);
+        background: var(--bg-muted);
     }
 
     .percentage-bar-wrap {
@@ -234,7 +242,10 @@
 @section('content')
 <div class="mobile-header">
     <span style="font-weight: 700;"><i class="bi bi-houses"></i> Pengurus Kampung</span>
-    <button class="hamburger" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+    <div style="display: flex; align-items: center; gap: 8px;">
+        @include('partials.theme_toggle', ['id' => 'pengurusLaporanMobileThemeToggle', 'iconOnly' => true])
+        <button class="hamburger" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+    </div>
 </div>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
@@ -245,8 +256,8 @@
         <!-- Page Title & Action Bar -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
             <div>
-                <h1><i class="bi bi-clipboard2-data-fill" style="color: #c4b5fd;"></i> Laporan Penjualan Per Triwulan</h1>
-                <p style="color: #94a3b8; font-size: 0.9rem;">
+                <h1><i class="bi bi-clipboard2-data-fill" style="color: var(--accent-purple, #8b5cf6);"></i> Laporan Penjualan Per Triwulan</h1>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">
                     Rekapitulasi penjualan ternak sapi wilayah Kampung Suka Maju periode 
                     <strong>
                         @if($triwulan === 'all')
@@ -437,18 +448,18 @@
                                 <tr>
                                     <td>{{ $idx + 1 }}</td>
                                     <td>
-                                        <strong style="color: #f1f5f9;">{{ $pb['name'] }}</strong>
+                                        <strong style="color: var(--text-heading);">{{ $pb['name'] }}</strong>
                                     </td>
-                                    <td style="font-family: monospace; font-size: 0.82rem;">{{ $pb['nik'] }}</td>
-                                    <td style="font-size: 0.82rem;">{{ Str::limit($pb['alamat'], 35) }}</td>
-                                    <td style="text-align: center; font-weight: 700; color: #c4b5fd;">
+                                    <td style="font-family: monospace; font-size: 0.82rem; color: var(--text-secondary);">{{ $pb['nik'] }}</td>
+                                    <td style="font-size: 0.82rem; color: var(--text-secondary);">{{ Str::limit($pb['alamat'], 35) }}</td>
+                                    <td style="text-align: center; font-weight: 700; color: var(--accent-purple-text, #6d28d9);">
                                         {{ $pb['jumlah_sapi'] }} Ekor
                                     </td>
-                                    <td style="text-align: right; font-weight: 800; color: #6ee7b7;">
+                                    <td style="text-align: right; font-weight: 800; color: var(--green-brand);">
                                         Rp {{ number_format($pb['total_omset'], 0, ',', '.') }}
                                     </td>
                                     <td>
-                                        <div style="text-align: center; font-size: 0.8rem; font-weight: 700; color: #cbd5e1;">{{ $pct }}%</div>
+                                        <div style="text-align: center; font-size: 0.8rem; font-weight: 700; color: var(--text-primary);">{{ $pct }}%</div>
                                         <div class="percentage-bar-wrap">
                                             <div class="percentage-bar-fill" style="width: {{ $pct }}%;"></div>
                                         </div>
@@ -459,7 +470,7 @@
                     </table>
                 </div>
             @else
-                <p style="color: #94a3b8; font-size: 0.9rem; text-align: center; padding: 2rem 0;">
+                <p style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 2rem 0;">
                     Belum ada transaksi penjualan sapi dari peternak pada periode triwulan yang dipilih.
                 </p>
             @endif
@@ -469,9 +480,9 @@
         <div class="report-table-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
                 <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px;">
-                    <i class="bi bi-receipt" style="color: #93c5fd;"></i> Rincian Seluruh Transaksi Penjualan
+                    <i class="bi bi-receipt" style="color: var(--accent-blue, #2563eb);"></i> Rincian Seluruh Transaksi Penjualan
                 </h3>
-                <span style="font-size: 0.8rem; color: #94a3b8;">{{ $transaksis->total() }} Transaksi Tercatat</span>
+                <span style="font-size: 0.8rem; color: var(--text-secondary);">{{ $transaksis->total() }} Transaksi Tercatat</span>
             </div>
 
             @if($transaksis->count() > 0)
@@ -492,27 +503,27 @@
                         <tbody>
                             @foreach($transaksis as $trx)
                                 <tr>
-                                    <td style="font-family: monospace; font-weight: 700; color: #f1f5f9;">
+                                    <td style="font-family: monospace; font-weight: 700; color: var(--text-heading);">
                                         {{ $trx->kode_transaksi }}
                                     </td>
-                                    <td style="font-size: 0.82rem; color: #94a3b8;">
+                                    <td style="font-size: 0.82rem; color: var(--text-muted);">
                                         {{ $trx->created_at->format('d/m/Y H:i') }}
                                     </td>
                                     <td>
-                                        <strong style="color: #f1f5f9;">{{ $trx->sapi?->peternak?->name ?? '-' }}</strong>
+                                        <strong style="color: var(--text-heading);">{{ $trx->sapi?->peternak?->name ?? '-' }}</strong>
                                     </td>
-                                    <td>
+                                    <td style="color: var(--text-primary); font-weight: 600;">
                                         {{ $trx->pembeli?->name ?? 'Pembeli' }}
                                     </td>
                                     <td>
-                                        <span style="color: #c4b5fd; font-weight: 600;">{{ $trx->sapi?->jenis ?? 'Sapi' }}</span>
+                                        <span style="color: var(--text-heading); font-weight: 600;">{{ $trx->sapi?->jenis ?? 'Sapi' }}</span>
                                         @if($trx->sapi)
-                                            <span style="font-size: 0.75rem; color: #94a3b8; display: block;">{{ $trx->sapi->bobot }} kg &bull; {{ $trx->sapi->umur_formatted }}</span>
+                                            <span style="font-size: 0.75rem; color: var(--text-secondary); display: block;">{{ $trx->sapi->bobot }} kg &bull; {{ $trx->sapi->umur_formatted }}</span>
                                         @endif
                                     </td>
                                     <td style="font-size: 0.82rem;">
-                                        <span style="display: block; font-weight: 600; color: #cbd5e1;">{{ ucfirst($trx->tipe_penjualan) }}</span>
-                                        <span style="color: #94a3b8;">{{ ucfirst($trx->metode_pembayaran) }}</span>
+                                        <span style="display: block; font-weight: 600; color: var(--text-primary);">{{ ucfirst($trx->tipe_penjualan) }}</span>
+                                        <span style="color: var(--text-secondary);">{{ ucfirst($trx->metode_pembayaran) }}</span>
                                     </td>
                                     <td>
                                         <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; background: {{ $trx->status_meta['bg'] }}; color: {{ $trx->status_meta['color'] }}; border: 1px solid {{ $trx->status_meta['border'] }};">

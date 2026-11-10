@@ -7,7 +7,13 @@
     <title>Login — Sistem Penjualan Sapi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Unified SIPETER Design System & Dark/Light Mode Theme -->
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <script src="{{ asset('js/theme-manager.js') }}"></script>
+
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -17,14 +23,15 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #f1f5f9;
+            background-color: var(--bg-page, #0f172a);
+            color: var(--text-primary, #f1f5f9);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            transition: var(--theme-transition);
         }
 
         /* Animated Background */
@@ -140,14 +147,16 @@
         }
 
         .login-logo-box {
-            width: 140px;
-            height: 80px;
-            border: 2px solid rgba(148, 163, 184, 0.15);
+            width: auto;
+            max-width: 280px;
+            height: 72px;
+            padding: 6px 16px;
+            border: 1px solid rgba(148, 163, 184, 0.15);
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(15, 23, 42, 0.5);
+            background: var(--bg-card, rgba(15, 23, 42, 0.5));
             overflow: hidden;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -158,25 +167,26 @@
         }
 
         .login-logo-box img {
-            max-width: 110px;
-            max-height: 60px;
+            max-width: 100%;
+            height: 56px;
             object-fit: contain;
+            display: block;
         }
 
         /* Title */
         .login-title {
             text-align: center;
-            font-size: 1.6rem;
+            font-size: 1.75rem;
             font-weight: 800;
             letter-spacing: -0.03em;
             margin-bottom: 2rem;
-            color: #f1f5f9;
+            color: var(--text-heading, #0f172a);
         }
 
         /* Error */
         .form-error {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: #fef2f2;
+            border: 1px solid #fecaca;
             border-radius: 12px;
             padding: 0.85rem 1rem;
             margin-bottom: 1.5rem;
@@ -197,7 +207,7 @@
             flex-shrink: 0;
             display: flex;
             align-items: center;
-            color: #fca5a5;
+            color: #b91c1c;
         }
 
         .form-error-icon svg {
@@ -207,7 +217,8 @@
 
         .form-error-text {
             font-size: 0.85rem;
-            color: #fca5a5;
+            color: #b91c1c;
+            font-weight: 600;
             line-height: 1.4;
         }
 
@@ -218,33 +229,37 @@
 
         .form-label {
             display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #cbd5e1;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary, #0f172a);
             margin-bottom: 0.6rem;
+            letter-spacing: -0.01em;
         }
 
         .form-input {
             width: 100%;
-            padding: 0.9rem 1rem;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.12);
+            padding: 0.9rem 1.1rem;
+            background: var(--input-bg, #ffffff);
+            border: 1.5px solid var(--input-border, #cbd5e1);
             border-radius: 12px;
-            color: #f1f5f9;
+            color: var(--text-primary, #0f172a);
             font-size: 0.95rem;
+            font-weight: 500;
             font-family: 'Inter', sans-serif;
             transition: all 0.25s ease;
             outline: none;
         }
 
         .form-input::placeholder {
-            color: #475569;
+            color: var(--text-muted, #64748b);
+            opacity: 0.85;
         }
 
         .form-input:focus {
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
-            background: rgba(15, 23, 42, 0.8);
+            border-color: var(--green-brand, #00A740);
+            box-shadow: 0 0 0 3.5px var(--input-focus-ring, rgba(0, 167, 64, 0.2));
+            background: var(--bg-surface, #ffffff);
+            color: var(--text-primary, #0f172a);
         }
 
         /* Password wrapper */
@@ -263,7 +278,7 @@
             transform: translateY(-50%);
             background: none;
             border: none;
-            color: #475569;
+            color: var(--text-muted, #475569);
             cursor: pointer;
             padding: 0.25rem;
             transition: color 0.2s ease;
@@ -277,39 +292,41 @@
         }
 
         .password-toggle:hover {
-            color: #93c5fd;
+            color: var(--green-brand, #00A740);
         }
 
         /* Submit */
         .btn-submit {
             width: 100%;
             padding: 0.95rem;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--green-brand, #00A740), var(--green-hover, #008f38));
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.02em;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
             margin-top: 0.75rem;
+            box-shadow: 0 4px 14px var(--green-glow, rgba(0, 167, 64, 0.3));
         }
 
         .btn-submit::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.12));
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.15));
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
         .btn-submit:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--green-glow, rgba(0, 167, 64, 0.45));
         }
 
         .btn-submit:hover::before {
@@ -325,29 +342,32 @@
             text-align: center;
             margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(148, 163, 184, 0.08);
-            font-size: 0.9rem;
-            color: #94a3b8;
+            border-top: 1px solid var(--border-color, #e2e8f0);
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--text-secondary, #334155);
         }
 
         .register-link a {
-            color: #60a5fa;
-            font-weight: 700;
+            color: var(--green-brand, #00A740);
+            font-weight: 800;
             text-decoration: none;
             transition: color 0.2s ease;
+            margin-left: 4px;
         }
 
         .register-link a:hover {
-            color: #93c5fd;
+            color: var(--green-hover, #008f38);
             text-decoration: underline;
         }
 
         /* Footer */
         .login-footer {
             text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.8rem;
-            color: #475569;
+            margin-top: 1.75rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted, #64748b);
         }
 
         @media (max-width: 480px) {
@@ -356,7 +376,7 @@
             }
 
             .login-title {
-                font-size: 1.35rem;
+                font-size: 1.45rem;
             }
 
             .login-logo-box {
@@ -367,6 +387,16 @@
     </style>
 </head>
 <body>
+    <div style="position: fixed; top: 20px; left: 24px; z-index: 100;">
+        <a href="{{ route('beranda') }}" class="sipeter-back-btn" title="Kembali ke Beranda">
+            <i class="bi bi-arrow-left"></i> Beranda
+        </a>
+    </div>
+
+    <div style="position: fixed; top: 20px; right: 24px; z-index: 100;">
+        @include('partials.theme_toggle', ['id' => 'loginThemeToggle'])
+    </div>
+
     <div class="bg-gradient">
         <div class="bg-orb"></div>
     </div>
@@ -376,13 +406,43 @@
         <div class="login-card">
             {{-- Logo --}}
             <div class="login-logo-wrapper">
-                <div class="login-logo-box">
-                    <img src="{{ asset('images/sipeter_logo.png') }}" alt="SIPETER Logo">
-                </div>
+                <a href="{{ route('beranda') }}" class="login-logo-box" title="Kembali ke Beranda">
+                    <img src="{{ asset('images/sipeter_logo.png') }}" class="sipeter-brand-logo" alt="SIPETER Logo">
+                </a>
             </div>
 
             {{-- Title --}}
             <h1 class="login-title">Login</h1>
+
+            {{-- Flash Alert Messages --}}
+            @if (session('error'))
+                <div class="form-error" style="margin-bottom: 1.25rem;">
+                    <div class="form-error-icon">
+                        <i class="bi bi-shield-x" style="font-size: 1.2rem;"></i>
+                    </div>
+                    <div class="form-error-text">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            @endif
+
+            @if (session('warning'))
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.85rem 1rem; border-radius: 12px; font-size: 0.88rem; margin-bottom: 1.25rem; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); color: #d97706; font-weight: 600;">
+                    <i class="bi bi-clock-history" style="font-size: 1.2rem; flex-shrink: 0; margin-top: 1px;"></i>
+                    <div style="line-height: 1.45;">
+                        {{ session('warning') }}
+                    </div>
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.85rem 1rem; border-radius: 12px; font-size: 0.88rem; margin-bottom: 1.25rem; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: #059669; font-weight: 600;">
+                    <i class="bi bi-check-circle" style="font-size: 1.2rem; flex-shrink: 0; margin-top: 1px;"></i>
+                    <div style="line-height: 1.45;">
+                        {{ session('success') }}
+                    </div>
+                </div>
+            @endif
 
             {{-- Error Messages --}}
             @if ($errors->any())

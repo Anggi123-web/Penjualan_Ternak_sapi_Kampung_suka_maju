@@ -53,6 +53,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.process');
+Route::get('/register/peternak-menunggu-verifikasi', [AuthController::class, 'peternakPending'])->name('register.peternak_pending');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Peternak routes
@@ -142,9 +143,12 @@ Route::middleware(['auth', 'role:pengurus_kampung'])->prefix('pengurus-kampung')
     Route::get('/monitoring/{id}/surat-pdf', [PesananController::class, 'downloadSuratPdf'])->name('pengurus_kampung.monitoring.surat_pdf');
     Route::put('/monitoring/{id}/update', [PengurusMonitoringController::class, 'updateMonitoring'])->name('pengurus_kampung.monitoring.update');
 
-    // Data Peternak
+    // Data & Verifikasi Peternak
     Route::get('/peternak', [PengurusPeternakController::class, 'index'])->name('pengurus_kampung.peternak.index');
     Route::get('/peternak/{id}', [PengurusPeternakController::class, 'show'])->name('pengurus_kampung.peternak.show');
+    Route::post('/peternak/{id}/verifikasi', [PengurusPeternakController::class, 'verifikasi'])->name('pengurus_kampung.peternak.verifikasi');
+    Route::post('/peternak/{id}/tolak', [PengurusPeternakController::class, 'tolak'])->name('pengurus_kampung.peternak.tolak');
+    Route::get('/peternak/{id}/kirim-wa', [PengurusPeternakController::class, 'kirimWa'])->name('pengurus_kampung.peternak.kirim_wa');
 
     // Laporan Penjualan Per Triwulan
     Route::get('/laporan-triwulan', [PengurusLaporanController::class, 'index'])->name('pengurus_kampung.laporan.index');

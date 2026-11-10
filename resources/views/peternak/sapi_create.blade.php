@@ -42,15 +42,16 @@
     }
 
     .back-link:hover {
-        color: #f1f5f9;
+        color: var(--text-heading);
     }
 
     .form-card {
-        background: rgba(30, 41, 59, 0.7);
+        background: var(--bg-card);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(148, 163, 184, 0.08);
+        border: 1px solid var(--border-color);
         border-radius: 16px;
         padding: 2rem;
+        color: var(--text-primary);
     }
 
     .form-card h3 {
@@ -61,6 +62,7 @@
         align-items: center;
         gap: 0.5rem;
         letter-spacing: -0.02em;
+        color: var(--text-heading);
     }
 
     .form-grid {
@@ -81,7 +83,7 @@
         display: block;
         font-size: 0.8rem;
         font-weight: 600;
-        color: #94a3b8;
+        color: var(--text-secondary);
         margin-bottom: 0.5rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -90,10 +92,10 @@
     .form-input, .form-select {
         width: 100%;
         padding: 0.8rem 1rem;
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(148, 163, 184, 0.1);
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
         border-radius: 10px;
-        color: #f1f5f9;
+        color: var(--text-primary);
         font-size: 0.9rem;
         font-family: 'Inter', sans-serif;
         transition: all 0.2s ease;
@@ -110,22 +112,22 @@
     }
 
     .form-select option {
-        background: #1e293b;
-        color: #f1f5f9;
+        background: var(--bg-card);
+        color: var(--text-primary);
     }
 
     .form-input::placeholder {
-        color: #475569;
+        color: var(--text-muted);
     }
 
     .form-input:focus, .form-select:focus {
-        border-color: rgba(16, 185, 129, 0.4);
-        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
+        border-color: var(--green-brand);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
     }
 
     .form-hint {
         font-size: 0.75rem;
-        color: #64748b;
+        color: var(--text-secondary);
         margin-top: 0.35rem;
     }
 
@@ -166,18 +168,18 @@
     /* File Upload */
     .file-upload {
         position: relative;
-        border: 2px dashed rgba(148, 163, 184, 0.15);
+        border: 2px dashed var(--border-strong);
         border-radius: 12px;
         padding: 1.75rem;
         text-align: center;
         cursor: pointer;
         transition: all 0.2s ease;
-        background: rgba(15, 23, 42, 0.3);
+        background: var(--bg-muted);
     }
 
     .file-upload:hover {
-        border-color: rgba(16, 185, 129, 0.3);
-        background: rgba(16, 185, 129, 0.03);
+        border-color: var(--green-brand);
+        background: var(--green-subtle);
     }
 
     .file-upload input[type="file"] {
@@ -190,18 +192,19 @@
     .file-upload-icon {
         font-size: 2rem;
         margin-bottom: 0.5rem;
-        opacity: 0.5;
+        opacity: 0.7;
+        color: var(--text-secondary);
     }
 
     .file-upload-text {
         font-size: 0.85rem;
-        color: #94a3b8;
-        font-weight: 500;
+        color: var(--text-primary);
+        font-weight: 600;
     }
 
     .file-upload-hint {
         font-size: 0.75rem;
-        color: #64748b;
+        color: var(--text-secondary);
         margin-top: 0.25rem;
     }
 
@@ -260,9 +263,9 @@
 
     .btn-cancel {
         padding: 0.8rem 1.5rem;
-        background: transparent;
-        color: #94a3b8;
-        border: 1px solid rgba(148, 163, 184, 0.15);
+        background: var(--bg-muted);
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
         border-radius: 10px;
         font-size: 0.9rem;
         font-weight: 600;
@@ -273,8 +276,9 @@
     }
 
     .btn-cancel:hover {
-        color: #f1f5f9;
-        border-color: rgba(148, 163, 184, 0.3);
+        color: var(--text-heading);
+        background: var(--border-color);
+        border-color: var(--text-secondary);
     }
 
     /* Error */
@@ -318,22 +322,22 @@
         font-size: 0.9rem;
         font-weight: 600;
         transition: all 0.3s ease;
-        border: 2px solid rgba(148, 163, 184, 0.1);
-        background: rgba(15, 23, 42, 0.4);
-        color: #94a3b8;
+        border: 2px solid var(--border-color);
+        background: var(--bg-muted);
+        color: var(--text-secondary);
     }
 
     .tipe-option input[type="radio"]:checked + .tipe-order {
-        border-color: #10b981;
-        background: rgba(16, 185, 129, 0.1);
-        color: #6ee7b7;
+        border-color: var(--green-brand);
+        background: var(--green-subtle);
+        color: var(--green-brand);
         box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
     }
 
     .tipe-option input[type="radio"]:checked + .tipe-preorder {
         border-color: #f59e0b;
-        background: rgba(245, 158, 11, 0.1);
-        color: #fcd34d;
+        background: var(--accent-amber-bg);
+        color: var(--accent-amber-text);
         box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.08);
     }
 
@@ -511,7 +515,7 @@
 
             <div class="form-group form-full">
                 <label class="form-label">Keterangan Alamat Kandang (Dari Profil Anda)</label>
-                <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 0.85rem 1rem; font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">
+                <div style="background: var(--bg-muted); border: 1px solid var(--border-color); border-radius: 12px; padding: 0.85rem 1rem; font-size: 0.9rem; color: var(--text-primary); line-height: 1.5;">
                     🏡 {{ auth()->user()->alamat ?? 'Alamat belum diatur di profil Anda.' }}
                 </div>
                 <input type="hidden" name="lokasi" value="{{ auth()->user()->alamat }}">
@@ -522,11 +526,11 @@
 
     <div class="form-card" style="margin-top: 1.5rem;">
         <h3>🩺 Riwayat Kesehatan</h3>
-        <div style="background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15); border-radius: 10px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;">
+        <div style="background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); border-radius: 10px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem;">
             <span style="font-size: 1.25rem;">⏳</span>
             <div>
-                <div style="font-size: 0.85rem; font-weight: 600; color: #fcd34d;">Belum Diperiksa</div>
-                <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.15rem;">Riwayat kesehatan akan diisi dan diverifikasi oleh Mantri Hewan.</div>
+                <div style="font-size: 0.85rem; font-weight: 600; color: var(--accent-amber-text);">Belum Diperiksa</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.15rem;">Riwayat kesehatan akan diisi dan diverifikasi oleh Mantri Hewan.</div>
             </div>
         </div>
     </div>

@@ -13,11 +13,11 @@
 
     .toolbar-info {
         font-size: 0.9rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
     }
 
     .toolbar-info strong {
-        color: #fcd34d;
+        color: var(--accent-amber-text);
     }
 
     /* Alert */
@@ -28,7 +28,7 @@
         padding: 0.85rem 1rem;
         margin-bottom: 1.5rem;
         font-size: 0.85rem;
-        color: #6ee7b7;
+        color: var(--green-brand);
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -42,15 +42,15 @@
     }
 
     .data-table thead th {
-        background: rgba(15, 23, 42, 0.5);
-        color: #94a3b8;
+        background: var(--bg-muted);
+        color: var(--text-secondary);
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         padding: 0.85rem 1rem;
         text-align: left;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .data-table thead th:first-child {
@@ -66,14 +66,14 @@
     }
 
     .data-table tbody tr:hover {
-        background: rgba(255, 255, 255, 0.02);
+        background: rgba(255, 255, 255, 0.04);
     }
 
     .data-table tbody td {
         padding: 1rem;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+        border-bottom: 1px solid var(--border-color);
         font-size: 0.88rem;
-        color: #e2e8f0;
+        color: var(--text-primary);
         vertical-align: middle;
     }
 
@@ -88,30 +88,30 @@
         height: 52px;
         border-radius: 10px;
         object-fit: cover;
-        border: 1px solid rgba(148, 163, 184, 0.1);
+        border: 1px solid var(--border-color);
     }
 
     .table-sapi-thumb-placeholder {
         width: 52px;
         height: 52px;
         border-radius: 10px;
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+        background: var(--bg-muted);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.5rem;
-        opacity: 0.5;
+        opacity: 0.6;
     }
 
     .table-sapi-name {
         font-weight: 700;
-        color: #f1f5f9;
+        color: var(--text-heading);
         font-size: 0.92rem;
     }
 
     .table-sapi-peternak {
         font-size: 0.78rem;
-        color: #64748b;
+        color: var(--text-secondary);
         margin-top: 0.15rem;
     }
 
@@ -149,16 +149,16 @@
     }
 
     .health-belum {
-        background: rgba(245, 158, 11, 0.1);
-        border: 1px solid rgba(245, 158, 11, 0.2);
-        color: #fcd34d;
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        color: var(--accent-amber-text);
     }
 
     /* Empty State */
     .empty-state {
         text-align: center;
         padding: 4rem 1.5rem;
-        color: #64748b;
+        color: var(--text-secondary);
     }
 
     .empty-state-icon {
@@ -170,7 +170,7 @@
     .empty-state h3 {
         font-size: 1.15rem;
         font-weight: 700;
-        color: #94a3b8;
+        color: var(--text-heading);
         margin-bottom: 0.5rem;
     }
 
@@ -179,6 +179,7 @@
         max-width: 420px;
         margin: 0 auto;
         line-height: 1.6;
+        color: var(--text-secondary);
     }
 
     @media (max-width: 768px) {

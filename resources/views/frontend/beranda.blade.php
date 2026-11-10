@@ -7,7 +7,9 @@
     <section class="hero-static-section" id="home">
         <div class="hero-static-inner">
             <div class="hero-static-image">
-                <img src="{{ asset('storage/iklan/foto/sapihero.png') }}" alt="Sapi Hero">
+                <img src="{{ file_exists(public_path('storage/iklan/foto/sapihero.png')) ? asset('storage/iklan/foto/sapihero.png') : asset('images/sapihero.png') }}"
+                     onerror="this.onerror=null; this.src='{{ asset('images/sapihero.png') }}';"
+                     alt="Sapi Hero">
             </div>
             <div class="hero-static-content">
                 <h1 class="hero-static-title">
@@ -23,46 +25,46 @@
     </section>
 
     {{-- ═══ Marketplace Trust & Value Proposition Bar ═══ --}}
-    <section class="trust-bar-section" style="padding: 1.5rem 2rem 0; background-color: #fafbfc;">
+    <section class="trust-bar-section" style="padding: 1.5rem 2rem 0; background-color: var(--bg-body, #fafbfc);">
         <div style="max-width: 1400px; margin: 0 auto;">
-            <div class="trust-bar-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; background: #ffffff; padding: 1.25rem 1.75rem; border-radius: 16px; border: 1px solid #eef2f6; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+            <div class="trust-bar-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; background: var(--bg-card, #ffffff); padding: 1.25rem 1.75rem; border-radius: 16px; border: 1px solid var(--border-color, #eef2f6); box-shadow: var(--card-shadow, 0 4px 20px rgba(0,0,0,0.03));">
                 <div style="display: flex; align-items: center; gap: 0.85rem;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16, 185, 129, 0.1); color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(16, 185, 129, 0.12); color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
                         <i class="bi bi-shield-check"></i>
                     </div>
                     <div>
-                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">100% Tersertifikasi</h4>
-                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Uji kesehatan Mantri Hewan</p>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--text-heading, #1e293b);">100% Tersertifikasi</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--text-secondary, #64748b);">Uji kesehatan Mantri Hewan</p>
                     </div>
                 </div>
 
                 <div style="display: flex; align-items: center; gap: 0.85rem;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(59, 130, 246, 0.1); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(59, 130, 246, 0.12); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
                         <i class="bi bi-person-check-fill"></i>
                     </div>
                     <div>
-                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">Langsung dari Peternak</h4>
-                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Tanpa calo, harga kandang</p>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--text-heading, #1e293b);">Langsung dari Peternak</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--text-secondary, #64748b);">Tanpa calo, harga kandang</p>
                     </div>
                 </div>
 
                 <div style="display: flex; align-items: center; gap: 0.85rem;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(245, 158, 11, 0.1); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(245, 158, 11, 0.12); color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
                         <i class="bi bi-truck"></i>
                     </div>
                     <div>
-                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">Garansi Pengantaran</h4>
-                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Sapi selamat sampai alamat</p>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--text-heading, #1e293b);">Garansi Pengantaran</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--text-secondary, #64748b);">Sapi selamat sampai alamat</p>
                     </div>
                 </div>
 
                 <div style="display: flex; align-items: center; gap: 0.85rem;">
-                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(139, 92, 246, 0.1); color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(139, 92, 246, 0.12); color: #7c3aed; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0;">
                         <i class="bi bi-credit-card-2-front-fill"></i>
                     </div>
                     <div>
-                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: #1e293b;">Transaksi Aman & DP</h4>
-                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: #64748b;">Tersedia skema Pre-Order DP</p>
+                        <h4 style="margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--text-heading, #1e293b);">Transaksi Aman & DP</h4>
+                        <p style="margin: 0.15rem 0 0; font-size: 0.78rem; color: var(--text-secondary, #64748b);">Tersedia skema Pre-Order DP</p>
                     </div>
                 </div>
             </div>
@@ -70,7 +72,7 @@
     </section>
 
     {{-- ═══ Quick Category Bar ═══ --}}
-    <section class="quick-categories-section" style="padding: 2rem 2rem 0.5rem; background-color: #fafbfc;">
+    <section class="quick-categories-section" style="padding: 2rem 2rem 0.5rem; background-color: var(--bg-body, #fafbfc);">
         <div style="max-width: 1400px; margin: 0 auto;">
             <style>
                 .category-pill-item {
@@ -78,11 +80,11 @@
                     align-items: center;
                     gap: 0.6rem;
                     padding: 0.65rem 1.15rem;
-                    background: #ffffff;
-                    border: 1px solid #e2e8f0;
+                    background: var(--bg-card, #ffffff);
+                    border: 1px solid var(--border-color, #e2e8f0);
                     border-radius: 999px;
                     text-decoration: none;
-                    color: #1e293b;
+                    color: var(--text-heading, #1e293b);
                     font-weight: 600;
                     font-size: 0.88rem;
                     white-space: nowrap;
@@ -113,10 +115,10 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                 <div>
-                    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: #1e293b;">Pilihan Kategori Ternak</h3>
-                    <p style="margin: 0.2rem 0 0; font-size: 0.85rem; color: #64748b;">Jelajahi sapi pilihan berdasarkan jenis ras dan tipe pemesanan</p>
+                    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-heading, #1e293b);">Pilihan Kategori Ternak</h3>
+                    <p style="margin: 0.2rem 0 0; font-size: 0.85rem; color: var(--text-secondary, #64748b);">Jelajahi sapi pilihan berdasarkan jenis ras dan tipe pemesanan</p>
                 </div>
-                <a href="{{ route('katalog.index') }}" style="font-size: 0.82rem; font-weight: 700; color: #059669; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">
+                <a href="{{ route('katalog.index') }}" style="font-size: 0.82rem; font-weight: 700; color: var(--green-brand, #059669); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">
                     Lihat Semua &rarr;
                 </a>
             </div>
@@ -201,7 +203,7 @@
                     <div class="sapi-card-new-body">
                         <div class="sapi-card-new-title-row">
                             <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none; color: inherit;">
-                                <h3 style="transition: color 0.2s;" onmouseover="this.style.color='#00A740'" onmouseout="this.style.color='#0f172a'">{{ $sapi->jenis }}</h3>
+                                <h3 style="transition: color 0.2s;">{{ $sapi->jenis }}</h3>
                             </a>
                             <span class="sapi-card-new-price">{{ $sapi->harga_formatted }}</span>
                         </div>
@@ -299,7 +301,7 @@
                     <div class="sapi-card-new-body">
                         <div class="sapi-card-new-title-row">
                             <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none; color: inherit;">
-                                <h3 style="transition: color 0.2s;" onmouseover="this.style.color='#00A740'" onmouseout="this.style.color='#0f172a'">{{ $sapi->jenis }}</h3>
+                                <h3 style="transition: color 0.2s;">{{ $sapi->jenis }}</h3>
                             </a>
                             <span class="sapi-card-new-price">{{ $sapi->harga_formatted }}</span>
                         </div>
@@ -341,10 +343,10 @@
                 @endforeach
             </div>
             @else
-            <div style="text-align: center; padding: 3rem 1.5rem; background: #ffffff; border-radius: 1rem; border: 1px dashed #cbd5e1; margin-top: 1rem;">
+            <div style="text-align: center; padding: 3rem 1.5rem; background: var(--bg-card, #ffffff); border-radius: 1rem; border: 1px dashed var(--border-color, #cbd5e1); margin-top: 1rem;">
                 <i class="bi bi-hourglass-split" style="font-size: 2.75rem; color: #f59e0b; display: block; margin-bottom: 0.5rem;"></i>
-                <h4 style="font-size: 1.1rem; color: #334155; margin: 0 0 0.4rem 0; font-weight: 600;">Belum Ada Sapi Pre-Order</h4>
-                <p style="color: #64748b; font-size: 0.9rem; margin: 0;">Saat ini belum ada ternak dalam kategori Pre-Order yang tersedia.</p>
+                <h4 style="font-size: 1.1rem; color: var(--text-heading, #334155); margin: 0 0 0.4rem 0; font-weight: 700;">Belum Ada Sapi Pre-Order</h4>
+                <p style="color: var(--text-secondary, #64748b); font-size: 0.9rem; margin: 0;">Saat ini belum ada ternak dalam kategori Pre-Order yang tersedia.</p>
             </div>
             @endif
         </div>
@@ -352,7 +354,7 @@
 
     {{-- ═══ Section Iklan di Sela-Sela Katalog (Tanpa Teks/Kalimat Apapun) ═══ --}}
     @if(isset($iklans) && $iklans->count() > 0)
-    <section class="iklan-sela-katalog-section" style="padding: 2rem 2rem; background-color: #f8fafc; border-top: 1px solid #f1f5f9;">
+    <section class="iklan-sela-katalog-section" style="padding: 2rem 2rem; background-color: var(--bg-body, #f8fafc); border-top: 1px solid var(--border-color, #f1f5f9);">
         <div style="max-width: 1400px; margin: 0 auto;">
             <div class="carousel-container" style="border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.06);">
                 <div class="carousel-track" id="carouselTrack">
@@ -379,7 +381,7 @@
     @endif
 
     {{-- ═══ Katalog Sapi Pesan Biasa Section ═══ --}}
-    <section class="sapi-update-section" id="katalog-biasa" style="padding-top: 3rem; padding-bottom: 4rem; background-color: #ffffff; border-top: 1px solid #f1f5f9;">
+    <section class="sapi-update-section" id="katalog-biasa" style="padding-top: 3rem; padding-bottom: 4rem; background-color: var(--bg-card, #ffffff); border-top: 1px solid var(--border-color, #f1f5f9);">
         <div class="sapi-update-inner">
             <div class="sapi-update-header">
                 <div class="sapi-update-header-left">
@@ -425,7 +427,7 @@
                     <div class="sapi-card-new-body">
                         <div class="sapi-card-new-title-row">
                             <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none; color: inherit;">
-                                <h3 style="transition: color 0.2s;" onmouseover="this.style.color='#00A740'" onmouseout="this.style.color='#0f172a'">{{ $sapi->jenis }}</h3>
+                                <h3 style="transition: color 0.2s;">{{ $sapi->jenis }}</h3>
                             </a>
                             <span class="sapi-card-new-price">{{ $sapi->harga_formatted }}</span>
                         </div>
@@ -467,10 +469,10 @@
                 @endforeach
             </div>
             @else
-            <div style="text-align: center; padding: 3rem 1.5rem; background: #f8fafc; border-radius: 1rem; border: 1px dashed #cbd5e1; margin-top: 1rem;">
+            <div style="text-align: center; padding: 3rem 1.5rem; background: var(--bg-card, #f8fafc); border-radius: 1rem; border: 1px dashed var(--border-color, #cbd5e1); margin-top: 1rem;">
                 <i class="bi bi-box-seam" style="font-size: 2.75rem; color: #10b981; display: block; margin-bottom: 0.5rem;"></i>
-                <h4 style="font-size: 1.1rem; color: #334155; margin: 0 0 0.4rem 0; font-weight: 600;">Belum Ada Sapi Pesan Biasa</h4>
-                <p style="color: #64748b; font-size: 0.9rem; margin: 0;">Saat ini belum ada ternak dalam kategori pesan biasa yang tersedia.</p>
+                <h4 style="font-size: 1.1rem; color: var(--text-heading, #334155); margin: 0 0 0.4rem 0; font-weight: 700;">Belum Ada Sapi Pesan Biasa</h4>
+                <p style="color: var(--text-secondary, #64748b); font-size: 0.9rem; margin: 0;">Saat ini belum ada ternak dalam kategori pesan biasa yang tersedia.</p>
             </div>
             @endif
 

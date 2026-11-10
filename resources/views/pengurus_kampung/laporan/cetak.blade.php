@@ -92,22 +92,14 @@
         }
 
         .kop-logo {
-            width: 70px;
-            text-align: center;
+            width: 150px;
+            text-align: left;
         }
 
-        .kop-logo-box {
-            width: 62px;
-            height: 62px;
-            border: 2px solid #000000;
-            border-radius: 50%;
-            margin: 0 auto;
-            text-align: center;
-            line-height: 58px;
-            color: #000000;
-            font-weight: bold;
-            font-size: 20pt;
-            font-family: Arial, sans-serif;
+        .kop-logo img {
+            height: 68px;
+            width: auto;
+            object-fit: contain;
         }
 
         .kop-text {
@@ -285,7 +277,7 @@
         <table class="kop-table">
             <tr>
                 <td class="kop-logo">
-                    <div class="kop-logo-box">KM</div>
+                    <img src="{{ asset('images/sipeter_logo.png') }}" alt="Logo" style="height: 68px; width: auto; object-fit: contain;">
                 </td>
                 <td class="kop-text">
                     <h4>Pemerintah Kabupaten Merauke</h4>
@@ -307,7 +299,7 @@
                 @if($triwulan === 'all')
                     Semua Triwulan (Tahun Anggaran {{ $tahun }})
                 @else
-                    Triwulan {{ match($triwulan) { '1' => 'I (Januari - Maret)', '2' => 'II (April - Juni)', '3' => 'III (Juli - September)', '4' => 'IV (Oktober - Desember)' } }} Tahun {{ $tahun }}
+                    Triwulan {{ match((string)$triwulan) { '1' => 'I (Januari - Maret)', '2' => 'II (April - Juni)', '3' => 'III (Juli - September)', '4' => 'IV (Oktober - Desember)', default => (string)$triwulan } }} Tahun {{ $tahun }}
                 @endif
             </div>
             <div style="font-size: 8.5pt; color: #555555; margin-top: 2px;">

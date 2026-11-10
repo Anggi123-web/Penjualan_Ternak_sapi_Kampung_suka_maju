@@ -22,7 +22,7 @@
                 display: inline-flex;
                 align-items: center;
                 gap: 0.5rem;
-                color: #94a3b8;
+                color: var(--text-secondary);
                 text-decoration: none;
                 font-size: 0.85rem;
                 font-weight: 600;
@@ -30,7 +30,7 @@
             }
 
             .back-nav-link:hover {
-                color: #f1f5f9;
+                color: var(--green-brand);
             }
 
             .notice-box {
@@ -39,12 +39,16 @@
                 border-radius: 12px;
                 padding: 1rem 1.25rem;
                 margin-bottom: 1.75rem;
-                color: #fca5a5;
+                color: #991b1b;
                 font-size: 0.88rem;
                 line-height: 1.5;
                 display: flex;
                 align-items: flex-start;
                 gap: 0.75rem;
+            }
+
+            [data-theme="dark"] .notice-box {
+                color: #fca5a5;
             }
 
             .table-container {
@@ -63,19 +67,20 @@
             }
 
             .sampah-table th {
-                background: rgba(15, 23, 42, 0.5);
+                background: var(--bg-muted);
                 padding: 1rem 1.25rem;
                 font-size: 0.75rem;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
-                color: #94a3b8;
-                border-bottom: 1px solid var(--border-color);
+                color: var(--text-secondary);
+                border-bottom: 2px solid var(--border-color);
             }
 
             .sampah-table td {
                 padding: 1.15rem 1.25rem;
-                border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+                border-bottom: 1px solid var(--border-color);
+                color: var(--text-primary);
                 vertical-align: middle;
             }
 
@@ -84,7 +89,26 @@
             }
 
             .sampah-table tr:hover td {
-                background: rgba(148, 163, 184, 0.02);
+                background: var(--bg-muted);
+            }
+
+            .btn-back-katalog {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.65rem 1.25rem;
+                background: rgba(139,92,246,0.12);
+                color: #6d28d9;
+                border: 1px solid rgba(139,92,246,0.3);
+                border-radius: 10px;
+                font-size: 0.85rem;
+                font-weight: 700;
+                text-decoration: none;
+                transition: all 0.2s ease;
+            }
+            [data-theme="dark"] .btn-back-katalog {
+                background: rgba(139,92,246,0.2);
+                color: #c4b5fd;
             }
 
             .sapi-item-info {
@@ -114,14 +138,14 @@
 
             .sapi-title-text {
                 font-weight: 700;
-                color: #f1f5f9;
+                color: var(--text-heading);
                 font-size: 0.95rem;
                 margin-bottom: 0.2rem;
             }
 
             .sapi-specs-text {
                 font-size: 0.8rem;
-                color: #94a3b8;
+                color: var(--text-secondary);
                 display: flex;
                 gap: 0.75rem;
             }
@@ -219,13 +243,13 @@
 
         <div class="table-container">
             @if($sapis->isEmpty())
-                <div style="text-align: center; padding: 4.5rem 2rem; color: #64748b;">
+                <div style="text-align: center; padding: 4.5rem 2rem; color: var(--text-secondary);">
                     <div style="font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.4;">✨</div>
-                    <h3 style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 0.5rem;">Sampah Kosong</h3>
-                    <p style="font-size: 0.9rem;">Tidak ada katalog sapi yang berada di dalam sampah saat ini.</p>
+                    <h3 style="color: var(--text-heading); font-size: 1.15rem; margin-bottom: 0.5rem;">Sampah Kosong</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Tidak ada katalog sapi yang berada di dalam sampah saat ini.</p>
                     <div style="margin-top: 1.5rem;">
-                        <a href="{{ route('pengurus_kampung.katalog.index') }}" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; background: rgba(139,92,246,0.15); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.3); border-radius: 10px; font-size: 0.85rem; font-weight: 600; text-decoration: none;">
-                            Kembali ke Katalog
+                        <a href="{{ route('pengurus_kampung.katalog.index') }}" class="btn-back-katalog">
+                            <i class="bi bi-arrow-left"></i> Kembali ke Katalog
                         </a>
                     </div>
                 </div>
@@ -257,24 +281,24 @@
                                             <div class="sapi-specs-text">
                                                 <span>📅 {{ $sapi->umur_formatted }}</span>
                                                 <span>⚖️ {{ number_format($sapi->bobot, 0) }} kg</span>
-                                                <span style="font-weight: 700; color: {{ $sapi->is_preorder ? '#fbbf24' : '#6ee7b7' }};">
+                                                <span style="font-weight: 700; color: {{ $sapi->is_preorder ? 'var(--accent-amber-text, #92400e)' : 'var(--green-brand)' }};">
                                                     {{ $sapi->tipe_penjualan_label }}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>
-                                    <div style="font-weight: 600; color: #f1f5f9;">{{ $sapi->peternak->name ?? '-' }}</div>
-                                    <div style="font-size: 0.8rem; color: #94a3b8;">{{ $sapi->peternak->email ?? '-' }}</div>
-                                </td>
-                                <td>
-                                    <div style="font-weight: 800; color: #6ee7b7;">{{ $sapi->harga_formatted }}</div>
-                                </td>
-                                <td>
-                                    <div style="font-weight: 600; color: #f1f5f9;">{{ $sapi->deleted_at->format('d M Y, H:i') }}</div>
-                                    <div style="font-size: 0.75rem; color: #94a3b8;">{{ $sapi->deleted_at->diffForHumans() }}</div>
-                                </td>
+                                    <td>
+                                        <div style="font-weight: 600; color: var(--text-heading);">{{ $sapi->peternak->name ?? '-' }}</div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">{{ $sapi->peternak->email ?? '-' }}</div>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 800; color: var(--green-brand);">{{ $sapi->harga_formatted }}</div>
+                                    </td>
+                                    <td>
+                                        <div style="font-weight: 600; color: var(--text-heading);">{{ $sapi->deleted_at->format('d M Y, H:i') }}</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted);">{{ $sapi->deleted_at->diffForHumans() }}</div>
+                                    </td>
                                 <td>
                                     <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;">
                                         {{-- Pulihkan --}}

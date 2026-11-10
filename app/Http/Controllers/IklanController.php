@@ -30,7 +30,7 @@ class IklanController extends Controller
     {
         $request->validate([
             'judul' => 'nullable|string|max:255',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
         ]);
 
         $path = $request->file('gambar')->store('iklan/foto', 'public');

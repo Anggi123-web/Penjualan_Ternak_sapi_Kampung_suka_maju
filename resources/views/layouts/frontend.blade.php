@@ -13,6 +13,10 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <!-- Unified SIPETER Design System & Dark/Light Mode Theme -->
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <script src="{{ asset('js/theme-manager.js') }}"></script>
+
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -23,9 +27,9 @@
         :root {
             --green-brand: #00A740;
             --green-hover: #008f38;
-            --black-text: #000000;
-            --medium-gray: #555555;
-            --light-bg: #f8fafc;
+            --black-text: var(--text-primary, #0f172a);
+            --medium-gray: var(--text-secondary, #64748b);
+            --light-bg: var(--bg-page, #f8fafc);
             --font-montserrat: 'Montserrat', sans-serif;
             --font-inter: 'Inter', sans-serif;
             --font-sloop: 'Alex Brush', 'Satisfy', cursive;
@@ -1489,6 +1493,9 @@
         </div>
         
         <div style="margin-top: auto; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+            <div style="margin-bottom: 1rem; display: flex; justify-content: center;">
+                @include('partials.theme_toggle', ['id' => 'mobileDrawerThemeToggle'])
+            </div>
             @auth
                 @php
                     $dashboardRoute = match(auth()->user()->role) {
@@ -1551,6 +1558,9 @@
                     </div>
                 </form>
 
+                <!-- Universal Theme Mode Toggle Button -->
+                @include('partials.theme_toggle', ['id' => 'frontendNavThemeToggle'])
+
                 @auth
                     @if(auth()->user()->role === 'pembeli')
                         @php
@@ -1579,17 +1589,17 @@
                                 <i class="bi bi-person-circle" style="font-size: 1.05rem;"></i> Akun Saya
                             </a>
                             <div class="dropdown-content" style="display: none; position: absolute; right: 0; padding-top: 8px; min-width: 180px; z-index: 10;">
-                                <div style="background-color: #ffffff; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
-                                    <a href="{{ route('pesanan.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; color: var(--black-text); text-decoration: none; font-size: 13px; font-weight: 600; font-family: var(--font-inter); transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
+                                <div style="background-color: var(--bg-card, #ffffff); box-shadow: var(--card-shadow, 0px 8px 16px 0px rgba(0,0,0,0.1)); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color, rgba(0,0,0,0.05));">
+                                    <a href="{{ route('pesanan.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; color: var(--text-primary, var(--black-text)); text-decoration: none; font-size: 13px; font-weight: 600; font-family: var(--font-inter); transition: background-color 0.2s;">
                                         <span style="display: flex; align-items: center; gap: 8px;"><i class="bi bi-box-seam" style="color: var(--green-brand);"></i> Pemesanan Saya</span>
                                         @if($notifUpdatePesanan > 0)
                                             <span style="background: #ef4444; color: white; border-radius: 999px; padding: 1px 6px; font-size: 10px; font-weight: bold;">{{ $notifUpdatePesanan }}</span>
                                         @endif
                                     </a>
-                                    <div style="height: 1px; background: rgba(0,0,0,0.05);"></div>
+                                    <div style="height: 1px; background: var(--border-color, rgba(0,0,0,0.05));"></div>
                                     <form action="{{ route('logout') }}" method="POST" style="margin: 0; padding: 0;">
                                         @csrf
-                                        <button type="submit" style="width: 100%; text-align: left; padding: 12px 16px; border: none; background: transparent; cursor: pointer; color: #ef4444; font-weight: bold; font-family: var(--font-inter); font-size: 13px; display: flex; align-items: center; gap: 8px; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#fee2e2'" onmouseout="this.style.backgroundColor='transparent'"><i class="bi bi-box-arrow-right"></i> Keluar</button>
+                                        <button type="submit" style="width: 100%; text-align: left; padding: 12px 16px; border: none; background: transparent; cursor: pointer; color: #ef4444; font-weight: bold; font-family: var(--font-inter); font-size: 13px; display: flex; align-items: center; gap: 8px; transition: background-color 0.2s;"><i class="bi bi-box-arrow-right"></i> Keluar</button>
                                     </form>
                                 </div>
                             </div>
@@ -1626,7 +1636,7 @@
         <div class="footer-inner">
             <div class="footer-brand">
                 <div class="footer-logo-row">
-                    <img src="{{ asset('images/sipeter_logo.png') }}" alt="Logo" style="height: 80px; width: auto; object-fit: contain;">
+                    <img src="{{ asset('images/sipeter_logo.png') }}" class="footer-logo-img sipeter-brand-logo" alt="Logo" style="height: 75px; width: auto; object-fit: contain;">
                 </div>
                 <p class="footer-desc">
                     Mewujudkan ekosistem peternakan sapi digital Indonesia yang lebih sehat, transparan, dan terpercaya bagi peternak dan pembeli.

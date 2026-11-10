@@ -218,7 +218,7 @@ class PesananController extends Controller
             ->setPaper('a4', 'portrait');
 
         $cleanNomor = preg_replace('/[^A-Za-z0-9_\-]/', '_', $transaksi->nomor_surat ?: $transaksi->kode_transaksi);
-        $filename = 'Surat_Keterangan_Jalan_Ternak_' . $cleanNomor . '.pdf';
+        $filename = 'Surat_Keterangan_Jual_Beli_Sapi_' . $cleanNomor . '.pdf';
 
         if (request()->query('download')) {
             return $pdf->download($filename);

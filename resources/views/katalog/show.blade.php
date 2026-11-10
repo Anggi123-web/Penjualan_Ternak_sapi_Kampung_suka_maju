@@ -20,6 +20,10 @@
     <!-- Leaflet CSS for Maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
+    <!-- Unified SIPETER Design System & Dark/Light Mode Theme -->
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <script src="{{ asset('js/theme-manager.js') }}"></script>
+
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -28,21 +32,22 @@
         }
 
         :root {
-            --primary-green: #00A740;
-            --primary-green-hover: #008f38;
-            --bg-card: #d8dbe0;
-            --bg-card-light: #f3f4f6;
-            --text-dark: #111827;
-            --text-muted: #6b7280;
-            --border-color: #cbd5e1;
+            --primary-green: var(--green-brand, #00A740);
+            --primary-green-hover: var(--green-hover, #008f38);
+            --bg-card: var(--bg-surface, #ffffff);
+            --bg-card-light: var(--bg-muted, #f8fafc);
+            --text-dark: var(--text-primary, #0f172a);
+            --text-muted: var(--text-muted, #64748b);
+            --border-color: var(--border-color, #e2e8f0);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: var(--text-dark);
+            background-color: var(--bg-page, #f8fafc);
+            color: var(--text-primary, #0f172a);
             min-height: 100vh;
             line-height: 1.5;
+            transition: var(--theme-transition);
         }
 
         /* ═══ Header / Navbar ═══ */
@@ -64,31 +69,26 @@
             justify-content: space-between;
         }
 
-        /* Logo matching wireframe block style with optional image */
+        /* Logo matching brand style */
         .logo-box {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 0.6rem 1.6rem;
-            background-color: #e5e7eb;
-            border: 1.5px solid #d1d5db;
-            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            background-color: transparent;
+            border: none;
+            border-radius: 8px;
             text-decoration: none;
-            color: #111827;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.15rem;
-            letter-spacing: 0.05em;
-            transition: all 0.2s ease;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
         .logo-box:hover {
-            background-color: #d1d5db;
-            color: #000;
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
 
         .logo-box img {
-            height: 34px;
+            height: 52px;
             width: auto;
             object-fit: contain;
             display: block;
@@ -794,11 +794,11 @@
         /* ═══ Section Ulasan & Reputasi Peternak ═══ */
         .ulasan-section-box {
             margin-top: 3rem;
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
+            background: var(--bg-card, #ffffff);
+            border: 1px solid var(--border-color, #e2e8f0);
             border-radius: 20px;
             padding: 2.25rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            box-shadow: var(--card-shadow, 0 4px 20px rgba(0,0,0,0.04));
         }
 
         .ulasan-section-header {
@@ -808,14 +808,142 @@
             flex-wrap: wrap;
             gap: 1.25rem;
             margin-bottom: 2rem;
-            border-bottom: 1px solid #f1f5f9;
+            border-bottom: 1px solid var(--border-color, #f1f5f9);
             padding-bottom: 1.5rem;
+        }
+
+        .ulasan-score-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 0.65rem 1.15rem;
+            border-radius: 14px;
+        }
+
+        .ulasan-score-num {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #b45309;
+            line-height: 1;
+        }
+
+        .ulasan-score-label {
+            font-size: 0.78rem;
+            color: #92400e;
+            font-weight: 700;
+            margin-top: 3px;
+        }
+
+        [data-theme="dark"] .ulasan-score-num {
+            color: #fcd34d;
+        }
+
+        [data-theme="dark"] .ulasan-score-label {
+            color: #fde68a;
         }
 
         .ulasan-reviews-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
             gap: 1.25rem;
+        }
+
+        .ulasan-card-item {
+            background: var(--bg-surface, #f8fafc);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .ulasan-buyer-name {
+            color: var(--text-heading, #1e293b);
+            font-size: 0.92rem;
+            display: block;
+            font-weight: 700;
+        }
+
+        .ulasan-meta-date {
+            font-size: 0.75rem;
+            color: var(--text-secondary, #64748b);
+        }
+
+        .ulasan-tag-badge {
+            background: rgba(16, 185, 129, 0.12);
+            color: #047857;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-weight: 700;
+        }
+
+        [data-theme="dark"] .ulasan-tag-badge {
+            color: #6ee7b7;
+        }
+
+        .ulasan-comment-text {
+            margin: 0;
+            color: var(--text-primary, #334155);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .ulasan-reply-box {
+            margin-top: 0.85rem;
+            padding: 0.6rem 0.85rem;
+            border-top: 1px dashed var(--border-color, #cbd5e1);
+            font-size: 0.8rem;
+            color: #047857;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+        }
+
+        [data-theme="dark"] .ulasan-reply-box {
+            color: #6ee7b7;
+        }
+
+        .ulasan-empty-state {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: var(--bg-surface, #f8fafc);
+            border-radius: 14px;
+            border: 1px dashed var(--border-color, #cbd5e1);
+        }
+
+        .ulasan-empty-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-heading, #334155);
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .ulasan-empty-desc {
+            color: var(--text-secondary, #64748b);
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        .btn-sapi-terjual {
+            width: 100%;
+            height: 52px;
+            background: var(--bg-muted, #f1f5f9);
+            color: var(--text-secondary, #64748b);
+            border: 2px dashed var(--border-color, #cbd5e1);
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: not-allowed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         @media (max-width: 768px) {
@@ -857,14 +985,15 @@
             <!-- LOGO Box matching wireframe -->
             <a href="{{ route('katalog.index') }}" class="logo-box" title="Kembali ke Beranda / Katalog">
                 @if(file_exists(public_path('images/sipeter_logo.png')))
-                    <img src="{{ asset('images/sipeter_logo.png') }}" alt="SIPETER Logo">
+                    <img src="{{ asset('images/sipeter_logo.png') }}" class="sipeter-brand-logo" alt="SIPETER Logo">
                 @else
                     LOGO
                 @endif
             </a>
 
             <!-- Register / Login or User Session -->
-            <div class="header-auth">
+            <div class="header-auth" style="display: flex; align-items: center; gap: 12px;">
+                @include('partials.theme_toggle', ['id' => 'katalogShowThemeToggle'])
                 @auth
                     @if(auth()->user()->role === 'pembeli')
                         @php
@@ -1286,11 +1415,11 @@
                         <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 2px;">
                             <span class="peternak-name-value">{{ $sapi->peternak->name ?? 'Peternak Kampung Suka Maju' }}</span>
                             @if(($peternakTotalUlasan ?? 0) > 0)
-                                <a href="#ulasan-peternak" style="text-decoration: none; background: #fef3c7; border: 1px solid #fde68a; color: #b45309; padding: 2px 8px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                                <a href="#ulasan-peternak" style="text-decoration: none; background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: var(--amber-dark, #b45309); padding: 2px 8px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
                                     <i class="bi bi-star-fill" style="color: #f59e0b;"></i> {{ $peternakAvgRating }} ({{ $peternakTotalUlasan }} Ulasan)
                                 </a>
                             @else
-                                <span style="background: #f1f5f9; color: #64748b; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 600;">
+                                <span style="background: var(--bg-muted, #f1f5f9); color: var(--text-secondary, #64748b); border: 1px solid var(--border-color, #cbd5e1); padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 600;">
                                     Peternak Baru
                                 </span>
                             @endif
@@ -1331,11 +1460,11 @@
 
                     <!-- Alamat Tertulis di Bawah Petanya -->
                     <div class="lokasi-address-text">
-                        <div style="font-weight: 700; color: #111827; margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem;">
+                        <div style="font-weight: 700; color: var(--text-heading, #111827); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.4rem;">
                             <i class="bi bi-geo-alt-fill" style="color: #ef4444;"></i>
                             <span>Alamat Peternak:</span>
                         </div>
-                        <div style="color: #374151; font-size: 0.95rem; line-height: 1.5;">
+                        <div style="color: var(--text-primary, #374151); font-size: 0.95rem; line-height: 1.5;">
                             {{ $alamatPeternak }}
                         </div>
                     </div>
@@ -1349,7 +1478,7 @@
                 {{-- 4. TOMBOL AKSI: MASUKAN KERANJANG & BELI (Matching Wireframe) --}}
                 @if($sapi->is_terjual)
                     <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem;">
-                        <button type="button" style="width: 100%; height: 52px; background: #f1f5f9; color: #64748b; border: 2px dashed #cbd5e1; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: not-allowed; display: flex; align-items: center; justify-content: center; gap: 8px;" disabled>
+                        <button type="button" class="btn-sapi-terjual" disabled>
                             <i class="bi bi-lock-fill" style="color: #ef4444; font-size: 1.15rem;"></i>
                             Sapi Ini Sudah Terjual (Tidak Dapat Dipesan)
                         </button>
@@ -1402,17 +1531,17 @@
         <section id="ulasan-peternak" class="ulasan-section-box">
             <div class="ulasan-section-header">
                 <div>
-                    <h2 style="font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 3vw, 1.45rem); font-weight: 800; color: #111827; margin: 0; display: flex; align-items: center; gap: 8px;">
+                    <h2 style="font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 3vw, 1.45rem); font-weight: 800; color: var(--text-heading, #111827); margin: 0; display: flex; align-items: center; gap: 8px;">
                         <i class="bi bi-star-fill" style="color: #f59e0b;"></i> Ulasan & Reputasi Peternak
                     </h2>
-                    <p style="color: #64748b; font-size: 0.9rem; margin-top: 4px; margin-bottom: 0;">
+                    <p style="color: var(--text-secondary, #64748b); font-size: 0.9rem; margin-top: 4px; margin-bottom: 0;">
                         Testimoni kepuasan pembeli sapi dari <strong>{{ $sapi->peternak->name ?? 'Peternak Suka Maju' }}</strong>
                     </p>
                 </div>
 
                 {{-- Rating Summary Pill --}}
-                <div style="display: flex; align-items: center; gap: 0.85rem; background: #fffbeb; border: 1px solid #fde68a; padding: 0.65rem 1.15rem; border-radius: 14px;">
-                    <div style="font-size: 2rem; font-weight: 900; color: #b45309; line-height: 1;">
+                <div class="ulasan-score-pill">
+                    <div class="ulasan-score-num">
                         {{ $peternakAvgRating ?? 0 }}
                     </div>
                     <div>
@@ -1421,7 +1550,7 @@
                                 <i class="bi bi-star{{ $i <= round($peternakAvgRating ?? 0) ? '-fill' : '' }}"></i>
                             @endfor
                         </div>
-                        <div style="font-size: 0.78rem; color: #78350f; font-weight: 700; margin-top: 3px;">
+                        <div class="ulasan-score-label">
                             {{ $peternakTotalUlasan ?? 0 }} Ulasan Terverifikasi
                         </div>
                     </div>
@@ -1431,7 +1560,7 @@
             @if(isset($peternakUlasans) && $peternakUlasans->count() > 0)
                 <div class="ulasan-reviews-grid">
                     @foreach($peternakUlasans as $review)
-                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="ulasan-card-item">
                             <div>
                                 <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 0.75rem;">
                                     <div style="display: flex; align-items: center; gap: 10px;">
@@ -1439,10 +1568,10 @@
                                             {{ strtoupper(substr($review->pembeli->name ?? 'P', 0, 1)) }}
                                         </div>
                                         <div>
-                                            <strong style="color: #1e293b; font-size: 0.92rem; display: block;">
+                                            <strong class="ulasan-buyer-name">
                                                 {{ $review->pembeli->name ?? 'Pembeli' }}
                                             </strong>
-                                            <span style="font-size: 0.75rem; color: #64748b;">
+                                            <span class="ulasan-meta-date">
                                                 Membeli {{ $review->sapi->jenis ?? 'Ternak Sapi' }} &bull; {{ $review->created_at->format('d M Y') }}
                                             </span>
                                         </div>
@@ -1457,26 +1586,26 @@
                                 @if(!empty($review->kategori) && is_array($review->kategori))
                                     <div style="display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 0.65rem;">
                                         @foreach($review->kategori as $cat)
-                                            <span style="background: rgba(16, 185, 129, 0.1); color: #065f46; font-size: 0.72rem; padding: 2px 8px; border-radius: 999px; font-weight: 600;">
+                                            <span class="ulasan-tag-badge">
                                                 <i class="bi bi-check2"></i> {{ $cat }}
                                             </span>
                                         @endforeach
                                     </div>
                                 @endif
 
-                                <p style="margin: 0; color: #334155; font-size: 0.88rem; line-height: 1.5; font-style: italic;">
+                                <p class="ulasan-comment-text">
                                     "{{ $review->komentar }}"
                                 </p>
 
                                 @if($review->foto)
                                     <div style="margin-top: 8px;">
-                                        <img src="{{ asset('storage/' . $review->foto) }}" alt="Foto Ulasan" style="max-height: 70px; border-radius: 6px; border: 1px solid #cbd5e1; object-fit: cover;">
+                                        <img src="{{ asset('storage/' . $review->foto) }}" alt="Foto Ulasan" style="max-height: 70px; border-radius: 6px; border: 1px solid var(--border-color, #cbd5e1); object-fit: cover;">
                                     </div>
                                 @endif
                             </div>
 
                             @if($review->balasan_peternak)
-                                <div style="margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px dashed #cbd5e1; font-size: 0.8rem; color: #047857; background: #ecfdf5; padding: 0.6rem 0.85rem; border-radius: 8px;">
+                                <div class="ulasan-reply-box">
                                     <strong><i class="bi bi-reply-fill"></i> Balasan Peternak:</strong>
                                     <div style="margin-top: 2px; font-style: italic;">"{{ $review->balasan_peternak }}"</div>
                                 </div>
@@ -1485,10 +1614,10 @@
                     @endforeach
                 </div>
             @else
-                <div style="text-align: center; padding: 2.5rem 1rem; background: #f8fafc; border-radius: 14px; border: 1px dashed #cbd5e1;">
-                    <i class="bi bi-chat-heart" style="font-size: 2.5rem; color: #94a3b8;"></i>
-                    <h3 style="font-size: 1.1rem; font-weight: 700; color: #334155; margin-top: 0.5rem; margin-bottom: 0.25rem;">Belum Ada Ulasan untuk Peternak Ini</h3>
-                    <p style="color: #64748b; font-size: 0.88rem; margin: 0;">Jadilah pembeli pertama yang memberikan ulasan setelah pesanan Anda selesai!</p>
+                <div class="ulasan-empty-state">
+                    <i class="bi bi-chat-heart" style="font-size: 2.5rem; color: var(--text-muted, #94a3b8);"></i>
+                    <h3 class="ulasan-empty-title">Belum Ada Ulasan untuk Peternak Ini</h3>
+                    <p class="ulasan-empty-desc">Jadilah pembeli pertama yang memberikan ulasan setelah pesanan Anda selesai!</p>
                 </div>
             @endif
         </section>

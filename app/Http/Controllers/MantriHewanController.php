@@ -27,25 +27,27 @@ class MantriHewanController extends Controller
 
         $totalDiperiksa = Sapi::whereIn('status_kesehatan', ['sehat', 'tidak_sehat'])->count();
 
-        return view('dashboard.mantri_hewan', compact(
-            'menungguPemeriksaan',
-            'verifikasiSehatBulanIni',
-            'tidakSehatBulanIni',
-            'totalDiperiksa'
-        ));
-    }
-
-    /**
-     * Daftar sapi yang perlu diperiksa (status = belum_diperiksa)
-     */
-    public function pemeriksaan()
-    {
+        // Ambil daftar sapi yang menunggu pemeriksaan (langsung ditampilkan di dashboard)
         $sapis = Sapi::where('status_kesehatan', 'belum_diperiksa')
             ->with('peternak')
             ->orderBy('created_at', 'asc')
             ->get();
 
-        return view('mantri_hewan.pemeriksaan', compact('sapis'));
+        return view('dashboard.mantri_hewan', compact(
+            'menungguPemeriksaan',
+            'verifikasiSehatBulanIni',
+            'tidakSehatBulanIni',
+            'totalDiperiksa',
+            'sapis'
+        ));
+    }
+
+    /**
+     * Redirect pemeriksaan langsung ke dashboard mantri hewan
+     */
+    public function pemeriksaan()
+    {
+        return redirect()->route('mantri_hewan.dashboard');
     }
 
     /**
@@ -91,7 +93,7 @@ class MantriHewanController extends Controller
 
         $statusText = $request->status_kesehatan === 'sehat' ? 'Sehat' : 'Tidak Sehat';
 
-        return redirect()->route('mantri_hewan.pemeriksaan')
+        return redirect()->route('mantri_hewan.dashboard')
             ->with('success', "Sapi {$sapi->jenis} berhasil diverifikasi sebagai \"{$statusText}\".");
     }
 

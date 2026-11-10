@@ -21,6 +21,20 @@ class RoleMiddleware
             abort(403, 'Anda tidak memiliki akses ke halaman ini.');
         }
 
+        // Khusus peternak: wajib sudah diverifikasi oleh aparat kampung
+        if (auth()->user()->role === 'peternak' && auth()->user()->status_verifikasi !== 'terverifikasi') {
+            $isMenunggu = auth()->user()->status_verifikasi === 'menunggu_verifikasi';
+            auth()->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')->withErrors([
+                'email' => $isMenunggu
+                    ? 'Akun Peternak Anda sedang menunggu proses verifikasi oleh Aparat Kampung Suka Maju. Pihak kampung akan menghubungi Anda dan mengirimkan notifikasi aktivasi via WhatsApp.'
+                    : 'Pendaftaran akun Peternak Anda belum disetujui oleh Aparat Kampung. Silakan hubungi aparat kampung.',
+            ]);
+        }
+
         return $next($request);
     }
 }

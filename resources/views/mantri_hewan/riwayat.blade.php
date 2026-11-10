@@ -13,11 +13,11 @@
 
     .toolbar-info {
         font-size: 0.9rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
     }
 
     .toolbar-info strong {
-        color: #f1f5f9;
+        color: var(--text-heading);
     }
 
     .filter-group {
@@ -32,22 +32,22 @@
         font-weight: 600;
         text-decoration: none;
         transition: all 0.2s ease;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        background: rgba(15, 23, 42, 0.5);
-        color: #94a3b8;
+        border: 1px solid var(--border-color);
+        background: var(--bg-card);
+        color: var(--text-secondary);
         font-family: 'Inter', sans-serif;
         cursor: pointer;
     }
 
     .filter-btn:hover {
-        border-color: rgba(148, 163, 184, 0.3);
-        color: #f1f5f9;
+        border-color: var(--text-secondary);
+        color: var(--text-heading);
     }
 
     .filter-btn.active {
-        background: rgba(245, 158, 11, 0.1);
-        border-color: rgba(245, 158, 11, 0.3);
-        color: #fcd34d;
+        background: rgba(245, 158, 11, 0.15);
+        border-color: rgba(245, 158, 11, 0.35);
+        color: var(--accent-amber-text);
     }
 
     /* Table Styles */
@@ -58,15 +58,15 @@
     }
 
     .data-table thead th {
-        background: rgba(15, 23, 42, 0.5);
-        color: #94a3b8;
+        background: var(--bg-muted);
+        color: var(--text-secondary);
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         padding: 0.85rem 1rem;
         text-align: left;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .data-table thead th:first-child {
@@ -82,14 +82,14 @@
     }
 
     .data-table tbody tr:hover {
-        background: rgba(255, 255, 255, 0.02);
+        background: rgba(255, 255, 255, 0.04);
     }
 
     .data-table tbody td {
         padding: 1rem;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+        border-bottom: 1px solid var(--border-color);
         font-size: 0.88rem;
-        color: #e2e8f0;
+        color: var(--text-primary);
         vertical-align: middle;
     }
 
@@ -104,30 +104,30 @@
         height: 44px;
         border-radius: 10px;
         object-fit: cover;
-        border: 1px solid rgba(148, 163, 184, 0.1);
+        border: 1px solid var(--border-color);
     }
 
     .table-sapi-thumb-placeholder {
         width: 44px;
         height: 44px;
         border-radius: 10px;
-        background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+        background: var(--bg-muted);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.3rem;
-        opacity: 0.5;
+        opacity: 0.6;
     }
 
     .table-sapi-name {
         font-weight: 700;
-        color: #f1f5f9;
+        color: var(--text-heading);
         font-size: 0.88rem;
     }
 
     .table-sapi-peternak {
         font-size: 0.75rem;
-        color: #64748b;
+        color: var(--text-secondary);
         margin-top: 0.1rem;
     }
 
@@ -142,14 +142,17 @@
     }
 
     .health-sehat {
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        color: #6ee7b7;
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: var(--green-brand);
     }
 
     .health-tidak-sehat {
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.2);
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #dc2626;
+    }
+    [data-theme="dark"] .health-tidak-sehat {
         color: #fca5a5;
     }
 
@@ -158,7 +161,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: #94a3b8;
+        color: var(--text-secondary);
         font-size: 0.82rem;
     }
 
@@ -167,9 +170,9 @@
         align-items: center;
         gap: 0.35rem;
         padding: 0.4rem 0.85rem;
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        color: #93c5fd;
+        background: rgba(59, 130, 246, 0.12);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        color: var(--accent-blue-text);
         border-radius: 8px;
         font-size: 0.78rem;
         font-weight: 600;
@@ -178,16 +181,16 @@
     }
 
     .btn-detail:hover {
-        background: rgba(59, 130, 246, 0.2);
+        background: rgba(59, 130, 246, 0.22);
         border-color: rgba(59, 130, 246, 0.4);
-        color: #93c5fd;
+        color: var(--accent-blue-text);
     }
 
     /* Empty State */
     .empty-state {
         text-align: center;
         padding: 4rem 1.5rem;
-        color: #64748b;
+        color: var(--text-secondary);
     }
 
     .empty-state-icon {
@@ -199,7 +202,7 @@
     .empty-state h3 {
         font-size: 1.15rem;
         font-weight: 700;
-        color: #94a3b8;
+        color: var(--text-heading);
         margin-bottom: 0.5rem;
     }
 
@@ -208,6 +211,7 @@
         max-width: 420px;
         margin: 0 auto;
         line-height: 1.6;
+        color: var(--text-secondary);
     }
 
     @media (max-width: 768px) {

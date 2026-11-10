@@ -552,7 +552,7 @@
                             <div class="sapi-card-new-body">
                                 <div class="sapi-card-new-title-row">
                                     <a href="{{ route('katalog.show', $sapi->id) }}" style="text-decoration: none; color: inherit;">
-                                        <h3 style="transition: color 0.2s;" onmouseover="this.style.color='#00A740'" onmouseout="this.style.color='#0f172a'">{{ $sapi->jenis }}</h3>
+                                        <h3 style="transition: color 0.2s;">{{ $sapi->jenis }}</h3>
                                     </a>
                                     <span class="sapi-card-new-price">{{ $sapi->harga_formatted }}</span>
                                 </div>
@@ -595,10 +595,10 @@
                 </div>
             @else
                 {{-- Empty State --}}
-                <div style="text-align: center; padding: 4rem 2rem; background: #ffffff; border-radius: 16px; border: 1px dashed #cbd5e1; margin-top: 1.5rem;">
-                    <i class="bi bi-search" style="font-size: 3rem; color: #94a3b8; display: block; margin-bottom: 0.75rem;"></i>
-                    <h3 style="font-size: 1.35rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">Tidak Ada Sapi Ditemukan</h3>
-                    <p style="color: #64748b; font-size: 0.95rem; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.6;">
+                <div style="text-align: center; padding: 4rem 2rem; background: var(--bg-card, #ffffff); border-radius: 16px; border: 1px dashed var(--border-color, #cbd5e1); margin-top: 1.5rem;">
+                    <i class="bi bi-search" style="font-size: 3rem; color: var(--text-muted, #94a3b8); display: block; margin-bottom: 0.75rem;"></i>
+                    <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--text-heading, #1e293b); margin-bottom: 0.5rem;">Tidak Ada Sapi Ditemukan</h3>
+                    <p style="color: var(--text-secondary, #64748b); font-size: 0.95rem; max-width: 480px; margin: 0 auto 1.5rem; line-height: 1.6;">
                         Maaf, kami tidak menemukan sapi yang sesuai dengan kata kunci atau pengaturan filter Anda. Silakan reset filter untuk melihat semua sapi yang tersedia.
                     </p>
                     <a href="{{ route('katalog.index') }}" class="catalog-btn-apply" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 0.75rem 2rem; height: auto;">

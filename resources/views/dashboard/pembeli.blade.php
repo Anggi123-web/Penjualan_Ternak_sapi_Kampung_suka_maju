@@ -5,36 +5,36 @@
     <div class="section-header" style="margin-bottom: 2rem; text-align: left;">
         <span class="section-tag">Profil Akun</span>
         <h2 class="section-title">Informasi Pembeli</h2>
-        <p style="color: var(--medium-gray); margin-top: 0.5rem; font-size: 1.05rem;">Kelola informasi akun Anda dan pantau ketersediaan sapi.</p>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 1.05rem;">Kelola informasi akun Anda dan pantau ketersediaan sapi.</p>
     </div>
 
     <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
         <!-- Profil Card -->
-        <div style="flex: 1; min-width: 300px; background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
+        <div style="flex: 1; min-width: 300px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; box-shadow: var(--card-shadow);">
             <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
                 <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--green-brand), #059669); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; font-family: var(--font-montserrat);">
                     {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
                 </div>
                 <div>
-                    <h3 style="font-family: var(--font-montserrat); font-size: 1.5rem; font-weight: 700; color: var(--black-text); margin: 0 0 0.25rem 0;">{{ auth()->user()->name }}</h3>
-                    <p style="color: var(--medium-gray); margin: 0;">{{ auth()->user()->email }}</p>
-                    <span style="display: inline-block; margin-top: 0.5rem; padding: 0.25rem 0.75rem; background: rgba(16, 185, 129, 0.1); color: var(--green-brand); border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Role: Pembeli</span>
+                    <h3 style="font-family: var(--font-montserrat); font-size: 1.5rem; font-weight: 700; color: var(--text-heading); margin: 0 0 0.25rem 0;">{{ auth()->user()->name }}</h3>
+                    <p style="color: var(--text-muted); margin: 0;">{{ auth()->user()->email }}</p>
+                    <span style="display: inline-block; margin-top: 0.5rem; padding: 0.25rem 0.75rem; background: var(--green-subtle); color: var(--green-brand); border-radius: 999px; font-size: 0.85rem; font-weight: 600;">Role: Pembeli</span>
                 </div>
             </div>
             
-            <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
-                <h4 style="font-family: var(--font-montserrat); font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--black-text);">Menu Akun</h4>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <h4 style="font-family: var(--font-montserrat); font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-heading);">Menu Akun</h4>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                    <a href="{{ route('pesanan.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 10px; text-decoration: none; color: var(--black-text); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.05)'; this.style.color='var(--green-brand)';" onmouseout="this.style.background='#f8fafc'; this.style.color='var(--black-text)';">
-                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-box-seam"></i> Monitoring Pemesanan</span>
+                    <a href="{{ route('pesanan.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: var(--bg-muted); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: var(--text-primary); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--green-brand)'; this.style.color='var(--green-brand)';" onmouseout="this.style.borderColor='var(--border-color)'; this.style.color='var(--text-primary)';">
+                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-box-seam" style="color: var(--green-brand);"></i> Monitoring Pemesanan</span>
                         <span><i class="bi bi-arrow-right"></i></span>
                     </a>
-                    <a href="{{ route('pembeli.keranjang.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 10px; text-decoration: none; color: var(--black-text); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.05)'; this.style.color='var(--green-brand)';" onmouseout="this.style.background='#f8fafc'; this.style.color='var(--black-text)';">
-                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-cart3"></i> Keranjang Belanja</span>
+                    <a href="{{ route('pembeli.keranjang.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: var(--bg-muted); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: var(--text-primary); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--green-brand)'; this.style.color='var(--green-brand)';" onmouseout="this.style.borderColor='var(--border-color)'; this.style.color='var(--text-primary)';">
+                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-cart3" style="color: var(--green-brand);"></i> Keranjang Belanja</span>
                         <span><i class="bi bi-arrow-right"></i></span>
                     </a>
-                    <a href="{{ route('katalog.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: #f8fafc; border-radius: 10px; text-decoration: none; color: var(--black-text); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='rgba(16, 185, 129, 0.05)'; this.style.color='var(--green-brand)';" onmouseout="this.style.background='#f8fafc'; this.style.color='var(--black-text)';">
-                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-search"></i> Cari Sapi Baru</span>
+                    <a href="{{ route('katalog.index') }}" style="display: flex; align-items: center; justify-content: space-between; padding: 1rem; background: var(--bg-muted); border: 1px solid var(--border-color); border-radius: 10px; text-decoration: none; color: var(--text-primary); font-weight: 600; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--green-brand)'; this.style.color='var(--green-brand)';" onmouseout="this.style.borderColor='var(--border-color)'; this.style.color='var(--text-primary)';">
+                        <span style="display: flex; align-items: center; gap: 0.75rem;"><i class="bi bi-search" style="color: var(--green-brand);"></i> Cari Sapi Baru</span>
                         <span><i class="bi bi-arrow-right"></i></span>
                     </a>
                 </div>
@@ -66,12 +66,12 @@
                 </div>
             </div>
 
-            <div style="background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 16px; padding: 1.5rem;">
+            <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 16px; padding: 1.5rem; color: var(--text-primary);">
                 <div style="display: flex; gap: 1rem; align-items: flex-start;">
-                    <div style="font-size: 1.5rem;"><i class="bi bi-lightbulb"></i></div>
+                    <div style="font-size: 1.5rem; color: var(--accent-blue-text);"><i class="bi bi-lightbulb"></i></div>
                     <div>
-                        <h4 style="font-family: var(--font-montserrat); font-size: 1.05rem; font-weight: 700; color: var(--black-text); margin: 0 0 0.5rem 0;">Informasi Pembelian</h4>
-                        <p style="color: var(--medium-gray); font-size: 0.9rem; margin: 0; line-height: 1.6;">
+                        <h4 style="font-family: var(--font-montserrat); font-size: 1.05rem; font-weight: 700; color: var(--text-heading); margin: 0 0 0.5rem 0;">Informasi Pembelian</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0; line-height: 1.6;">
                             Semua sapi yang masuk ke katalog telah melalui proses verifikasi kesehatan yang ketat oleh Mantri Hewan untuk menjamin kualitas hewan ternak Anda.
                         </p>
                     </div>

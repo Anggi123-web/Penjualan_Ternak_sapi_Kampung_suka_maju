@@ -5,7 +5,10 @@
 @section('content')
 <div class="mobile-header">
     <span style="font-weight: 700;">🏘️ Pengurus Kampung</span>
-    <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div style="display: flex; align-items: center; gap: 8px;">
+        @include('partials.theme_toggle', ['id' => 'pengurusKatalogMobileThemeToggle', 'iconOnly' => true])
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    </div>
 </div>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
@@ -28,14 +31,19 @@
                 align-items: center;
                 gap: 0.6rem;
                 padding: 0.75rem 1.4rem;
-                background: rgba(239, 68, 68, 0.12);
+                background: rgba(239, 68, 68, 0.1);
                 border: 1px solid rgba(239, 68, 68, 0.3);
-                color: #fca5a5;
+                color: #b91c1c;
                 border-radius: 12px;
                 font-weight: 700;
                 font-size: 0.9rem;
                 text-decoration: none;
                 transition: all 0.25s ease;
+            }
+
+            [data-theme="dark"] .btn-sampah-top {
+                color: #fca5a5;
+                background: rgba(239, 68, 68, 0.15);
             }
 
             .btn-sampah-top:hover {
@@ -81,10 +89,10 @@
             .filter-input, .filter-select {
                 width: 100%;
                 padding: 0.7rem 1rem;
-                background: rgba(15, 23, 42, 0.6);
-                border: 1px solid rgba(148, 163, 184, 0.15);
+                background: var(--input-bg);
+                border: 1px solid var(--input-border);
                 border-radius: 10px;
-                color: #f1f5f9;
+                color: var(--text-primary);
                 font-size: 0.85rem;
                 font-family: inherit;
                 outline: none;
@@ -92,18 +100,18 @@
             }
 
             .filter-select option {
-                background: #1e293b;
-                color: #f1f5f9;
+                background: var(--bg-card);
+                color: var(--text-primary);
             }
 
             .filter-input:focus, .filter-select:focus {
-                border-color: rgba(139, 92, 246, 0.5);
-                box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+                border-color: var(--green-brand);
+                box-shadow: 0 0 0 3px var(--input-focus-ring);
             }
 
             .btn-filter-apply {
                 padding: 0.7rem 1.25rem;
-                background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                background: linear-gradient(135deg, var(--green-brand), var(--green-hover));
                 color: white;
                 border: none;
                 border-radius: 10px;
@@ -115,14 +123,14 @@
 
             .btn-filter-apply:hover {
                 transform: translateY(-1px);
-                box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+                box-shadow: 0 4px 15px var(--green-glow);
             }
 
             .btn-filter-reset {
                 padding: 0.7rem 1rem;
-                background: transparent;
-                border: 1px solid rgba(148, 163, 184, 0.2);
-                color: #94a3b8;
+                background: var(--bg-muted);
+                border: 1px solid var(--border-color);
+                color: var(--text-secondary);
                 border-radius: 10px;
                 font-weight: 600;
                 font-size: 0.85rem;
@@ -131,8 +139,8 @@
             }
 
             .btn-filter-reset:hover {
-                color: #f1f5f9;
-                border-color: rgba(148, 163, 184, 0.4);
+                color: var(--text-primary);
+                border-color: var(--green-brand);
             }
 
             /* Custom Table */
@@ -152,19 +160,20 @@
             }
 
             .katalog-table th {
-                background: rgba(15, 23, 42, 0.5);
+                background: var(--bg-muted);
                 padding: 1rem 1.25rem;
                 font-size: 0.75rem;
                 font-weight: 700;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
-                color: #94a3b8;
-                border-bottom: 1px solid var(--border-color);
+                color: var(--text-secondary);
+                border-bottom: 2px solid var(--border-color);
             }
 
             .katalog-table td {
                 padding: 1.15rem 1.25rem;
-                border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+                border-bottom: 1px solid var(--border-color);
+                color: var(--text-primary);
                 vertical-align: middle;
             }
 
@@ -173,7 +182,7 @@
             }
 
             .katalog-table tr:hover td {
-                background: rgba(148, 163, 184, 0.02);
+                background: var(--bg-muted);
             }
 
             .sapi-item-info {
@@ -203,14 +212,14 @@
 
             .sapi-title-text {
                 font-weight: 700;
-                color: #f1f5f9;
+                color: var(--text-heading);
                 font-size: 0.95rem;
                 margin-bottom: 0.2rem;
             }
 
             .sapi-specs-text {
                 font-size: 0.8rem;
-                color: #94a3b8;
+                color: var(--text-secondary);
                 display: flex;
                 gap: 0.75rem;
             }
@@ -445,10 +454,10 @@
         {{-- Table --}}
         <div class="table-container">
             @if($sapis->isEmpty())
-                <div style="text-align: center; padding: 4rem 2rem; color: #64748b;">
+                <div style="text-align: center; padding: 4rem 2rem; color: var(--text-secondary);">
                     <div style="font-size: 3.5rem; margin-bottom: 1rem; opacity: 0.5;">🐮</div>
-                    <h3 style="color: #94a3b8; font-size: 1.15rem; margin-bottom: 0.5rem;">Tidak Ada Data Katalog</h3>
-                    <p style="font-size: 0.9rem;">Tidak ditemukan data sapi yang sesuai dengan filter pencarian.</p>
+                    <h3 style="color: var(--text-heading); font-size: 1.15rem; margin-bottom: 0.5rem;">Tidak Ada Data Katalog</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-secondary);">Tidak ditemukan data sapi yang sesuai dengan filter pencarian.</p>
                 </div>
             @else
                 <table class="katalog-table">
@@ -479,7 +488,7 @@
                                             <div class="sapi-specs-text">
                                                 <span>📅 {{ $sapi->umur_formatted }}</span>
                                                 <span>⚖️ {{ number_format($sapi->bobot, 0) }} kg</span>
-                                                <span style="font-weight: 700; color: {{ $sapi->is_preorder ? '#fbbf24' : '#6ee7b7' }};">
+                                                <span style="font-weight: 700; color: {{ $sapi->is_preorder ? 'var(--accent-amber-text, #92400e)' : 'var(--green-brand)' }};">
                                                     {{ $sapi->tipe_penjualan_label }}
                                                 </span>
                                             </div>
@@ -487,11 +496,11 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div style="font-weight: 600; color: #f1f5f9;">{{ $sapi->peternak->name ?? '-' }}</div>
-                                    <div style="font-size: 0.8rem; color: #94a3b8;">{{ $sapi->peternak->email ?? '-' }}</div>
+                                    <div style="font-weight: 600; color: var(--text-heading);">{{ $sapi->peternak->name ?? '-' }}</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">{{ $sapi->peternak->email ?? '-' }}</div>
                                 </td>
                                 <td>
-                                    <div style="font-weight: 800; color: #6ee7b7;">{{ $sapi->harga_formatted }}</div>
+                                    <div style="font-weight: 800; color: var(--green-brand);">{{ $sapi->harga_formatted }}</div>
                                 </td>
                                 <td>
                                     @if($sapi->status_kesehatan === 'sehat')

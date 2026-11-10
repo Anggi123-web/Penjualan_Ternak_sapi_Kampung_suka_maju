@@ -31,9 +31,24 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $user = User::where('email', $request->email)->first();
 
-        if (Auth::attempt($credentials)) {
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Cek status verifikasi khusus Peternak
+            if ($user->role === 'peternak' && $user->status_verifikasi === 'menunggu_verifikasi') {
+                return back()->withErrors([
+                    'email' => 'Akun Peternak Anda sedang menunggu proses verifikasi oleh Aparat Kampung Suka Maju. Pihak kampung akan menghubungi Anda dan mengirimkan rincian akun melalui WhatsApp setelah disetujui.',
+                ])->withInput($request->only('email'));
+            }
+
+            if ($user->role === 'peternak' && $user->status_verifikasi === 'ditolak') {
+                $alasan = $user->alasan_penolakan ? ' Catatan Kampung: "' . $user->alasan_penolakan . '".' : '';
+                return back()->withErrors([
+                    'email' => 'Pendaftaran akun Peternak Anda tidak disetujui oleh Aparat Kampung.' . $alasan . ' Silakan hubungi aparat kampung atau daftar ulang dengan data yang benar.',
+                ])->withInput($request->only('email'));
+            }
+
+            Auth::login($user, $request->boolean('remember'));
             $request->session()->regenerate();
 
             $role = Auth::user()->role;
@@ -122,6 +137,8 @@ class AuthController extends Controller
             $fotoSelfiePath = $request->file('foto_selfie_ktp')->store('selfie-ktp', 'public');
         }
 
+        $statusVerifikasi = ($request->role === 'peternak') ? 'menunggu_verifikasi' : 'terverifikasi';
+
         $user = User::create([
             'name' => $request->name,
             'nik' => $request->nik,
@@ -129,6 +146,7 @@ class AuthController extends Controller
             'no_telepon' => $request->no_telepon,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'status_verifikasi' => $statusVerifikasi,
             'alamat' => $request->alamat,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
@@ -138,10 +156,28 @@ class AuthController extends Controller
             'foto_selfie_ktp' => $fotoSelfiePath,
         ]);
 
+        if ($request->role === 'peternak') {
+            // Peternak wajib menunggu verifikasi dari aparat kampung, jangan auto-login
+            return redirect()->route('register.peternak_pending', ['id' => $user->id]);
+        }
+
         Auth::login($user);
         $request->session()->regenerate();
 
         return redirect($this->getDashboardUrl($user->role));
+    }
+
+    /**
+     * Tampilkan halaman pemberitahuan bahwa akun peternak menunggu verifikasi kampung
+     */
+    public function peternakPending(Request $request)
+    {
+        $user = null;
+        if ($request->has('id')) {
+            $user = User::where('role', 'peternak')->find($request->id);
+        }
+
+        return view('auth.peternak_pending', compact('user'));
     }
 
     /**

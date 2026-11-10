@@ -15,7 +15,7 @@
         }
 
         .back-link:hover {
-            color: #f1f5f9;
+            color: var(--text-heading);
         }
 
         .detail-grid {
@@ -28,7 +28,7 @@
         .detail-media {
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(148, 163, 184, 0.1);
+            border: 1px solid var(--border-color);
         }
 
         .detail-media img {
@@ -40,7 +40,7 @@
         .detail-media-placeholder {
             width: 100%;
             height: 350px;
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+            background: var(--bg-muted);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -56,11 +56,12 @@
         }
 
         .info-card {
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--bg-card);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(148, 163, 184, 0.1);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 1.5rem;
+            color: var(--text-primary);
         }
 
         .info-card h3 {
@@ -68,6 +69,7 @@
             font-weight: 700;
             margin-bottom: 1.25rem;
             letter-spacing: -0.02em;
+            color: var(--text-heading);
         }
 
         .info-row {
@@ -75,7 +77,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .info-row:last-child {
@@ -83,20 +85,20 @@
         }
 
         .info-label {
-            color: #64748b;
+            color: var(--text-secondary);
             font-size: 0.85rem;
             font-weight: 500;
         }
 
         .info-value {
-            color: #f1f5f9;
+            color: var(--text-heading);
             font-size: 0.92rem;
             font-weight: 600;
             text-align: right;
         }
 
         .info-value.harga {
-            color: #6ee7b7;
+            color: var(--green-brand);
             font-size: 1.05rem;
             font-weight: 800;
         }
@@ -203,8 +205,11 @@
         .radio-option input[type="radio"]:checked+label.label-tidak-sehat {
             border-color: #ef4444;
             background: rgba(239, 68, 68, 0.1);
-            color: #fca5a5;
+            color: #dc2626;
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+        }
+        [data-theme="dark"] .radio-option input[type="radio"]:checked+label.label-tidak-sehat {
+            color: #fca5a5;
         }
 
         .form-group {
@@ -213,7 +218,7 @@
 
         .form-group label {
             display: block;
-            color: #94a3b8;
+            color: var(--text-secondary);
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
@@ -222,10 +227,10 @@
         .form-group textarea {
             width: 100%;
             padding: 0.85rem 1rem;
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(148, 163, 184, 0.15);
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
             border-radius: 10px;
-            color: #f1f5f9;
+            color: var(--text-primary);
             font-size: 0.9rem;
             font-family: 'Inter', sans-serif;
             resize: vertical;
@@ -240,7 +245,7 @@
         }
 
         .form-group textarea::placeholder {
-            color: #475569;
+            color: var(--text-muted);
         }
 
         .btn-submit {
@@ -283,8 +288,8 @@
 @endsection
 
 @section('page-content')
-    <a href="{{ route('mantri_hewan.pemeriksaan') }}" class="back-link">
-        ← Kembali ke Daftar Pemeriksaan
+    <a href="{{ route('mantri_hewan.dashboard') }}" class="back-link">
+        ← Kembali ke Dashboard Mantri
     </a>
 
     <div class="page-header">
@@ -424,8 +429,8 @@
                 <div class="form-group">
                     <label for="dokumen_pemeriksaan">Upload Dokumen Pemeriksaan (PDF)</label>
                     <input type="file" name="dokumen_pemeriksaan" id="dokumen_pemeriksaan" accept=".pdf"
-                        style="width: 100%; padding: 0.75rem 1rem; background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.15); border-radius: 10px; color: #f1f5f9; font-size: 0.9rem;">
-                    <span style="display: block; color: #64748b; font-size: 0.8rem; margin-top: 0.35rem;">* Format file: PDF (Maksimal 10 MB)</span>
+                        style="width: 100%; padding: 0.75rem 1rem; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 10px; color: var(--text-primary); font-size: 0.9rem;">
+                    <span style="display: block; color: var(--text-secondary); font-size: 0.8rem; margin-top: 0.35rem;">* Format file: PDF (Maksimal 10 MB)</span>
                     @error('dokumen_pemeriksaan')
                         <p class="form-error">{{ $message }}</p>
                     @enderror

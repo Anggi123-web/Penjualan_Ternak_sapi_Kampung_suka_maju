@@ -29,58 +29,58 @@
             </div>
         @endif
 
-        <div style="background: #ffffff; border-radius: 20px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05); overflow: hidden; padding: 2.25rem;">
+        <div style="background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05); overflow: hidden; padding: 2.25rem; color: var(--text-primary);">
             
             {{-- Header --}}
             <div style="text-align: center; margin-bottom: 1.75rem;">
-                <div style="width: 64px; height: 64px; background: rgba(245, 158, 11, 0.12); color: #d97706; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.85rem; margin: 0 auto 1rem;">
+                <div style="width: 64px; height: 64px; background: rgba(245, 158, 11, 0.12); color: var(--accent-amber-text); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.85rem; margin: 0 auto 1rem;">
                     <i class="bi bi-cash-stack"></i>
                 </div>
-                <div style="display: inline-flex; align-items: center; gap: 6px; background: #fef3c7; color: #b45309; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">
+                <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(245, 158, 11, 0.15); color: var(--accent-amber-text); padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">
                     <i class="bi bi-calendar-check"></i> Pembayaran Tahap 2 — Pelunasan
                 </div>
-                <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: #0f172a; margin-bottom: 0.25rem;">
+                <h2 style="font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--text-heading); margin-bottom: 0.25rem;">
                     Pelunasan Sapi Pre-Order
                 </h2>
-                <p style="color: #64748b; font-size: 0.92rem; margin: 0;">
-                    Nomor Pesanan: <strong style="color: #0f172a; font-family: monospace;">{{ $transaksi->kode_transaksi }}</strong>
+                <p style="color: var(--text-secondary); font-size: 0.92rem; margin: 0;">
+                    Nomor Pesanan: <strong style="color: var(--text-heading); font-family: monospace;">{{ $transaksi->kode_transaksi }}</strong>
                 </p>
             </div>
 
             {{-- Ringkasan Keuangan Pre-Order --}}
-            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.75rem;">
+            <div style="background: var(--bg-muted); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.25rem 1.5rem; margin-bottom: 1.75rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <span style="color: #64748b; font-size: 0.9rem;">Ternak Sapi:</span>
-                    <strong style="color: #0f172a; font-size: 0.95rem;">Sapi {{ $transaksi->sapi->jenis }}</strong>
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Ternak Sapi:</span>
+                    <strong style="color: var(--text-heading); font-size: 0.95rem;">Sapi {{ $transaksi->sapi->jenis }}</strong>
                 </div>
 
                 @if($transaksi->tanggal_pengambilan)
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <span style="color: #64748b; font-size: 0.9rem;">Rencana {{ $transaksi->is_pengantaran ? 'Pengantaran' : 'Penjemputan' }}:</span>
-                    <strong style="color: #b45309; font-size: 0.92rem;">
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Rencana {{ $transaksi->is_pengantaran ? 'Pengantaran' : 'Penjemputan' }}:</span>
+                    <strong style="color: var(--accent-amber-text); font-size: 0.92rem;">
                         <i class="bi bi-calendar-event"></i> {{ \Carbon\Carbon::parse($transaksi->tanggal_pengambilan)->translatedFormat('d F Y') }}
                     </strong>
                 </div>
                 @endif
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                    <span style="color: #64748b; font-size: 0.9rem;">Total Biaya Keseluruhan:</span>
-                    <strong style="color: #0f172a;">{{ $transaksi->total_harga_formatted }}</strong>
+                    <span style="color: var(--text-secondary); font-size: 0.9rem;">Total Biaya Keseluruhan:</span>
+                    <strong style="color: var(--text-heading);">{{ $transaksi->total_harga_formatted }}</strong>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; background: rgba(16, 185, 129, 0.08); padding: 0.5rem 0.75rem; border-radius: 8px;">
-                    <span style="color: #047857; font-size: 0.88rem; font-weight: 600;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; background: rgba(16, 185, 129, 0.1); padding: 0.5rem 0.75rem; border-radius: 8px;">
+                    <span style="color: var(--green-brand); font-size: 0.88rem; font-weight: 600;">
                         <i class="bi bi-check-circle-fill"></i> Pembayaran 1 (DP yang Sudah Dibayar):
                     </span>
-                    <strong style="color: #047857;">{{ $transaksi->dp_formatted }}</strong>
+                    <strong style="color: var(--green-brand);">{{ $transaksi->dp_formatted }}</strong>
                 </div>
 
-                <div style="border-top: 2px dashed #cbd5e1; padding-top: 0.85rem; margin-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                <div style="border-top: 2px dashed var(--border-color); padding-top: 0.85rem; margin-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
                     <div>
-                        <div style="font-size: 0.85rem; color: #64748b; font-weight: 700; text-transform: uppercase;">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 700; text-transform: uppercase;">
                             Sisa Tagihan Pelunasan:
                         </div>
-                        <div style="font-size: 0.78rem; color: #94a3b8;">
+                        <div style="font-size: 0.78rem; color: var(--text-secondary);">
                             Dibayarkan saat sapi siap diambil / diantar
                         </div>
                     </div>
@@ -120,11 +120,11 @@
                 @csrf
 
                 <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 0.5rem;">
+                    <label style="display: block; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text-heading); margin-bottom: 0.5rem;">
                         Unggah Foto Bukti Transfer Pelunasan
                     </label>
 
-                    <div style="border: 2px dashed #cbd5e1; border-radius: 14px; padding: 2rem; text-align: center; background: #fafafa; cursor: pointer; transition: all 0.2s;" onclick="document.getElementById('inputBuktiPelunasan').click()" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+                    <div style="border: 2px dashed var(--border-color); border-radius: 14px; padding: 2rem; text-align: center; background: var(--bg-muted); cursor: pointer; transition: all 0.2s;" onclick="document.getElementById('inputBuktiPelunasan').click()" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
                         <input type="file" name="bukti_pelunasan" id="inputBuktiPelunasan" accept="image/*" style="display: none;" onchange="previewImage(this)" required>
                         
                         <div id="previewWrapper" style="display: none; margin-bottom: 1rem;">
@@ -135,14 +135,14 @@
                             <div style="font-size: 2.75rem; margin-bottom: 0.5rem; color: #f59e0b;">
                                 <i class="bi bi-cloud-arrow-up-fill"></i>
                             </div>
-                            <div style="font-weight: 700; color: #1e293b; font-size: 1rem;">Klik untuk memilih file foto bukti transfer pelunasan</div>
-                            <div style="font-size: 0.82rem; color: #94a3b8; margin-top: 0.25rem;">Format JPG, PNG, WEBP (Maksimal 4 MB)</div>
+                            <div style="font-weight: 700; color: var(--text-heading); font-size: 1rem;">Klik untuk memilih file foto bukti transfer pelunasan</div>
+                            <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.25rem;">Format JPG, PNG, WEBP (Maksimal 4 MB)</div>
                         </div>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <a href="{{ route('pesanan.index') }}" style="flex: 1; height: 50px; display: inline-flex; align-items: center; justify-content: center; background: #f1f5f9; color: #475569; text-decoration: none; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.92rem; border: 1px solid #cbd5e1;">
+                    <a href="{{ route('pesanan.index') }}" style="flex: 1; height: 50px; display: inline-flex; align-items: center; justify-content: center; background: var(--bg-card); color: var(--text-secondary); text-decoration: none; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.92rem; border: 1px solid var(--border-color);">
                         <i class="bi bi-arrow-left" style="margin-right: 6px;"></i> Kembali
                     </a>
                     <button type="submit" style="flex: 2; height: 50px; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; border-radius: 12px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);">

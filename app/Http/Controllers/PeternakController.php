@@ -14,11 +14,95 @@ class PeternakController extends Controller
 {
     public function dashboard()
     {
-        $totalSapi = Sapi::where('user_id', Auth::id())->count();
-        $sapiSehat = Sapi::where('user_id', Auth::id())->where('status_kesehatan', 'sehat')->count();
-        $sapiBelumDiperiksa = Sapi::where('user_id', Auth::id())->where('status_kesehatan', 'belum_diperiksa')->count();
+        $userId = Auth::id();
 
-        return view('dashboard.peternak', compact('totalSapi', 'sapiSehat', 'sapiBelumDiperiksa'));
+        // 1. Data Inventaris Ternak Sapi
+        $totalSapi = Sapi::where('user_id', $userId)->count();
+        $sapiSehat = Sapi::where('user_id', $userId)->where('status_kesehatan', 'sehat')->count();
+        $sapiBelumDiperiksa = Sapi::where('user_id', $userId)->where('status_kesehatan', 'belum_diperiksa')->count();
+        $sapiTerjual = Sapi::where('user_id', $userId)->where('status_penjualan', 'terjual')->count();
+
+        // 2. Data Laporan Penjualan & Pendapatan
+        $sapiIds = Sapi::withTrashed()->where('user_id', $userId)->pluck('id');
+        
+        $transaksiSelesai = Transaksi::whereIn('sapi_id', $sapiIds)
+            ->where('status', 'selesai');
+
+        $totalPenjualan = $transaksiSelesai->count();
+        $totalPendapatan = (int) $transaksiSelesai->sum('total_harga');
+        $rataRataHarga = $totalPenjualan > 0 ? (int) round($totalPendapatan / $totalPenjualan) : 0;
+        
+        $pesananDiproses = Transaksi::whereIn('sapi_id', $sapiIds)
+            ->whereIn('status', ['menunggu_verifikasi', 'diproses', 'dikirim'])
+            ->count();
+
+        // 3. Data Grafik Tren Penjualan Bulanan (6 bulan terakhir)
+        $bulanLabels = [];
+        $penjualanBulanan = [];
+        $pendapatanBulanan = [];
+
+        for ($i = 5; $i >= 0; $i--) {
+            $date = now()->subMonths($i);
+            $startOfMonth = $date->copy()->startOfMonth();
+            $endOfMonth = $date->copy()->endOfMonth();
+            $label = $date->locale('id')->translatedFormat('M Y');
+
+            $trxInMonth = Transaksi::whereIn('sapi_id', $sapiIds)
+                ->where('status', 'selesai')
+                ->whereBetween('created_at', [$startOfMonth, $endOfMonth]);
+
+            $count = $trxInMonth->count();
+            $sum = (int) $trxInMonth->sum('total_harga');
+
+            $bulanLabels[] = $label;
+            $penjualanBulanan[] = $count;
+            $pendapatanBulanan[] = round($sum / 1000000, 2); // dalam juta rupiah untuk sumbu grafik
+        }
+
+        // 4. Data Distribusi Penjualan per Jenis Sapi
+        $terjualGroup = Transaksi::whereIn('sapi_id', $sapiIds)
+            ->where('status', 'selesai')
+            ->with('sapi')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->sapi ? $item->sapi->jenis : 'Lainnya';
+            })
+            ->map(fn($group) => $group->count());
+
+        $populasiGroup = Sapi::where('user_id', $userId)
+            ->get()
+            ->groupBy('jenis')
+            ->map(fn($group) => $group->count());
+
+        $isJenisTerjual = $terjualGroup->isNotEmpty();
+        $chartJenisSource = $isJenisTerjual ? $terjualGroup : $populasiGroup;
+        $jenisLabels = $chartJenisSource->keys()->toArray();
+        $jenisCounts = $chartJenisSource->values()->toArray();
+
+        // 5. Pesanan Terbaru
+        $pesananTerbaru = Transaksi::with(['sapi', 'pembeli'])
+            ->whereIn('sapi_id', $sapiIds)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('dashboard.peternak', compact(
+            'totalSapi',
+            'sapiSehat',
+            'sapiBelumDiperiksa',
+            'sapiTerjual',
+            'totalPenjualan',
+            'totalPendapatan',
+            'rataRataHarga',
+            'pesananDiproses',
+            'bulanLabels',
+            'penjualanBulanan',
+            'pendapatanBulanan',
+            'jenisLabels',
+            'jenisCounts',
+            'isJenisTerjual',
+            'pesananTerbaru'
+        ));
     }
 
     // ─── Penjualan / Data Sapi ───────────────────────
@@ -295,7 +379,7 @@ class PeternakController extends Controller
 
     public function laporan()
     {
-        return view('peternak.laporan');
+        return redirect()->route('peternak.dashboard');
     }
 
     // ─── Akun ────────────────────────────────────────

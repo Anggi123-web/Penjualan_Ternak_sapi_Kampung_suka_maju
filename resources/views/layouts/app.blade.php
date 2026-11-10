@@ -7,8 +7,13 @@
     <title>@yield('title', 'Sistem Penjualan Sapi')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Unified SIPETER Design System & Dark/Light Mode Theme -->
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <script src="{{ asset('js/theme-manager.js') }}"></script>
+
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -25,19 +30,20 @@
             --mantri-dark: #d97706;
             --pengurus: #8b5cf6;
             --pengurus-dark: #7c3aed;
-            --bg-dark: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border-color: rgba(148, 163, 184, 0.1);
+            --bg-dark: var(--bg-page, #f8fafc);
+            --bg-card: var(--bg-surface, #ffffff);
+            --text-primary: var(--text-primary, #0f172a);
+            --text-secondary: var(--text-secondary, #64748b);
+            --border-color: var(--border-color, #e2e8f0);
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-page);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            transition: var(--theme-transition);
         }
 
         /* Dashboard Layout */
@@ -69,6 +75,27 @@
             padding-bottom: 2rem;
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 2rem;
+        }
+
+        .sidebar-brand-header {
+            padding-bottom: 1.25rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .app-sidebar-logo {
+            max-height: 48px;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
+            margin: 0 auto 0.4rem auto;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+
+        .app-sidebar-logo:hover {
+            transform: scale(1.03);
         }
 
         .sidebar-logo-icon {
@@ -111,8 +138,8 @@
         }
 
         .sidebar-nav a:hover, .sidebar-nav a.active {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.05);
+            color: var(--green-brand);
+            background: var(--green-subtle);
         }
 
         .sidebar-nav a .nav-icon {
@@ -158,13 +185,13 @@
         .btn-logout {
             width: 100%;
             padding: 0.75rem;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            background: rgba(239, 68, 68, 0.1);
-            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            background: rgba(239, 68, 68, 0.08);
+            color: #b91c1c;
             border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: 500;
+            font-weight: 600;
             font-family: 'Inter', sans-serif;
             transition: all 0.2s ease;
             display: flex;
@@ -173,9 +200,20 @@
             gap: 0.5rem;
         }
 
+        [data-theme="dark"] .btn-logout {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+        }
+
         .btn-logout:hover {
-            background: rgba(239, 68, 68, 0.2);
-            border-color: rgba(239, 68, 68, 0.5);
+            background: rgba(239, 68, 68, 0.18);
+            color: #991b1b;
+        }
+
+        [data-theme="dark"] .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.25);
+            color: #fecaca;
         }
 
         .main-content {

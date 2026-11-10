@@ -13,11 +13,11 @@
 
     .toolbar-info {
         font-size: 0.9rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
     }
 
     .toolbar-info strong {
-        color: #f1f5f9;
+        color: var(--text-heading);
     }
 
     .btn-primary {
@@ -51,9 +51,9 @@
     }
 
     .sapi-card {
-        background: rgba(30, 41, 59, 0.7);
+        background: var(--bg-card);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(148, 163, 184, 0.08);
+        border: 1px solid var(--border-color);
         border-radius: 16px;
         overflow: hidden;
         transition: all 0.3s ease;
@@ -132,18 +132,18 @@
         font-size: 1.1rem;
         font-weight: 700;
         letter-spacing: -0.02em;
-        color: #f1f5f9;
+        color: var(--text-heading);
         transition: color 0.2s ease;
     }
 
     .sapi-card-jenis-link:hover .sapi-card-jenis {
-        color: #6ee7b7;
+        color: var(--green-brand);
     }
 
     .sapi-card-harga {
         font-size: 1rem;
         font-weight: 800;
-        color: #6ee7b7;
+        color: var(--green-brand);
         white-space: nowrap;
     }
 
@@ -158,11 +158,11 @@
         align-items: center;
         gap: 0.35rem;
         font-size: 0.8rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
     }
 
     .sapi-detail-item strong {
-        color: #cbd5e1;
+        color: var(--text-primary);
     }
 
     /* Health Badge */
@@ -177,20 +177,23 @@
     }
 
     .health-belum {
-        background: rgba(245, 158, 11, 0.1);
-        border: 1px solid rgba(245, 158, 11, 0.2);
-        color: #fcd34d;
+        background: rgba(245, 158, 11, 0.15);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        color: var(--accent-amber-text);
     }
 
     .health-sehat {
-        background: rgba(16, 185, 129, 0.1);
-        border: 1px solid rgba(16, 185, 129, 0.2);
-        color: #6ee7b7;
+        background: rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: var(--green-brand);
     }
 
     .health-tidak-sehat {
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.2);
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #dc2626;
+    }
+    [data-theme="dark"] .health-tidak-sehat {
         color: #fca5a5;
     }
 
@@ -198,7 +201,7 @@
     .empty-state {
         text-align: center;
         padding: 4rem 1.5rem;
-        color: #64748b;
+        color: var(--text-secondary);
     }
 
     .empty-state-icon {
@@ -210,7 +213,7 @@
     .empty-state h3 {
         font-size: 1.15rem;
         font-weight: 700;
-        color: #94a3b8;
+        color: var(--text-heading);
         margin-bottom: 0.5rem;
     }
 
@@ -219,6 +222,7 @@
         max-width: 420px;
         margin: 0 auto 1.5rem;
         line-height: 1.6;
+        color: var(--text-secondary);
     }
 
     /* Alert */
@@ -229,7 +233,8 @@
         padding: 0.85rem 1rem;
         margin-bottom: 1.5rem;
         font-size: 0.85rem;
-        color: #6ee7b7;
+        color: var(--green-brand);
+        font-weight: 600;
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -275,46 +280,57 @@
 
     /* Detail Button */
     .btn-action.btn-detail {
-        background: rgba(148, 163, 184, 0.08);
-        color: #cbd5e1;
-        border-color: rgba(148, 163, 184, 0.15);
+        background: var(--bg-muted);
+        color: var(--text-primary);
+        border-color: var(--border-color);
     }
 
     .btn-action.btn-detail:hover {
-        background: rgba(148, 163, 184, 0.18);
-        color: #ffffff;
-        border-color: rgba(148, 163, 184, 0.3);
+        background: var(--border-color);
+        color: var(--text-heading);
         transform: translateY(-1px);
     }
 
     /* Edit Button */
     .btn-action.btn-edit {
         background: rgba(59, 130, 246, 0.12);
-        color: #60a5fa;
+        color: #2563eb;
         border-color: rgba(59, 130, 246, 0.25);
+    }
+    [data-theme="dark"] .btn-action.btn-edit {
+        color: #93c5fd;
     }
 
     .btn-action.btn-edit:hover {
         background: rgba(59, 130, 246, 0.22);
-        color: #93c5fd;
+        color: #1d4ed8;
         border-color: rgba(59, 130, 246, 0.45);
         box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
         transform: translateY(-1px);
+    }
+    [data-theme="dark"] .btn-action.btn-edit:hover {
+        color: #bfdbfe;
     }
 
     /* Delete Button */
     .btn-action.btn-delete {
         background: rgba(239, 68, 68, 0.1);
-        color: #fca5a5;
+        color: #dc2626;
         border-color: rgba(239, 68, 68, 0.2);
+    }
+    [data-theme="dark"] .btn-action.btn-delete {
+        color: #fca5a5;
     }
 
     .btn-action.btn-delete:hover {
         background: rgba(239, 68, 68, 0.22);
-        color: #f87171;
+        color: #b91c1c;
         border-color: rgba(239, 68, 68, 0.4);
         box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
         transform: translateY(-1px);
+    }
+    [data-theme="dark"] .btn-action.btn-delete:hover {
+        color: #f87171;
     }
 
     .btn-sampah-nav {
@@ -323,7 +339,7 @@
         gap: 0.4rem;
         padding: 0.7rem 1.25rem;
         background: rgba(239, 68, 68, 0.12);
-        color: #fca5a5;
+        color: #dc2626;
         border: 1px solid rgba(239, 68, 68, 0.3);
         border-radius: 10px;
         font-size: 0.85rem;
@@ -333,13 +349,19 @@
         transition: all 0.3s ease;
         text-decoration: none;
     }
+    [data-theme="dark"] .btn-sampah-nav {
+        color: #fca5a5;
+    }
 
     .btn-sampah-nav:hover {
         background: rgba(239, 68, 68, 0.22);
         border-color: rgba(239, 68, 68, 0.5);
-        color: #ffffff;
+        color: #b91c1c;
         transform: translateY(-1px);
         box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
+    }
+    [data-theme="dark"] .btn-sampah-nav:hover {
+        color: #ffffff;
     }
 
     @media (max-width: 640px) {

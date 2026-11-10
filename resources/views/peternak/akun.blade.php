@@ -38,7 +38,7 @@
         font-size: 1.75rem;
         font-weight: 800;
         color: white;
-        border: 4px solid #0f172a;
+        border: 4px solid var(--border-color);
     }
 
     .profile-name {
@@ -46,6 +46,7 @@
         font-weight: 800;
         letter-spacing: -0.02em;
         margin-bottom: 0.15rem;
+        color: var(--text-heading);
     }
 
     .profile-role {
@@ -58,7 +59,7 @@
         border-radius: 6px;
         font-size: 0.75rem;
         font-weight: 600;
-        color: #6ee7b7;
+        color: var(--green-brand);
         margin-top: 0.5rem;
     }
 
@@ -79,6 +80,7 @@
         align-items: center;
         gap: 0.5rem;
         letter-spacing: -0.02em;
+        color: var(--text-heading);
     }
 
     .info-row {
@@ -86,7 +88,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.85rem 0;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .info-row:last-child {
@@ -95,14 +97,14 @@
 
     .info-label {
         font-size: 0.85rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
         font-weight: 500;
     }
 
     .info-value {
         font-size: 0.9rem;
         font-weight: 600;
-        color: #f1f5f9;
+        color: var(--text-heading);
     }
 
     .alert-success {
@@ -112,7 +114,7 @@
         padding: 0.85rem 1rem;
         margin-bottom: 1.5rem;
         font-size: 0.85rem;
-        color: #6ee7b7;
+        color: var(--green-brand);
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -126,7 +128,7 @@
         display: block;
         font-size: 0.8rem;
         font-weight: 600;
-        color: #94a3b8;
+        color: var(--text-secondary);
         margin-bottom: 0.5rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -135,10 +137,10 @@
     .form-input {
         width: 100%;
         padding: 0.8rem 1rem;
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(148, 163, 184, 0.1);
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
         border-radius: 10px;
-        color: #f1f5f9;
+        color: var(--text-primary);
         font-size: 0.9rem;
         font-family: 'Inter', sans-serif;
         transition: all 0.2s ease;
@@ -146,8 +148,8 @@
     }
 
     .form-input:focus {
-        border-color: rgba(16, 185, 129, 0.4);
-        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.08);
+        border-color: var(--green-brand);
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
     }
 
     .form-input:disabled {
@@ -211,7 +213,7 @@
             </div>
         </div>
         <div class="profile-name">{{ auth()->user()->name }}</div>
-        <div style="color: #94a3b8; font-size: 0.9rem;">{{ auth()->user()->email }}</div>
+        <div style="color: var(--text-secondary); font-size: 0.9rem;">{{ auth()->user()->email }}</div>
         <div class="profile-role">🐄 Peternak</div>
     </div>
 </div>

@@ -65,10 +65,14 @@ class LaporanController extends Controller
         $peternakId = $request->query('peternak_id', 'all');
 
         // Daftar tahun yang ada pada sistem untuk filter
-        $dbYears = Transaksi::selectRaw('YEAR(created_at) as yr')
+        $driver = \DB::connection()->getDriverName();
+        $yearExpr = $driver === 'sqlite' ? "strftime('%Y', created_at) as yr" : "YEAR(created_at) as yr";
+        $dbYears = Transaksi::selectRaw($yearExpr)
             ->distinct()
             ->orderBy('yr', 'desc')
             ->pluck('yr')
+            ->map(fn($y) => (int)$y)
+            ->filter()
             ->toArray();
         $availableYears = array_unique(array_merge([Carbon::now()->year, Carbon::now()->year - 1], $dbYears));
         rsort($availableYears);
@@ -88,7 +92,11 @@ class LaporanController extends Controller
         // Query utama
         $baseQuery = Transaksi::with(['sapi.peternak', 'pembeli', 'aparat'])
             ->whereYear('created_at', $tahun)
-            ->whereIn(\DB::raw('MONTH(created_at)'), $monthRange);
+            ->where(function ($q) use ($monthRange) {
+                foreach ($monthRange as $m) {
+                    $q->orWhereMonth('created_at', $m);
+                }
+            });
 
         if ($status === 'selesai') {
             $baseQuery->where('status', 'selesai');
@@ -119,8 +127,13 @@ class LaporanController extends Controller
         ];
 
         foreach ($quarterDefinitions as $qNum => $qDef) {
+            $months = $qDef['months'];
             $qQuery = Transaksi::whereYear('created_at', $tahun)
-                ->whereIn(\DB::raw('MONTH(created_at)'), $qDef['months']);
+                ->where(function ($q) use ($months) {
+                    foreach ($months as $m) {
+                        $q->orWhereMonth('created_at', $m);
+                    }
+                });
 
             if ($status === 'selesai') {
                 $qQuery->where('status', 'selesai');

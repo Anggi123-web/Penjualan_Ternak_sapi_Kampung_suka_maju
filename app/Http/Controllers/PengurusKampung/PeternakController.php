@@ -17,13 +17,29 @@ class PeternakController extends Controller
     {
         $search = $request->query('q');
         $filterStatus = $request->query('status', 'semua');
+        $filterVerifikasi = $request->query('status_verifikasi', 'semua');
+
+        // Tab counts for verification status
+        $countMenunggu = User::where('role', 'peternak')->where('status_verifikasi', 'menunggu_verifikasi')->count();
+        $countTerverifikasi = User::where('role', 'peternak')->where('status_verifikasi', 'terverifikasi')->count();
+        $countDitolak = User::where('role', 'peternak')->where('status_verifikasi', 'ditolak')->count();
+        $countSemua = User::where('role', 'peternak')->count();
+
+        // Default to 'menunggu_verifikasi' if there are pending applicants and user hasn't selected another tab
+        if (!$request->has('status_verifikasi') && $countMenunggu > 0) {
+            $filterVerifikasi = 'menunggu_verifikasi';
+        }
 
         $query = User::where('role', 'peternak')
+            ->with(['diverifikasiOleh'])
             ->withCount([
                 'sapis as total_sapi',
                 'sapisAktif as sapi_aktif_count'
-            ])
-            ->latest();
+            ]);
+
+        // Prioritize pending verifications at the top
+        $query->orderByRaw("CASE WHEN status_verifikasi = 'menunggu_verifikasi' THEN 0 WHEN status_verifikasi = 'terverifikasi' THEN 1 ELSE 2 END")
+              ->latest();
 
         if ($search) {
             $query->where(function ($q) use ($search) {
@@ -41,6 +57,14 @@ class PeternakController extends Controller
             $query->doesntHave('sapisAktif');
         }
 
+        if ($filterVerifikasi === 'menunggu_verifikasi') {
+            $query->where('status_verifikasi', 'menunggu_verifikasi');
+        } elseif ($filterVerifikasi === 'terverifikasi') {
+            $query->where('status_verifikasi', 'terverifikasi');
+        } elseif ($filterVerifikasi === 'ditolak') {
+            $query->where('status_verifikasi', 'ditolak');
+        }
+
         $peternaks = $query->paginate(10)->withQueryString();
 
         // Ambil ID semua sapi dari peternak-peternak untuk hitung omset masing-masing di halaman ini
@@ -52,7 +76,7 @@ class PeternakController extends Controller
 
         // Summary KPI wilayah
         $totalPeternak = User::where('role', 'peternak')->count();
-        $peternakAktif = User::where('role', 'peternak')->has('sapisAktif')->count();
+        $peternakAktif = User::where('role', 'peternak')->where('status_verifikasi', 'terverifikasi')->has('sapisAktif')->count();
         $totalSapiWilayah = Sapi::count();
         $totalOmsetWilayah = Transaksi::where('status', 'selesai')->sum('total_harga');
 
@@ -60,6 +84,11 @@ class PeternakController extends Controller
             'peternaks',
             'search',
             'filterStatus',
+            'filterVerifikasi',
+            'countMenunggu',
+            'countTerverifikasi',
+            'countDitolak',
+            'countSemua',
             'totalPeternak',
             'peternakAktif',
             'totalSapiWilayah',
@@ -73,6 +102,7 @@ class PeternakController extends Controller
     public function show($id)
     {
         $peternak = User::where('role', 'peternak')
+            ->with(['diverifikasiOleh'])
             ->withCount(['sapis', 'sapisAktif'])
             ->findOrFail($id);
 
@@ -108,5 +138,75 @@ class PeternakController extends Controller
             'transaksis',
             'stats'
         ));
+    }
+
+    /**
+     * Setujui pendaftaran peternak dan generate link WhatsApp untuk kirim notifikasi aktivasi
+     */
+    public function verifikasi(Request $request, $id)
+    {
+        $peternak = User::where('role', 'peternak')->findOrFail($id);
+
+        $peternak->update([
+            'status_verifikasi' => 'terverifikasi',
+            'diverifikasi_oleh' => auth()->id(),
+            'tanggal_verifikasi' => now(),
+            'alasan_penolakan' => null,
+            'wa_notifikasi_terkirim_at' => now(),
+        ]);
+
+        $waUrl = $peternak->generateWhatsAppAktivasiUrl();
+
+        return redirect()->route('pengurus_kampung.peternak.index', ['status_verifikasi' => 'terverifikasi'])
+            ->with('success', 'Akun Peternak ' . $peternak->name . ' BERHASIL DIVERIFIKASI!')
+            ->with('wa_url', $waUrl)
+            ->with('verified_peternak', $peternak->name)
+            ->with('verified_phone', $peternak->no_telepon);
+    }
+
+    /**
+     * Tolak pendaftaran peternak dengan alasan
+     */
+    public function tolak(Request $request, $id)
+    {
+        $request->validate([
+            'alasan_penolakan' => 'required|string|max:500',
+        ], [
+            'alasan_penolakan.required' => 'Wajib memberikan alasan atau catatan penolakan pendaftaran.',
+        ]);
+
+        $peternak = User::where('role', 'peternak')->findOrFail($id);
+
+        $peternak->update([
+            'status_verifikasi' => 'ditolak',
+            'diverifikasi_oleh' => auth()->id(),
+            'tanggal_verifikasi' => now(),
+            'alasan_penolakan' => $request->alasan_penolakan,
+        ]);
+
+        $waUrl = $peternak->generateWhatsAppPenolakanUrl($request->alasan_penolakan);
+
+        return redirect()->route('pengurus_kampung.peternak.index', ['status_verifikasi' => 'ditolak'])
+            ->with('warning', 'Pengajuan akun Peternak ' . $peternak->name . ' telah ditolak.')
+            ->with('wa_url', $waUrl)
+            ->with('rejected_peternak', $peternak->name);
+    }
+
+    /**
+     * Kirim ulang notifikasi akun WhatsApp secara langsung
+     */
+    public function kirimWa(Request $request, $id)
+    {
+        $peternak = User::where('role', 'peternak')->findOrFail($id);
+
+        if ($peternak->status_verifikasi === 'ditolak') {
+            $waUrl = $peternak->generateWhatsAppPenolakanUrl();
+        } else {
+            $waUrl = $peternak->generateWhatsAppAktivasiUrl();
+        }
+
+        $peternak->update(['wa_notifikasi_terkirim_at' => now()]);
+
+        return redirect()->away($waUrl);
     }
 }

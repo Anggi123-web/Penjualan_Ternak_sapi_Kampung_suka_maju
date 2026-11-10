@@ -265,24 +265,24 @@
                                 </a>
                             </div>
 
-                            <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 12px; padding: 0.85rem 1.1rem; font-size: 0.88rem; color: #334155; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                            <div style="background: var(--bg-surface, #f8fafc); border: 1.5px solid var(--border-color, #cbd5e1); border-radius: 12px; padding: 0.85rem 1.1rem; font-size: 0.88rem; color: var(--text-primary, #334155); box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                                    <strong style="color: #0f172a; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+                                    <strong style="color: var(--text-heading, #0f172a); font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
                                         <i class="bi bi-shop" style="color: #10b981;"></i> Kandang Peternak: {{ $sapi->peternak->name ?? 'Peternak' }}
                                     </strong>
                                     <a href="https://www.google.com/maps/dir/?api=1&destination={{ $sapiLat }},{{ $sapiLng }}" target="_blank" rel="noopener noreferrer" style="background: #00A740; color: white; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(0, 167, 64, 0.25); transition: all 0.2s;" title="Klik untuk membuka titik rute lokasi sapi di Google Maps">
                                         <i class="bi bi-geo-alt-fill"></i> Ambil di Lokasi (Peta)
                                     </a>
                                 </div>
-                                <div style="color: #475569; line-height: 1.5; font-size: 0.88rem;">
+                                <div style="color: var(--text-secondary, #475569); line-height: 1.5; font-size: 0.88rem;">
                                     {{ $sapiLokasi }}
                                 </div>
                                 <div style="margin-top: 4px;">
-                                    <a href="https://www.google.com/maps/dir/?api=1&destination={{ $sapiLat }},{{ $sapiLng }}" target="_blank" rel="noopener noreferrer" style="color: #00A740; font-weight: 700; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                    <a href="https://www.google.com/maps/dir/?api=1&destination={{ $sapiLat }},{{ $sapiLng }}" target="_blank" rel="noopener noreferrer" style="color: var(--green-brand, #00A740); font-weight: 700; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                                         <i class="bi bi-signpost-2-fill"></i> Lihat Rute Petunjuk Arah Google Maps &rarr;
                                     </a>
                                 </div>
-                                <div style="font-size: 0.8rem; color: #64748b; margin-top: 6px; border-top: 1px dashed #e2e8f0; padding-top: 6px; display: flex; align-items: center; gap: 5px;">
+                                <div style="font-size: 0.8rem; color: var(--text-secondary, #64748b); margin-top: 6px; border-top: 1px dashed var(--border-color, #e2e8f0); padding-top: 6px; display: flex; align-items: center; gap: 5px;">
                                     <i class="bi bi-info-circle-fill" style="color: #3b82f6;"></i>
                                     <span>Peta di bawah menunjukkan titik koordinat lokasi sapi untuk penjemputan ternak secara mandiri.</span>
                                 </div>
@@ -392,76 +392,76 @@
 
         {{-- Modal Konfirmasi Pemesanan --}}
         <div id="modalKonfirmasiBeli" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;" onclick="closeModalKonfirmasi()">
-            <div style="background: white; border-radius: 18px; max-width: 500px; width: 100%; padding: 1.75rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);" onclick="event.stopPropagation()">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem;">
-                    <div style="width: 44px; height: 44px; background: rgba(0, 167, 64, 0.1); color: #00A740; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+            <div style="background: var(--bg-card, white); border: 1px solid var(--border-color, transparent); border-radius: 18px; max-width: 500px; width: 100%; padding: 1.75rem; box-shadow: var(--card-shadow, 0 25px 50px -12px rgba(0, 0, 0, 0.25));" onclick="event.stopPropagation()">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color, #f1f5f9); padding-bottom: 1rem;">
+                    <div style="width: 44px; height: 44px; background: rgba(0, 167, 64, 0.12); color: var(--green-brand, #00A740); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
                         <i class="bi bi-bag-check-fill"></i>
                     </div>
                     <div>
-                        <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800; color: #0f172a; margin: 0;">
+                        <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--text-heading, #0f172a); margin: 0;">
                             Konfirmasi Pemesanan Sapi
                         </h3>
-                        <span style="font-size: 0.8rem; color: #64748b;">Periksa rincian pesanan Anda sebelum lanjut</span>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary, #64748b);">Periksa rincian pesanan Anda sebelum lanjut</span>
                     </div>
                 </div>
 
-                <div style="background: #f8fafc; border-radius: 12px; padding: 1rem; border: 1px solid #e2e8f0; margin-bottom: 1.25rem; font-size: 0.88rem;">
+                <div style="background: var(--bg-surface, #f8fafc); border-radius: 12px; padding: 1rem; border: 1px solid var(--border-color, #e2e8f0); margin-bottom: 1.25rem; font-size: 0.88rem;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                        <span style="color: #64748b;">Ternak:</span>
-                        <strong style="color: #0f172a;">Sapi {{ $sapi->jenis }}</strong>
+                        <span style="color: var(--text-secondary, #64748b);">Ternak:</span>
+                        <strong style="color: var(--text-heading, #0f172a);">Sapi {{ $sapi->jenis }}</strong>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                        <span style="color: #64748b;">Harga Ternak:</span>
-                        <span style="color: #0f172a;">Rp.{{ number_format($sapi->harga, 0, ',', '.') }}</span>
+                        <span style="color: var(--text-secondary, #64748b);">Harga Ternak:</span>
+                        <span style="color: var(--text-heading, #0f172a); font-weight: 600;">Rp.{{ number_format($sapi->harga, 0, ',', '.') }}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                        <span style="color: #64748b;">Metode Pengantaran:</span>
-                        <span id="modalPengantaranText" style="color: #0f172a; font-weight: 600;">Diantar</span>
+                        <span style="color: var(--text-secondary, #64748b);">Metode Pengantaran:</span>
+                        <span id="modalPengantaranText" style="color: var(--text-heading, #0f172a); font-weight: 700;">Diantar</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;" id="modalRowLokasiAmbil">
-                        <span style="color: #64748b;">Lokasi Pengambilan:</span>
-                        <a href="https://www.google.com/maps/dir/?api=1&destination={{ $sapiLat }},{{ $sapiLng }}" target="_blank" rel="noopener noreferrer" style="color: #00A740; font-weight: 700; text-align: right; max-width: 250px; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Buka rute Google Maps">
+                        <span style="color: var(--text-secondary, #64748b);">Lokasi Pengambilan:</span>
+                        <a href="https://www.google.com/maps/dir/?api=1&destination={{ $sapiLat }},{{ $sapiLng }}" target="_blank" rel="noopener noreferrer" style="color: var(--green-brand, #00A740); font-weight: 700; text-align: right; max-width: 250px; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="Buka rute Google Maps">
                             <span>{{ Str::limit($sapiLokasi, 32) }}</span>
                             <i class="bi bi-box-arrow-up-right"></i>
                         </a>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px;" id="modalRowOngkir">
-                        <span style="color: #64748b;">Ongkos Kirim:</span>
-                        <span id="modalOngkirText" style="color: #0f172a;">Rp.100.000</span>
+                        <span style="color: var(--text-secondary, #64748b);">Ongkos Kirim:</span>
+                        <span id="modalOngkirText" style="color: var(--text-heading, #0f172a); font-weight: 600;">Rp.100.000</span>
                     </div>
                     @if($sapi->is_preorder)
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px;" id="modalRowTanggalPreorder">
-                        <span style="color: #64748b;">Rencana Penjemputan/Kirim:</span>
-                        <strong id="modalTanggalText" style="color: #0f172a;"></strong>
+                        <span style="color: var(--text-secondary, #64748b);">Rencana Penjemputan/Kirim:</span>
+                        <strong id="modalTanggalText" style="color: var(--text-heading, #0f172a);"></strong>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 6px;" id="modalRowBiayaPerawatan">
-                        <span style="color: #64748b;">Biaya Perawatan:</span>
+                        <span style="color: var(--text-secondary, #64748b);">Biaya Perawatan:</span>
                         <span id="modalBiayaPerawatanText" style="color: #b45309; font-weight: 700;"></span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; background: rgba(16, 185, 129, 0.08); padding: 5px 8px; border-radius: 8px;">
-                        <span style="color: #047857; font-weight: 600;">Pembayaran 1 (DP Sekarang):</span>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; background: rgba(16, 185, 129, 0.12); padding: 5px 8px; border-radius: 8px;">
+                        <span style="color: #047857; font-weight: 700;">Pembayaran 1 (DP Sekarang):</span>
                         <strong id="modalDpText" style="color: #047857;"></strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; background: rgba(245, 158, 11, 0.08); padding: 5px 8px; border-radius: 8px;">
-                        <span style="color: #b45309; font-weight: 600;">Pembayaran 2 (Pelunasan):</span>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px; background: rgba(245, 158, 11, 0.12); padding: 5px 8px; border-radius: 8px;">
+                        <span style="color: #b45309; font-weight: 700;">Pembayaran 2 (Pelunasan):</span>
                         <strong id="modalSisaText" style="color: #b45309;"></strong>
                     </div>
                     @endif
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: #64748b;">Metode Pembayaran:</span>
-                        <span id="modalMetodeBayarText" style="color: #0f172a; font-weight: 600;">Transfer Bank</span>
+                        <span style="color: var(--text-secondary, #64748b);">Metode Pembayaran:</span>
+                        <span id="modalMetodeBayarText" style="color: var(--text-heading, #0f172a); font-weight: 700;">Transfer Bank</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed #cbd5e1; font-size: 1rem;">
-                        <strong style="color: #0f172a;">Total Biaya Keseluruhan:</strong>
-                        <strong id="modalTotalText" style="color: #00A740; font-family: 'Montserrat', sans-serif;"></strong>
+                    <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px dashed var(--border-color, #cbd5e1); font-size: 1rem;">
+                        <strong style="color: var(--text-heading, #0f172a);">Total Biaya Keseluruhan:</strong>
+                        <strong id="modalTotalText" style="color: var(--green-brand, #00A740); font-family: 'Montserrat', sans-serif;"></strong>
                     </div>
                 </div>
 
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    <button type="button" onclick="closeModalKonfirmasi()" style="padding: 0.65rem 1.25rem; border-radius: 10px; border: 1px solid #cbd5e1; background: white; color: #475569; font-weight: 600; cursor: pointer;">
+                    <button type="button" onclick="closeModalKonfirmasi()" style="padding: 0.65rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-card, white); color: var(--text-secondary, #475569); font-weight: 600; cursor: pointer;">
                         Periksa Kembali
                     </button>
-                    <button type="button" id="btnModalExecuteSubmit" onclick="executeSubmitForm()" style="padding: 0.65rem 1.4rem; border-radius: 10px; border: none; background: #00A740; color: white; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(0, 167, 64, 0.3);">
+                    <button type="button" id="btnModalExecuteSubmit" onclick="executeSubmitForm()" style="padding: 0.65rem 1.4rem; border-radius: 10px; border: none; background: var(--green-brand, #00A740); color: white; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(0, 167, 64, 0.3);">
                         <i class="bi bi-check-circle-fill"></i> Ya, Buat Pesanan
                     </button>
                 </div>
@@ -470,18 +470,18 @@
 
         {{-- Modal Role Notice untuk Non-Pembeli di Pembayaran --}}
         <div id="modalRoleNotice" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;" onclick="closeModalRoleNotice()">
-            <div style="background: white; border-radius: 16px; max-width: 460px; width: 100%; padding: 1.75rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); text-align: center;" onclick="event.stopPropagation()">
-                <div style="width: 56px; height: 56px; background: #fef2f2; color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem;">
+            <div style="background: var(--bg-card, white); border: 1px solid var(--border-color, transparent); border-radius: 16px; max-width: 460px; width: 100%; padding: 1.75rem; box-shadow: var(--card-shadow, 0 25px 50px -12px rgba(0, 0, 0, 0.25)); text-align: center;" onclick="event.stopPropagation()">
+                <div style="width: 56px; height: 56px; background: rgba(239, 68, 68, 0.12); color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 1rem;">
                     <i class="bi bi-shield-lock-fill"></i>
                 </div>
-                <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;" id="modalRoleTitle">
+                <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--text-heading, #0f172a); margin-bottom: 0.5rem;" id="modalRoleTitle">
                     Pemberitahuan Akun
                 </h3>
-                <p style="color: #64748b; font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.5rem;" id="modalRoleMessage">
+                <p style="color: var(--text-secondary, #64748b); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.5rem;" id="modalRoleMessage">
                     Fitur transaksi pembelian sapi hanya dapat dilakukan melalui akun dengan role <strong>Pembeli</strong>.
                 </p>
                 <div style="display: flex; gap: 10px; justify-content: center;" id="modalRoleActionBtns">
-                    <button type="button" onclick="closeModalRoleNotice()" style="padding: 0.6rem 1.25rem; border-radius: 10px; border: 1px solid #cbd5e1; background: white; color: #475569; font-weight: 600; cursor: pointer;">
+                    <button type="button" onclick="closeModalRoleNotice()" style="padding: 0.6rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-color, #cbd5e1); background: var(--bg-card, white); color: var(--text-secondary, #475569); font-weight: 600; cursor: pointer;">
                         Tutup
                     </button>
                     @auth

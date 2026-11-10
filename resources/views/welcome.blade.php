@@ -7,8 +7,13 @@
     <title>Sistem Penjualan Sapi — Pilih Akun</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Unified SIPETER Design System & Dark/Light Mode Theme -->
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <script src="{{ asset('js/theme-manager.js') }}"></script>
+
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -18,11 +23,12 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #f1f5f9;
+            background-color: var(--bg-page, #0f172a);
+            color: var(--text-primary, #f1f5f9);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            transition: var(--theme-transition);
         }
 
         /* Animated Background */
@@ -349,9 +355,98 @@
             transform: translateY(20px);
             animation: fadeUp 0.6s ease forwards;
         }
+
+        /* ── Light Mode High Contrast Overrides ── */
+        [data-theme="light"] .header-badge {
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(16, 185, 129, 0.35);
+            color: #065f46;
+        }
+
+        [data-theme="light"] .header h1 {
+            color: #0f172a;
+            background: none;
+            -webkit-text-fill-color: initial;
+            font-weight: 900;
+        }
+
+        [data-theme="light"] .header p {
+            color: #334155;
+            font-weight: 500;
+        }
+
+        [data-theme="light"] .role-card {
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .role-card:hover {
+            border-color: #94a3b8;
+            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.14);
+        }
+
+        [data-theme="light"] .card-title {
+            color: #0f172a;
+        }
+
+        [data-theme="light"] .card-desc {
+            color: #475569;
+        }
+
+        [data-theme="light"] .card-peternak .card-icon {
+            background: rgba(16, 185, 129, 0.15);
+            color: #047857;
+        }
+        [data-theme="light"] .card-peternak .card-arrow {
+            color: #047857;
+        }
+
+        [data-theme="light"] .card-pembeli .card-icon {
+            background: rgba(59, 130, 246, 0.15);
+            color: #1d4ed8;
+        }
+        [data-theme="light"] .card-pembeli .card-arrow {
+            color: #1d4ed8;
+        }
+
+        [data-theme="light"] .card-mantri .card-icon {
+            background: rgba(245, 158, 11, 0.15);
+            color: #b45309;
+        }
+        [data-theme="light"] .card-mantri .card-arrow {
+            color: #b45309;
+        }
+
+        [data-theme="light"] .card-pengurus .card-icon {
+            background: rgba(139, 92, 246, 0.15);
+            color: #6d28d9;
+        }
+        [data-theme="light"] .card-pengurus .card-arrow {
+            color: #6d28d9;
+        }
+
+        [data-theme="light"] .footer {
+            border-top-color: #e2e8f0;
+        }
+
+        [data-theme="light"] .footer p {
+            color: #475569;
+        }
     </style>
 </head>
 <body>
+    <div style="position: fixed; top: 20px; left: 24px; z-index: 100;">
+        <a href="{{ route('beranda') }}" class="sipeter-back-btn" title="Kembali ke Beranda">
+            <i class="bi bi-arrow-left"></i> Beranda
+        </a>
+    </div>
+
+    <div style="position: fixed; top: 20px; right: 24px; z-index: 100;">
+        @include('partials.theme_toggle', ['id' => 'welcomeThemeToggle'])
+    </div>
+
     <div class="bg-gradient">
         <div class="bg-orb"></div>
     </div>
@@ -359,6 +454,11 @@
 
     <div class="container">
         <div class="header">
+            <div style="margin-bottom: 1.75rem; display: flex; justify-content: center;">
+                <a href="{{ route('beranda') }}" title="Kembali ke Beranda">
+                    <img src="{{ asset('images/sipeter_logo.png') }}" class="welcome-logo-img" alt="Logo Sistem Penjualan Ternak Sapi" style="height: 76px; width: auto; max-width: 90%; object-fit: contain;">
+                </a>
+            </div>
             <div class="header-badge">
                 <span></span>
                 Sistem Penjualan Sapi

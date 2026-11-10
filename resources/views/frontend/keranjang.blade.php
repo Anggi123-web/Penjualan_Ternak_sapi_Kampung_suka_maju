@@ -9,12 +9,12 @@
     </div>
 
     @if(session('success'))
-        <div style="background: #d1fae5; color: #065f46; padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; font-weight: 500;">
+        <div style="background: rgba(16, 185, 129, 0.12); color: var(--green-brand, #047857); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; font-weight: 600;">
             {{ session('success') }}
         </div>
     @endif
     @if(session('error'))
-        <div style="background: #fee2e2; color: #b91c1c; padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; font-weight: 500;">
+        <div style="background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 1rem 1.5rem; border-radius: 8px; margin-bottom: 2rem; font-weight: 600;">
             {{ session('error') }}
         </div>
     @endif
@@ -34,9 +34,9 @@
                 @php $totalHarga = 0; @endphp
                 @foreach($keranjangs as $item)
                     @php $totalHarga += $item->sapi->harga; @endphp
-                    <div style="display: flex; gap: 1.5rem; padding: 1.5rem; background: #ffffff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; align-items: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
+                    <div style="display: flex; gap: 1.5rem; padding: 1.5rem; background: var(--bg-card, #ffffff); border: 1px solid var(--border-color, rgba(0,0,0,0.08)); border-radius: 12px; align-items: center; box-shadow: var(--card-shadow, 0 4px 6px -1px rgba(0,0,0,0.02));">
                         <!-- Foto -->
-                        <div style="width: 140px; height: 140px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: #f1f5f9;">
+                        <div style="width: 140px; height: 140px; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--bg-muted, #f1f5f9);">
                             @if($item->sapi->first_foto)
                                 <img src="{{ asset('storage/' . $item->sapi->first_foto) }}" alt="{{ $item->sapi->jenis }}" style="width: 100%; height: 100%; object-fit: cover;">
                             @else
@@ -69,7 +69,7 @@
                 @endforeach
 
                 <!-- Total & Checkout -->
-                <div style="margin-top: 1.5rem; padding-top: 2rem; border-top: 2px dashed rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;">
+                <div style="margin-top: 1.5rem; padding-top: 2rem; border-top: 2px dashed var(--border-color, rgba(0,0,0,0.1)); display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <span style="color: var(--medium-gray); font-size: 1.1rem; font-weight: 600;">Total Pembayaran:</span>
                         <div style="font-family: var(--font-montserrat); font-size: 1.8rem; font-weight: 800; color: var(--black-text); margin-top: 0.25rem;">

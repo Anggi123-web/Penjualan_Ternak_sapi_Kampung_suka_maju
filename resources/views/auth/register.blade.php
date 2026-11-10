@@ -7,8 +7,14 @@
     <title>Daftar Akun — Sistem Penjualan Sapi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <!-- Unified SIPETER Design System & Dark/Light Mode Theme -->
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <script src="{{ asset('js/theme-manager.js') }}"></script>
+
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -18,8 +24,8 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #f1f5f9;
+            background-color: var(--bg-page, #0f172a);
+            color: var(--text-primary, #f1f5f9);
             min-height: 100vh;
             display: flex;
             align-items: flex-start;
@@ -27,6 +33,7 @@
             position: relative;
             overflow-x: hidden;
             padding: 2rem 0;
+            transition: var(--theme-transition);
         }
 
         /* Animated Background */
@@ -112,29 +119,32 @@
         }
 
         .header-logo-box {
-            width: 100px;
+            width: auto;
+            max-width: 190px;
             height: 56px;
-            border: 2px solid rgba(148, 163, 184, 0.15);
+            padding: 4px 10px;
+            border: 1px solid rgba(148, 163, 184, 0.15);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(15, 23, 42, 0.5);
+            background: var(--bg-card, rgba(15, 23, 42, 0.5));
             overflow: hidden;
             flex-shrink: 0;
         }
 
         .header-logo-box img {
-            max-width: 80px;
-            max-height: 44px;
+            max-width: 100%;
+            height: 46px;
             object-fit: contain;
+            display: block;
         }
 
         .header-title {
             font-size: 1.6rem;
             font-weight: 800;
             letter-spacing: -0.03em;
-            color: #f1f5f9;
+            color: var(--text-heading, #0f172a);
         }
 
         /* Role Tabs */
@@ -151,16 +161,16 @@
             font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            border: 2px solid rgba(148, 163, 184, 0.15);
-            background: rgba(30, 41, 59, 0.5);
-            color: #94a3b8;
+            border: 2px solid var(--border-color, rgba(148, 163, 184, 0.2));
+            background: var(--bg-card, rgba(30, 41, 59, 0.5));
+            color: var(--text-secondary, #475569);
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
         }
 
         .role-tab:hover {
-            border-color: rgba(148, 163, 184, 0.3);
-            color: #cbd5e1;
+            border-color: var(--green-brand, #10b981);
+            color: var(--text-primary, #0f172a);
         }
 
         .role-tab.active {
@@ -172,9 +182,9 @@
 
         /* Card */
         .register-card {
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--bg-card, #ffffff);
             backdrop-filter: blur(24px);
-            border: 1px solid rgba(148, 163, 184, 0.08);
+            border: 1px solid var(--border-color, #e2e8f0);
             border-radius: 24px;
             padding: 2.5rem;
             position: relative;
@@ -208,33 +218,37 @@
 
         .form-label {
             display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #cbd5e1;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary, #0f172a);
             margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
         }
 
         .form-input {
             width: 100%;
             padding: 0.85rem 1rem;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(148, 163, 184, 0.12);
+            background: var(--input-bg, #ffffff);
+            border: 1.5px solid var(--input-border, #cbd5e1);
             border-radius: 12px;
-            color: #f1f5f9;
+            color: var(--text-primary, #0f172a);
             font-size: 0.95rem;
+            font-weight: 500;
             font-family: 'Inter', sans-serif;
             transition: all 0.25s ease;
             outline: none;
         }
 
         .form-input::placeholder {
-            color: #475569;
+            color: var(--text-muted, #64748b);
+            opacity: 0.85;
         }
 
         .form-input:focus {
-            border-color: rgba(59, 130, 246, 0.4);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
-            background: rgba(15, 23, 42, 0.8);
+            border-color: var(--green-brand, #00A740);
+            box-shadow: 0 0 0 3.5px var(--input-focus-ring, rgba(0, 167, 64, 0.2));
+            background: var(--bg-surface, #ffffff);
+            color: var(--text-primary, #0f172a);
         }
 
         textarea.form-input {
@@ -321,13 +335,13 @@
         /* File Upload */
         .file-upload-area {
             position: relative;
-            border: 2px dashed rgba(148, 163, 184, 0.2);
+            border: 2px dashed var(--border-color, #cbd5e1);
             border-radius: 12px;
             padding: 1.5rem 1rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(15, 23, 42, 0.4);
+            background: var(--bg-muted, rgba(241, 245, 249, 0.7));
             min-height: 120px;
             display: flex;
             flex-direction: column;
@@ -337,13 +351,13 @@
         }
 
         .file-upload-area:hover {
-            border-color: rgba(59, 130, 246, 0.4);
-            background: rgba(15, 23, 42, 0.6);
+            border-color: var(--green-brand, #00A740);
+            background: var(--bg-card, #ffffff);
         }
 
         .file-upload-area.has-file {
-            border-color: rgba(16, 185, 129, 0.4);
-            background: rgba(16, 185, 129, 0.05);
+            border-color: rgba(16, 185, 129, 0.5);
+            background: rgba(16, 185, 129, 0.08);
         }
 
         .file-upload-area input[type="file"] {
@@ -359,17 +373,21 @@
         }
 
         .file-upload-text {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--text-secondary, #334155);
+            font-weight: 600;
         }
 
         .file-upload-name {
-            font-size: 0.75rem;
-            color: #10b981;
-            font-weight: 600;
+            font-size: 0.8rem;
+            color: #047857;
+            font-weight: 700;
             margin-top: 0.25rem;
             word-break: break-all;
+        }
+
+        [data-theme="dark"] .file-upload-name {
+            color: #10b981;
         }
 
         .file-upload-preview {
@@ -379,7 +397,7 @@
             object-fit: contain;
             margin-top: 0.35rem;
             border: 1px solid rgba(16, 185, 129, 0.4);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             display: none;
             z-index: 2;
             position: relative;
@@ -387,17 +405,17 @@
         }
 
         .file-upload-label {
-            font-size: 0.8rem;
-            color: #64748b;
+            font-size: 0.85rem;
+            color: var(--text-secondary, #475569);
             margin-top: 0.5rem;
             text-align: center;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Error */
         .form-error {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 12px;
             padding: 0.85rem 1rem;
             margin-bottom: 1.25rem;
@@ -415,9 +433,14 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.85rem;
-            color: #fca5a5;
+            font-size: 0.88rem;
+            color: #b91c1c;
             line-height: 1.5;
+            font-weight: 600;
+        }
+
+        [data-theme="dark"] .form-error-item {
+            color: #fca5a5;
         }
 
         .form-error-item + .form-error-item {
@@ -542,22 +565,23 @@
         }
 
         .register-link a {
-            color: #60a5fa;
-            font-weight: 700;
+            color: var(--green-brand, #00A740);
+            font-weight: 800;
             text-decoration: none;
             transition: color 0.2s ease;
         }
 
         .register-link a:hover {
-            color: #93c5fd;
+            color: var(--green-hover, #008f38);
             text-decoration: underline;
         }
 
         .page-footer {
             text-align: center;
             margin-top: 1.5rem;
-            font-size: 0.8rem;
-            color: #475569;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted, #64748b);
         }
 
         @media (max-width: 640px) {
@@ -584,21 +608,66 @@
                 font-size: 1.35rem;
             }
         }
+
+        .peternak-verif-box {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 14px;
+            padding: 0.9rem 1.25rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .peternak-verif-title {
+            color: #047857;
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 700;
+        }
+        .peternak-verif-desc {
+            font-size: 0.88rem;
+            color: #1e293b;
+            line-height: 1.45;
+        }
+        [data-theme="dark"] .peternak-verif-title {
+            color: #6ee7b7;
+        }
+        [data-theme="dark"] .peternak-verif-desc {
+            color: #cbd5e1;
+        }
     </style>
 </head>
 <body>
+    <div style="position: fixed; top: 20px; left: 24px; z-index: 100;">
+        <a href="{{ route('beranda') }}" class="sipeter-back-btn" title="Kembali ke Beranda">
+            <i class="bi bi-arrow-left"></i> Beranda
+        </a>
+    </div>
+
+    <div style="position: fixed; top: 20px; right: 24px; z-index: 100;">
+        @include('partials.theme_toggle', ['id' => 'registerThemeToggle'])
+    </div>
+
     <div class="bg-gradient">
         <div class="bg-orb"></div>
     </div>
     <div class="grid-pattern"></div>
 
-    <div class="register-container">
+    <div class="register-container" style="margin-top: 2rem;">
         {{-- Header Bar: Logo + Title --}}
-        <div class="register-header-bar">
-            <div class="header-logo-box">
-                <img src="{{ asset('images/sipeter_logo.png') }}" alt="SIPETER Logo">
+        <div class="register-header-bar" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 1.25rem;">
+                <a href="{{ route('beranda') }}" class="header-logo-box" title="Kembali ke Beranda" style="text-decoration: none;">
+                    <img src="{{ asset('images/sipeter_logo.png') }}" class="sipeter-brand-logo" alt="SIPETER Logo">
+                </a>
+                <h1 class="header-title">Registrasi</h1>
             </div>
-            <h1 class="header-title">Registrasi</h1>
+            <div>
+                <a href="{{ route('login') }}" class="auth-link" style="color: var(--green-brand); font-weight: 700; text-decoration: none; font-size: 0.95rem;">
+                    Sudah punya akun? Masuk &rarr;
+                </a>
+            </div>
         </div>
 
         {{-- Role Tabs --}}
@@ -609,6 +678,17 @@
             <button type="button" class="role-tab" id="tab-pembeli" data-role="pembeli" onclick="switchRole('pembeli')">
                 🛒 Pembeli
             </button>
+        </div>
+
+        {{-- Notice Verifikasi Peternak --}}
+        <div id="peternak-verif-notice" class="peternak-verif-box">
+            <div style="width: 38px; height: 38px; border-radius: 10px; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <div class="peternak-verif-desc">
+                <strong class="peternak-verif-title">Verifikasi Aparat Kampung & Notifikasi WhatsApp</strong>
+                Pendaftaran akun peternak akan ditinjau dan diverifikasi oleh <strong>Aparat Kampung Suka Maju</strong>. Setelah disetujui, akun akan otomatis terkirimkan melalui WhatsApp oleh pihak kampung ke nomor peternak.
+            </div>
         </div>
 
         {{-- Registration Card --}}
@@ -837,6 +917,8 @@
         const rekeningBankSection = document.getElementById('rekening-bank-section');
         const tabPeternak = document.getElementById('tab-peternak');
         const tabPembeli = document.getElementById('tab-pembeli');
+        const peternakVerifNotice = document.getElementById('peternak-verif-notice');
+        const btnRegister = document.getElementById('btn-register');
 
         function switchRole(role) {
             roleInput.value = role;
@@ -845,11 +927,15 @@
             tabPeternak.classList.toggle('active', role === 'peternak');
             tabPembeli.classList.toggle('active', role === 'pembeli');
 
-            // Show/hide bank account fields (Peternak only)
+            // Show/hide bank account fields and verification notice
             if (role === 'peternak') {
                 if (rekeningBankSection) rekeningBankSection.style.display = 'grid';
+                if (peternakVerifNotice) peternakVerifNotice.style.display = 'flex';
+                if (btnRegister) btnRegister.textContent = 'Daftar & Ajukan Verifikasi Peternak';
             } else {
                 if (rekeningBankSection) rekeningBankSection.style.display = 'none';
+                if (peternakVerifNotice) peternakVerifNotice.style.display = 'none';
+                if (btnRegister) btnRegister.textContent = 'Daftar Akun Pembeli';
             }
 
             initMap();

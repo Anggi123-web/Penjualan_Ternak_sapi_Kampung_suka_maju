@@ -11,10 +11,10 @@
 
     .filter-select {
         padding: 0.6rem 1rem;
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(148, 163, 184, 0.1);
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
         border-radius: 10px;
-        color: #f1f5f9;
+        color: var(--text-primary);
         font-size: 0.85rem;
         font-family: 'Inter', sans-serif;
         outline: none;
@@ -28,12 +28,12 @@
     }
 
     .filter-select:focus {
-        border-color: rgba(16, 185, 129, 0.4);
+        border-color: var(--green-brand);
     }
 
     .filter-select option {
-        background: #1e293b;
-        color: #f1f5f9;
+        background: var(--bg-card);
+        color: var(--text-primary);
     }
 
     .report-grid {
@@ -54,7 +54,7 @@
     .report-card h4 {
         font-size: 0.85rem;
         font-weight: 700;
-        color: #94a3b8;
+        color: var(--text-heading);
         text-transform: uppercase;
         letter-spacing: 0.04em;
         margin-bottom: 1.25rem;
@@ -68,7 +68,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.65rem 0;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .report-row:last-child {
@@ -77,17 +77,17 @@
 
     .report-label {
         font-size: 0.85rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
     }
 
     .report-value {
         font-size: 0.9rem;
         font-weight: 700;
-        color: #f1f5f9;
+        color: var(--text-heading);
     }
 
     .report-value.positive {
-        color: #6ee7b7;
+        color: var(--green-brand);
     }
 
     .chart-placeholder {
@@ -96,14 +96,14 @@
         align-items: center;
         justify-content: center;
         min-height: 200px;
-        color: #64748b;
+        color: var(--text-secondary);
         font-size: 0.9rem;
         gap: 0.75rem;
     }
 
     .chart-placeholder-icon {
         font-size: 2.5rem;
-        opacity: 0.4;
+        opacity: 0.5;
     }
 </style>
 @endsection
@@ -127,7 +127,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Total Penjualan</span>
-            <div class="stat-card-icon" style="background: rgba(16,185,129,0.1); color: #6ee7b7;"><i class="bi bi-cash-stack"></i></div>
+            <div class="stat-card-icon" style="background: rgba(16,185,129,0.15); color: var(--green-brand);"><i class="bi bi-cash-stack"></i></div>
         </div>
         <div class="stat-card-value">0</div>
         <div class="stat-card-change">Transaksi</div>
@@ -135,7 +135,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Total Pendapatan</span>
-            <div class="stat-card-icon" style="background: rgba(59,130,246,0.1); color: #93c5fd;"><i class="bi bi-graph-up-arrow"></i></div>
+            <div class="stat-card-icon" style="background: rgba(59,130,246,0.15); color: var(--accent-blue-text);"><i class="bi bi-graph-up-arrow"></i></div>
         </div>
         <div class="stat-card-value">Rp 0</div>
         <div class="stat-card-change">Periode ini</div>
@@ -143,7 +143,7 @@
     <div class="stat-card">
         <div class="stat-card-header">
             <span class="stat-card-label">Rata-rata Harga</span>
-            <div class="stat-card-icon" style="background: rgba(245,158,11,0.1); color: #fcd34d;"><i class="bi bi-bar-chart-line"></i></div>
+            <div class="stat-card-icon" style="background: rgba(245,158,11,0.15); color: var(--accent-amber-text);"><i class="bi bi-bar-chart-line"></i></div>
         </div>
         <div class="stat-card-value">Rp 0</div>
         <div class="stat-card-change">Per ekor</div>

@@ -32,7 +32,7 @@
         transition: color 0.2s ease;
     }
 
-    .back-link:hover { color: #f1f5f9; }
+    .back-link:hover { color: var(--text-heading); }
 
     .alert-success {
         background: rgba(16, 185, 129, 0.08);
@@ -41,7 +41,7 @@
         padding: 0.85rem 1rem;
         margin-bottom: 1.5rem;
         font-size: 0.85rem;
-        color: #6ee7b7;
+        color: var(--green-brand);
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -54,11 +54,12 @@
     }
 
     .detail-card {
-        background: rgba(30, 41, 59, 0.7);
+        background: var(--bg-card);
         backdrop-filter: blur(20px);
-        border: 1px solid rgba(148, 163, 184, 0.08);
+        border: 1px solid var(--border-color);
         border-radius: 16px;
         overflow: hidden;
+        color: var(--text-primary);
     }
 
     .detail-media {
@@ -69,18 +70,19 @@
     }
 
     .media-card {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid rgba(148, 163, 184, 0.08);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
         border-radius: 16px;
         overflow: hidden;
+        color: var(--text-primary);
     }
 
     .media-card-header {
         padding: 1rem 1.25rem;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+        border-bottom: 1px solid var(--border-color);
         font-size: 0.85rem;
         font-weight: 700;
-        color: #94a3b8;
+        color: var(--text-heading);
         text-transform: uppercase;
         letter-spacing: 0.04em;
         display: flex;
@@ -172,10 +174,11 @@
 
     /* Info Card */
     .info-card {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid rgba(148, 163, 184, 0.08);
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
         border-radius: 16px;
         padding: 1.5rem;
+        color: var(--text-primary);
     }
 
     .info-card h3 {
@@ -186,6 +189,7 @@
         align-items: center;
         gap: 0.5rem;
         letter-spacing: -0.02em;
+        color: var(--text-heading);
     }
 
     .info-row {
@@ -193,26 +197,26 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.75rem 0;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.06);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .info-row:last-child { border-bottom: none; }
 
     .info-label {
         font-size: 0.85rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
         font-weight: 500;
     }
 
     .info-value {
         font-size: 0.9rem;
         font-weight: 700;
-        color: #f1f5f9;
+        color: var(--text-heading);
         text-align: right;
     }
 
     .info-value.price {
-        color: #6ee7b7;
+        color: var(--green-brand);
         font-size: 1.05rem;
     }
 
@@ -227,18 +231,18 @@
     }
 
     .health-belum {
-        background: rgba(245, 158, 11, 0.06);
-        border: 1px solid rgba(245, 158, 11, 0.15);
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.25);
     }
 
     .health-sehat {
-        background: rgba(16, 185, 129, 0.06);
-        border: 1px solid rgba(16, 185, 129, 0.15);
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.25);
     }
 
     .health-tidak-sehat {
-        background: rgba(239, 68, 68, 0.06);
-        border: 1px solid rgba(239, 68, 68, 0.15);
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.25);
     }
 
     .health-icon {
@@ -250,29 +254,31 @@
         font-weight: 700;
     }
 
-    .health-belum .health-info h4 { color: #fcd34d; }
-    .health-sehat .health-info h4 { color: #6ee7b7; }
-    .health-tidak-sehat .health-info h4 { color: #fca5a5; }
+    .health-belum .health-info h4 { color: var(--accent-amber-text); }
+    .health-sehat .health-info h4 { color: var(--green-brand); }
+    .health-tidak-sehat .health-info h4 { color: #dc2626; }
+    [data-theme="dark"] .health-tidak-sehat .health-info h4 { color: #fca5a5; }
 
     .health-info p {
         font-size: 0.8rem;
-        color: #94a3b8;
+        color: var(--text-secondary);
         margin-top: 0.15rem;
     }
 
     .health-notes {
         margin-top: 0.75rem;
         padding: 0.85rem;
-        background: rgba(15, 23, 42, 0.4);
+        background: var(--bg-muted);
+        border: 1px solid var(--border-color);
         border-radius: 8px;
         font-size: 0.85rem;
-        color: #cbd5e1;
+        color: var(--text-primary);
         line-height: 1.6;
     }
 
     .health-verifier {
         font-size: 0.75rem;
-        color: #64748b;
+        color: var(--text-secondary);
         margin-top: 0.5rem;
     }
 
@@ -311,9 +317,9 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.7rem 1.25rem;
-        background: transparent;
-        color: #fca5a5;
-        border: 1px solid rgba(239, 68, 68, 0.2);
+        background: rgba(239, 68, 68, 0.1);
+        color: #dc2626;
+        border: 1px solid rgba(239, 68, 68, 0.25);
         border-radius: 10px;
         font-size: 0.85rem;
         font-weight: 600;
@@ -321,10 +327,17 @@
         cursor: pointer;
         transition: all 0.2s ease;
     }
+    [data-theme="dark"] .btn-delete {
+        color: #fca5a5;
+    }
 
     .btn-delete:hover {
-        background: rgba(239, 68, 68, 0.1);
+        background: rgba(239, 68, 68, 0.2);
+        color: #b91c1c;
         border-color: rgba(239, 68, 68, 0.4);
+    }
+    [data-theme="dark"] .btn-delete:hover {
+        color: #ffffff;
     }
 
     @media (max-width: 768px) {
@@ -501,10 +514,10 @@
                     </div>
                     <div class="info-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
                         <span class="info-label">Keterangan Lokasi</span>
-                        <span class="info-value" style="text-align: left; font-weight: 500; color: #cbd5e1; margin-top: 0.25rem;">{{ $sapi->lokasi ?? '-' }}</span>
+                        <span class="info-value" style="text-align: left; font-weight: 500; color: var(--text-primary); margin-top: 0.25rem;">{{ $sapi->lokasi ?? '-' }}</span>
                     </div>
                     <div style="margin-top: 1.25rem;">
-                        <a href="https://www.google.com/maps/search/?api=1&query={{ $sapi->latitude }},{{ $sapi->longitude }}" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 10px; color: #60a5fa; font-weight: 600; text-decoration: none; font-size: 0.85rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(59,130,246,0.2)'" onmouseout="this.style.background='rgba(59,130,246,0.1)'">
+                        <a href="https://www.google.com/maps/search/?api=1&query={{ $sapi->latitude }},{{ $sapi->longitude }}" target="_blank" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 10px; color: var(--accent-blue-text); font-weight: 600; text-decoration: none; font-size: 0.85rem; transition: all 0.2s;" onmouseover="this.style.background='rgba(59,130,246,0.2)'" onmouseout="this.style.background='rgba(59,130,246,0.1)'">
                             🗺️ Buka di Google Maps
                         </a>
                     </div>
